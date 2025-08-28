@@ -138,7 +138,7 @@ Package Manager: Astral uv (Python), Bun (JavaScript)
 [ROADMAP] [DECISAO]
 
 ### Fase 1: Ganchos Básicos (Primeira Implementação)
-[TEMPLATE-DISPONIVEL: 03-sistema-hooks.md LINHAS:225-245]
+[TEMPLATE-DISPONIVEL: templates-pt-br/gancho-basico.py]
 **Objetivo**: Adicionar observabilidade básica aos projetos
 ```bash
 # Estrutura em PT-BR:
@@ -148,41 +148,44 @@ Package Manager: Astral uv (Python), Bun (JavaScript)
     ├── pre_execucao.py     # Validação simples
     └── pos_execucao.py     # Registro básico
 
-# Template: /avansado/03-sistema-hooks.md [TEMPLATE]
+# Templates prontos: /avansado/templates-pt-br/
 ```
 
-### Fase 2: MCP Server Simples
+### Fase 2: Servidor MCP Simples  
+[TEMPLATE-DISPONIVEL: templates-pt-br/servidor-mcp-basico.py]
 **Objetivo**: Criar primeiro MCP para automação
-```typescript
-// Quando necessário, crie:
-// - MCP para tarefas repetitivas
-// - Tools personalizadas
-// - Prompts reutilizáveis
+```python
+# Quando necessário, crie:
+# - MCP para tarefas repetitivas
+# - Ferramentas personalizadas  
+# - Prompts reutilizáveis
 
-// Use como referência: /avansado/4.md
+# Template pronto: /avansado/templates-pt-br/servidor-mcp-basico.py
 ```
 
 ### Fase 3: Sistema de Evolução
+[VER: 06-guia-implementacao.md]
 **Objetivo**: Permitir que o sistema se expanda
 ```python
 # Implemente quando houver necessidade:
 # - Scripts de auto-configuração
-# - Geração automática de hooks
+# - Geração automática de ganchos
 # - Templates para novos MCPs
 
-# Consulte: /avansado/6.md para guias
+# Guia completo: /avansado/06-guia-implementacao.md
 ```
 
 ### Fase 4: Observabilidade Avançada
+[VER: 05-dashboard-monitoramento.md]
 **Objetivo**: Visualização e métricas (implementação futura)
 ```yaml
 # Componentes a criar quando viável:
-- Dashboard web simples
+- Painel web simples
 - Coleta de métricas
 - Visualização de eventos
 - Análise de performance
 
-# Templates em: /avansado/5.md
+# Exemplos: /avansado/05-dashboard-monitoramento.md
 ```
 
 ## 🎨 Tríade Operacional Expandida
@@ -309,7 +312,7 @@ cat > .claude/settings.json << 'EOF'
 }
 EOF
 
-# Implemente hook básico baseado em /avansado/3.md
+# Use template pronto: /avansado/templates-pt-br/gancho-basico.py
 ```
 
 ### Passo 2: Adicionar MCP Server (Quando Apropriado)
@@ -325,7 +328,7 @@ EOF
     }
   }
 }
-// Use templates de /avansado/4.md
+// Use template: /avansado/templates-pt-br/servidor-mcp-basico.py
 ```
 
 ### Princípio de Implementação
@@ -575,10 +578,10 @@ DETECTE oportunidades de automação
 def criar_automacao_sob_demanda(padrao_detectado):
     """
     Cria automação apenas quando há benefício claro
-    Baseado em exemplos de /avansado/3.md
+    Baseado em exemplos de /avansado/03-sistema-hooks.md
     """
     if contador_repeticoes[padrao_detectado] >= 3:
-        gerar_hook_automatico(padrao_detectado)
+        gerar_gancho_automatico(padrao_detectado)
         documentar_nova_capacidade()
 ```
 
@@ -598,10 +601,11 @@ def criar_automacao_sob_demanda(padrao_detectado):
 
 ### Templates Prontos para Adaptação
 ```yaml
-Hooks Python: Use /avansado/3.md como base
-MCP TypeScript: Adapte de /avansado/4.md
-Dashboard Vue: Referência em /avansado/5.md
-Guia Completo: Siga /avansado/6.md
+Ganchos PT-BR: Use /avansado/templates-pt-br/gancho-basico.py
+Servidor MCP: Use /avansado/templates-pt-br/servidor-mcp-basico.py
+Configurações: Use /avansado/templates-pt-br/configuracoes.json
+Evolução Doc: Use /avansado/templates-pt-br/EVOLUCAO.md
+Exemplos Inglês: Consulte /avansado/03-sistema-hooks.md se necessário
 ```
 
 ## Comportamentos Proativos
@@ -767,7 +771,7 @@ FUNÇÃO inicializar_agente_progressivo():
    Verifique o que existe:
    - Projeto tem .claude/? → Use capacidades avançadas
    - Primeira vez? → Use modo básico
-   - Repetitivo 3x+? → Crie automação [VER: 03-sistema-hooks.md]
+   - Repetitivo 3x+? → Crie automação [VER: templates-pt-br/]
    ```
 
 2. **📋 DECISÃO DE IMPLEMENTAÇÃO**
@@ -829,15 +833,15 @@ Próximo: Identificar necessidades do projeto
 
 ### 🔄 Estágio 1: Primeiros Ganchos
 [IMPLEMENTAR-QUANDO: Necessidade de logs]
-[VER-TEMPLATE: 03-sistema-hooks.md LINHAS:114-261]
+[VER-TEMPLATE: templates-pt-br/gancho-basico.py]
 ```yaml
 Trigger: Primeira necessidade de observabilidade
 Implementar em PT-BR:
-  - .claude/configuracoes.json
-  - ganchos/registro.py
-  - EVOLUCAO.md (documentação)
+  - .claude/configuracoes.json [USE: templates-pt-br/configuracoes.json]
+  - ganchos/registro.py [USE: templates-pt-br/gancho-basico.py]
+  - EVOLUCAO.md [USE: templates-pt-br/EVOLUCAO.md]
 Benefício: Visibilidade das operações
-Tempo estimado: 30 minutos
+Tempo estimado: 15 minutos (com templates prontos)
 ```
 
 ### 🔄 Estágio 2: Automação Específica
