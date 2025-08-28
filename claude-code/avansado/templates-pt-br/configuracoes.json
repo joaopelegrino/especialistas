@@ -1,0 +1,52 @@
+{
+  "_comentario": "[TEMPLATE] [PORTUGUES-BR] Configurações básicas para projeto com ganchos",
+  
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/ganchos/pre_execucao.py",
+            "_descricao": "Validação antes de executar ferramentas"
+          }
+        ]
+      }
+    ],
+    
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/ganchos/pos_execucao.py",
+            "_descricao": "Registro após execução de ferramentas"
+          }
+        ]
+      }
+    ]
+  },
+  
+  "configuracoes_projeto": {
+    "nome_projeto": "meu-projeto",
+    "idioma": "pt-BR",
+    "nivel_log": "INFO",
+    "coletar_metricas": true,
+    "diretorio_logs": ".claude/logs",
+    "diretorio_metricas": ".claude/metricas"
+  },
+  
+  "automacoes": {
+    "ativar_sugestoes": true,
+    "limiar_repeticao": 3,
+    "_comentario": "Após 3 repetições, sugere criar automação"
+  },
+  
+  "evolucao": {
+    "documentar_mudancas": true,
+    "arquivo_evolucao": ".claude/EVOLUCAO.md",
+    "versao_sistema": "0.1.0"
+  }
+}
