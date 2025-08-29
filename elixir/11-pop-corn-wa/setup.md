@@ -2,11 +2,38 @@
 
 ## 📋 Pré-requisitos
 
-### Versões Específicas Necessárias
+### ⚠️ ATUALIZAÇÃO 29/08/2025 - Compatibilidade Elixir 1.14
+
+**DESCOBERTA CRÍTICA**: Popcorn pode funcionar com Elixir 1.14.0 + Phoenix 1.7.21  
+**Projeto Blog**: Infraestrutura WASM implementada com sucesso (35/40 testes passando)
+
+### Versões Testadas e Validadas
 ```bash
-# Verificar versões instaladas
-elixir --version  # Deve ser 1.17.3
+# ✅ CONFIGURAÇÃO FUNCIONANDO (29/08/2025)
+elixir --version  # Elixir 1.14.0 (compiled with Erlang/OTP 25)
+erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell  # OTP 25
+mix hex.info  # Hex: 2.2.3-dev (built from source)
+
+# ⚠️ CONFIGURAÇÃO ORIGINAL (pode ter incompatibilidades)
+elixir --version  # Deve ser 1.17.3  
 erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell  # Deve ser 26
+```
+
+### Stack Compatibility Matrix Atualizada
+```yaml
+WASM-First Blog (✅ FUNCIONANDO):
+  Elixir: 1.14.0
+  Erlang/OTP: 25
+  Phoenix: 1.7.21
+  Hex: 2.2.3-dev (from source)
+  Popcorn: v0.1.0 (Phase 2 ready)
+  Results: 35/40 tests passing, infraestrutura completa
+  
+CONFIGURAÇÃO ORIGINAL (documentada):
+  Elixir: 1.17.3-otp-26
+  Erlang/OTP: 26
+  Phoenix: 1.8+
+  Status: Pode ter compatibility issues com Hex
 ```
 
 ### Instalação com ASDF

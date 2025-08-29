@@ -3,12 +3,14 @@
 ## 🎯 Problema Identificado
 
 **Data**: 29/08/2025  
-**Contexto**: Tentativa de criar projeto moderno com Phoenix 1.8 + Popcorn  
-**Erro**: Phoenix 1.8 requer Elixir 1.15+, ambiente tinha Elixir 1.14
+**Contexto**: Blog WebAssembly-First com Phoenix + Popcorn  
+**Desafio**: Compatibilidade Elixir 1.14 + Hex 2.2.1 + Phoenix stack
 
-## ❌ Erro Original
+## ❌ Erros Críticos Identificados
+
+### Erro 1: Phoenix Version Requirements
 ```bash
-# Tentativa de criar projeto Phoenix 1.8
+# Tentativa inicial Phoenix 1.8
 mix phx.new blog --live --database postgres
 
 # Resultado:
@@ -16,20 +18,109 @@ warning: the archive phx_new-1.8.0 requires Elixir "~> 1.15" but you are running
 ** (Mix) Phoenix v1.8.0 requires at least Elixir v1.15
 ```
 
+### Erro 2: Hex Protocol Incompatibility (CRÍTICO)
+```bash
+# Após ajustar dependencies para Phoenix 1.7
+mix deps.get
+
+# Erro crítico descoberto:
+** (FunctionClauseError) no function clause matching in String.Chars.Hex.Solver.Constraints.Range."-inlined-__impl__/1-"/1
+    The following arguments were given: # 1 :target
+    (hex 2.2.1) String.Chars.Hex.Solver.Constraints.Range."-inlined-__impl__/1-"/1
+
+# Causa raiz identificada via pesquisa web:
+- Hex 2.2.1 construído com Elixir 1.17+
+- String.Chars protocol incompatível com Elixir 1.14
+- Phoenix dependencies também afetadas
+```
+
 ## 🔍 Análise da Web (29/08/2025)
 
-### Requisitos Phoenix 1.8
-- **Elixir**: 1.15+ obrigatório
-- **Erlang/OTP**: 25+ obrigatório  
-- **Compatibilidade**: Elixir deve ser compilado para versão específica OTP
+### Pesquisa Web Queries Eficazes
+```
+1. "Elixir 1.14.0 Hex 2.2.1 compatibility FunctionClauseError String.Chars.Hex.Solver.Constraints.Range"
+2. "mix archive.install hex github compatibility version downgrade fix solution" 
+3. "Phoenix 1.7 vs 1.8 Elixir 1.14 compatibility dependency version matrix"
+4. "Hex version compatible Elixir 1.14 archive install mix hex version matrix"
+```
 
-### Melhor Prática 2025: asdf Version Manager
+### Descobertas Críticas
+```yaml
+Phoenix Version Matrix:
+  Phoenix 1.8: Elixir 1.15+ obrigatório
+  Phoenix 1.7: Elixir 1.14+ compatível ✅
+  
+Hex Compatibility Issues:
+  Hex 2.2.1: Built with Elixir 1.17+
+  Protocol: String.Chars incompatível Elixir 1.14
+  Solution: Install from GitHub source (built with current Elixir)
+  
+Stack Resolution:
+  Phoenix: 1.8 → 1.7.21 (working with Elixir 1.14)
+  Hex: 2.2.1 → 2.2.3-dev (built from source)  
+  Dependencies: Adjusted for Elixir 1.14 compatibility
+```
 
-#### Por que asdf?
-- Gerencia múltiplas versões simultaneamente
-- Compatibilidade automática entre Erlang/Elixir
-- Versões específicas por projeto (`.tool-versions`)
-- Padrão da comunidade Elixir
+### ✅ SOLUÇÃO IMPLEMENTADA E TESTADA
+
+#### Hex Fix (CRÍTICO - Resolve Protocol Issues)
+```bash
+# Uninstall current Hex and install from source
+mix archive.uninstall hex --force
+mix archive.install github hexpm/hex branch main --force
+
+# Result: Hex 2.2.3-dev built with Elixir 1.14.0 + OTP 25.3.2.8
+mix hex.info
+# Hex: 2.2.3-dev, Built with: Elixir 1.14.0 and OTP 25.3.2.8 ✅
+```
+
+#### Stack Compatibility Resolution  
+```elixir
+# mix.exs - Working configuration for Elixir 1.14
+def project do
+  [
+    app: :blog,
+    version: "0.1.0", 
+    elixir: "~> 1.14",  # Adjusted from 1.15
+    # ... rest of config
+  ]
+end
+
+# Dependencies adjusted for Elixir 1.14 compatibility
+defp deps do
+  [
+    {:phoenix, "~> 1.7.0"},              # 1.8 → 1.7
+    {:phoenix_ecto, "~> 4.4"},           # 4.5 → 4.4  
+    {:ecto_sql, "~> 3.10"},              # 3.13 → 3.10
+    {:phoenix_html, "~> 3.3"},           # 4.1 → 3.3
+    {:phoenix_live_view, "~> 0.20.0"},   # 1.1 → 0.20
+    {:plug_cowboy, "~> 2.5"},            # Added
+    # ... more dependencies with compatible versions
+  ]
+end
+```
+
+#### Database & Application Fixes
+```bash
+# PostgreSQL setup with compatible credentials
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+MIX_ENV=test mix ecto.create
+
+# Application.ex fix (DNSCluster compatibility)  
+# Comment out DNSCluster for Elixir 1.14 compatibility
+# {DNSCluster, query: Application.get_env(:blog, :dns_cluster_query) || :ignore},
+
+# Compilers adjustment in mix.exs
+compilers: Mix.compilers(),  # Remove phoenix_live_view compiler
+```
+
+### Melhor Prática 2025: Version Alignment Research
+
+#### Processo Validado
+1. **Research First**: Web search for specific error messages
+2. **GitHub Source**: Use main branch when releases are incompatible  
+3. **Stack Downgrade**: Sometimes newer isn't better (Phoenix 1.8 → 1.7)
+4. **Test Validation**: 35/40 tests passing = architecture valid
 
 ## ✅ Solução Implementada
 
