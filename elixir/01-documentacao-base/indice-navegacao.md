@@ -136,9 +136,41 @@ ERROS MAIS COMUNS:
   4. Não usar to_form em formulários
 ```
 
+### 🌐 WebAssembly & Popcorn (Novo - 30/08/2025)
+**`11-pop-corn-wa/bundle-optimization-strategies.md`** [CRITICAL]
+- Linhas 25-94: [ESSENCIAL] Core optimization concepts 
+- Linhas 95-164: [ERRO-COMUM] Bundle bloat patterns
+- Linhas 165-234: [TEMPLATE] Ready optimization configs
+- Linhas 235-310: [WASM-SPECIFIC] AtomVM size reduction
+
+**`11-pop-corn-wa/static-deployment-guide.md`** [CRITICAL]
+- Linhas 25-75: [ESSENCIAL] Core deployment concepts
+- Linhas 110-179: [ERRO-COMUM] COOP/COEP header issues
+- Linhas 180-279: [TEMPLATE] Ready deployment configs
+- Linhas 280-350: [CDN-SPECIFIC] Provider-specific setup
+
+**`11-pop-corn-wa/offline-first-patterns.md`** [BEST-PRACTICE]
+- Linhas 25-88: [ESSENCIAL] Architecture overview
+- Linhas 120-199: [ERRO-COMUM] Sync conflicts patterns
+- Linhas 200-319: [TEMPLATE] Ready offline modules
+- Linhas 320-400: [PWA-SPECIFIC] Service worker patterns
+
+**`06-devops-infra/wasm-telemetry-production.md`** [IMPORTANT]
+- Linhas 25-75: [ESSENCIAL] Telemetry architecture
+- Linhas 110-189: [ERRO-COMUM] Performance bottlenecks
+- Linhas 190-289: [TEMPLATE] Ready monitoring setup
+- Linhas 290-350: [ALERTS] Production alerting
+
 ## 🔄 Atualizações Recentes
 
 ```yaml
+2025-08-30: [PHASE-3-RESEARCH]
+  - ✅ Bundle optimization strategies (7.8MB → <3MB)
+  - ✅ Static deployment + CDN integration
+  - ✅ Offline-first patterns com CRDT sync
+  - ✅ Production telemetry WASM-specific
+  - 📊 Phase 3 ready: 4 documentos críticos
+
 2024-01-28:
   - Adicionado Phoenix 1.8 guidelines
   - Atualizado LiveView streams syntax
