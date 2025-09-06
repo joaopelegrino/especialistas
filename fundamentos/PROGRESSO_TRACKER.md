@@ -1,8 +1,8 @@
-# 📊 Sistema de Controle de Evolução - Fundamentos OS Dev
+# 📊 Sistema de Controle de Evolução - Trilha OSR2
 
 ## 🎯 Visão Geral
 
-Este documento serve como **centro de controle** para acompanhar minha evolução na trilha de aprendizado de desenvolvimento de sistemas operacionais. Será atualizado automaticamente pelo Claude Code durante o processo.
+Este documento serve como **centro de controle** para acompanhar minha evolução na trilha **OSR2 - OS Development + Radare2 Integration**. Será atualizado automaticamente pelo Claude Code durante o processo de aprendizado dual-terminal.
 
 ---
 
@@ -10,61 +10,74 @@ Este documento serve como **centro de controle** para acompanhar minha evoluçã
 
 | Métrica | Status | Data Atualização |
 |---------|---------|------------------|
-| **Fase Atual** | 🔴 Não Iniciado | 2025-09-03 |
-| **Progresso Total** | 0% (0/6 fases) | 2025-09-03 |
-| **Horas Investidas** | 0h / 390h estimadas | 2025-09-03 |
-| **Última Atividade** | Configuração inicial | 2025-09-03 |
+| **Fase Atual** | 🔴 Não Iniciado | 2025-09-04 |
+| **Progresso Total** | 0% (0/6 fases) | 2025-09-04 |
+| **Horas Investidas** | 0h / 420h estimadas OSR2 | 2025-09-04 |
+| **r2 Expertise Level** | 🔴 Beginner | 2025-09-04 |
+| **Dual-Terminal Setup** | ✅ Configurado | 2025-09-04 |
+| **Última Atividade** | Sistema OSR2 configurado | 2025-09-04 |
 
 ---
 
 ## 📋 Progress por Fase
 
-### 🔧 FASE 0: Preparação do Ambiente (0/20h)
+### 🔧 FASE 0: Ambiente Dual + r2 Setup (0/25h)
 - **Status:** 🔴 Não Iniciado
 - **Módulos:** 0/2 completos
 - **Data Início:** ___
 - **Data Conclusão:** ___
+- **r2 Skills:** Comandos básicos + navegação
 
-**Checklist Rápido:**
-- [ ] WSL2 configurado
-- [ ] Ubuntu 24.04 instalado
-- [ ] Arch Linux configurado
-- [ ] VSCode integrado
-- [ ] Backup implementado
+**Checklist OSR2:**
+- [ ] Arch Linux configurado para desenvolvimento
+- [ ] Radare2 instalado e funcional
+- [ ] Workflow dual-terminal Ubuntu/Arch
+- [ ] Primeiro programa analisado com r2
+- [ ] Windows Terminal profiles configurados
 
 ---
 
-### 💻 FASE 1: Fundamentos C/C++ (0/60h)
+### 💻 FASE 1: C/C++ + Análise Binária (0/70h)
 - **Status:** 🔴 Bloqueada (FASE 0 pendente)
-- **Módulos:** 0/2 completos
+- **Módulos:** 0/3 completos
 - **Data Início:** ___
 - **Data Conclusão:** ___
+- **r2 Skills:** Static analysis + cross-references
 
-**Checklist Rápido:**
-- [ ] C/C++ revisado
-- [ ] Makefiles dominados
-- [ ] GDB configurado
-- [ ] Projetos práticos
+**Checklist OSR2:**
+- [ ] C/C++ para sistemas dominado
+- [ ] r2 static analysis proficiency
+- [ ] Assembly reading capability
+- [ ] Tiny Shell + complete r2 analysis
+- [ ] Compiler optimization analysis com r2
 
 ---
 
-### ⚙️ FASE 2: Hardware (0/80h)
+### ⚙️ FASE 2: Hardware + Bootloaders + r2 Debug (0/90h)
 - **Status:** 🔴 Bloqueada
+- **r2 Skills:** 16-bit debugging + hardware analysis
+- **Projeto:** Multi-stage bootloader + r2 analysis
 - **Data Início:** ___
 - **Data Conclusão:** ___
 
-### 🖥️ FASE 3: Kernel (0/80h)
+### 🖥️ FASE 3: Kernel + r2 Remote Debugging (0/90h)
 - **Status:** 🔴 Bloqueada
+- **r2 Skills:** Kernel debugging + crash analysis
+- **Projeto:** Kernel com VFS + complete r2 documentation
 - **Data Início:** ___
 - **Data Conclusão:** ___
 
-### 🔄 FASE 4: Processos (0/80h)
+### 🔄 FASE 4: Processos + r2 Tracing (0/90h)
 - **Status:** 🔴 Bloqueada
+- **r2 Skills:** Process tracing + concurrency debugging
+- **Projeto:** Multitasking OS + race condition analysis
 - **Data Início:** ___
 - **Data Conclusão:** ___
 
-### 🔌 FASE 5: Extensões (0/70h)
+### 🔌 FASE 5: I/O + Drivers + Hardware r2 Analysis (0/85h)
 - **Status:** 🔴 Bloqueada
+- **r2 Skills:** Hardware reverse engineering + production analysis
+- **Projeto:** Production OS + complete r2 analysis suite
 - **Data Início:** ___
 - **Data Conclusão:** ___
 
@@ -116,14 +129,14 @@ _Lista será preenchida conforme progresso_
 
 ## 📊 Estatísticas Detalhadas
 
-### Distribuição do Tempo
+### Distribuição do Tempo - Trilha OSR2
 ```
-FASE 0: ████████████████████ 20h (5.1%)
-FASE 1: ████████████████████████████████████████████████████████ 60h (15.4%)
-FASE 2: ████████████████████████████████████████████████████████████████████████████████ 80h (20.5%)
-FASE 3: ████████████████████████████████████████████████████████████████████████████████ 80h (20.5%)
-FASE 4: ████████████████████████████████████████████████████████████████████████████████ 80h (20.5%)
-FASE 5: ██████████████████████████████████████████████████████████████████████ 70h (17.9%)
+FASE 0: ███████████████████████ 25h (6.0%) - Ambiente Dual + r2 Setup
+FASE 1: ███████████████████████████████████████████████████████████ 70h (16.7%) - C/C++ + Binary Analysis  
+FASE 2: █████████████████████████████████████████████████████████████████████████████████████ 90h (21.4%) - Hardware + Bootloader + r2
+FASE 3: █████████████████████████████████████████████████████████████████████████████████████ 90h (21.4%) - Kernel + r2 Debug
+FASE 4: █████████████████████████████████████████████████████████████████████████████████████ 90h (21.4%) - Process + r2 Tracing
+FASE 5: ████████████████████████████████████████████████████████████████████████████████ 85h (20.2%) - I/O + Hardware r2 Analysis
 ```
 
 ### Velocidade de Aprendizado
@@ -153,15 +166,17 @@ Para atualizar progresso:
 
 ## 🗂️ Links e Referências
 
-### Documentação Principal
-- [📁 Trilha Completa](./app-aprender/00_ROTEIRO_GERAL.md)
-- [✅ Checklist WSL](./app-aprender/CHECKLIST_MIGRACAO_WSL.md)
-- [📅 Planejamento](./app-aprender/PLANEJAMENTO_WSL_APRENDIZADO.md)
+### Documentação OSR2 Principal
+- [🚀 Trilha OSR2 Completa](./app-aprender-osr2/ROTEIRO_GERAL_OSR2.md)
+- [✅ Checklist Ambiente Dual](./app-aprender-osr2/CHECKLIST_AMBIENTE_DUAL.md)
+- [🔬 Integração r2 Completa](./app-aprender-osr2/INTEGRACAO_R2_COMPLETA.md)
+- [📋 Instruções de Uso](./instrucoes-usuario.md)
 
-### Arquivos de Trabalho
-- [📝 Anotações Sessão](./ANOTACOES_SESSAO.md) _(será criado)_
-- [💻 Código Pratico](./codigo-pratico/) _(será criado)_
-- [📋 Exercícios](./exercicios/) _(será criado)_
+### Arquivos de Trabalho OSR2
+- [📚 Sessões Dual-Terminal](./sessoes/) _(logs Ubuntu + Arch)_
+- [🔬 Análises r2](./app-aprender-osr2/radare2-integration/analysis-templates/) 
+- [💻 Projetos Integrados](./app-aprender-osr2/projetos-integrados/)
+- [📋 Exercícios r2](./exercicios/) _(com análise binária)_
 
 ### Recursos Externos
 - [OSDev Wiki](https://wiki.osdev.org/)
@@ -194,22 +209,24 @@ gdb programa
 
 ## 📞 Ajuda do Claude Code
 
-### Como Pedir Ajuda
+### Como Pedir Ajuda - Comandos OSR2
 ```markdown
-1. "Claude, atualizar meu progresso na FASE X"
-2. "Claude, explicar conceito Y da trilha"
-3. "Claude, criar exercício prático para tópico Z"
-4. "Claude, revisar meu código da pasta W"
+1. "Claude, iniciar FASE X da trilha OSR2"
+2. "Claude, criar exercício [tópico] com análise r2" 
+3. "Claude, explicar conceito Y com integração r2"
+4. "Claude, checkpoint FASE X.Y - validar progresso"
+5. "Claude, troubleshooting [problema] no Arch"
 ```
 
-### Comandos Especiais
-- `update-progress`: Atualizar este documento
-- `next-steps`: Ver próximos passos
-- `create-exercise`: Criar exercício personalizado
-- `review-code`: Revisar código atual
+### Comandos Especiais OSR2
+- `iniciar FASE X`: Criar guia dual-terminal para fase
+- `checkpoint X.Y`: Validar progresso com critérios r2
+- `análise r2 [binário]`: Guia de análise específica
+- `sessão estudo`: Iniciar/encerrar tracking de sessão
 
 ---
 
-**Última Atualização:** 2025-09-03  
-**Próxima Revisão:** Após primeira sessão de estudo  
-**Status Sistema:** 🟢 Ativo e funcional
+**Última Atualização:** 2025-09-04  
+**Sistema:** 🚀 Trilha OSR2 - OS Development + r2 Integration  
+**Próxima Revisão:** Após primeira sessão dual-terminal  
+**Status Sistema:** 🟢 OSR2 Ativo e funcional

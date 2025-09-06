@@ -1,272 +1,261 @@
-# 🗂️ Estrutura Organizacional - Fundamentos OS Dev
+# 🗂️ Estrutura Organizacional - Trilha OSR2
 
-## 📁 Organização da Pasta `/fundamentos`
+## 📁 Organização da Pasta `/fundamentos` - Sistema OSR2
 
 ```
 /home/notebook/workspace/especialistas/fundamentos/
-├── 📊 PROGRESSO_TRACKER.md          # Controle central de evolução
-├── 🗂️ ESTRUTURA_ORGANIZACIONAL.md   # Este documento
-├── 📚 app-aprender/                  # Trilha principal (clonada)
-│   ├── 00_ROTEIRO_GERAL.md
-│   ├── CHECKLIST_MIGRACAO_WSL.md
-│   ├── FASE_0_AMBIENTE/
-│   ├── FASE_1_FUNDAMENTOS/
-│   ├── FASE_2_HARDWARE/
-│   ├── FASE_3_KERNEL/
-│   ├── FASE_4_PROCESSOS/
-│   ├── FASE_5_EXTENSOES/
-│   ├── INTEGRACAO_REACT.md
-│   └── PLANEJAMENTO_WSL_APRENDIZADO.md
-├── 📝 minhas-anotacoes/              # Anotações pessoais
-│   ├── sessao-YYYY-MM-DD.md
-│   ├── conceitos-importantes.md
-│   ├── duvidas-frequentes.md
-│   └── insights-pessoais.md
-├── 💻 codigo-pratico/                # Código desenvolvido
-│   ├── fase-0/                      # Projetos da FASE 0
-│   ├── fase-1/                      # Projetos da FASE 1
-│   │   ├── memory-manager/
-│   │   ├── mini-shell/
-│   │   └── device-driver-sim/
-│   ├── fase-2/                      # Bootloaders
-│   ├── fase-3/                      # Kernel básico
-│   ├── fase-4/                      # Gerenciamento processos
-│   └── fase-5/                      # Extensões avançadas
-├── 🧪 exercicios/                   # Exercícios e testes
-│   ├── resolvidos/
-│   ├── em-andamento/
-│   └── desafios/
-├── 📋 checkpoints/                  # Validações de aprendizado
-│   ├── fase-0-validado.md
-│   ├── fase-1-validado.md
-│   └── ...
-├── 🛠️ ferramentas/                 # Scripts e utilitários
-│   ├── setup-ambiente.sh
-│   ├── compile-helper.sh
-│   ├── backup-progress.sh
-│   └── test-environment.sh
-└── 📖 recursos/                     # Material complementar
-    ├── referencias.md
-    ├── links-uteis.md
-    ├── livros-pdfs/
-    └── videos-importantes.md
+├── 📊 PROGRESSO_TRACKER.md          # Dashboard OSR2 central
+├── 🚀 app-aprender-osr2/            # 🎯 TRILHA PRINCIPAL OSR2
+│   ├── ROTEIRO_GERAL_OSR2.md        # Roadmap 420h integrado
+│   ├── CHECKLIST_AMBIENTE_DUAL.md   # Ubuntu + Arch + r2 setup
+│   ├── INTEGRACAO_R2_COMPLETA.md    # Metodologia r2-first
+│   ├── FASE_0_AMBIENTE/             # Setup dual + r2 básico
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   └── recursos/
+│   ├── FASE_1_FUNDAMENTOS/          # C/C++ + análise binária
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   ├── recursos/
+│   │   └── r2-analysis/            # Templates análise r2
+│   ├── FASE_2_HARDWARE/             # Hardware + bootloaders + r2
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   ├── recursos/
+│   │   ├── r2-analysis/
+│   │   └── bootloaders/            # Código bootloaders
+│   ├── FASE_3_KERNEL/               # Kernel + r2 remote debug
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   ├── recursos/
+│   │   ├── r2-analysis/
+│   │   └── kernel-src/             # Código kernel
+│   ├── FASE_4_PROCESSOS/            # Multitask + r2 tracing
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   ├── recursos/
+│   │   ├── r2-analysis/
+│   │   └── scheduling/             # Algoritmos scheduling
+│   ├── FASE_5_EXTENSOES/            # I/O + drivers + hardware r2
+│   │   ├── modulos/
+│   │   ├── exercicios/
+│   │   ├── projetos/
+│   │   ├── recursos/
+│   │   ├── r2-analysis/
+│   │   └── drivers/                # Device drivers
+│   ├── radare2-integration/         # 🔬 r2 recursos centralizados
+│   │   ├── tutorials/
+│   │   ├── scripts/
+│   │   ├── configs/
+│   │   ├── analysis-templates/
+│   │   ├── debugging-guides/
+│   │   └── reverse-engineering/
+│   ├── projetos-integrados/         # 🏗️ Projetos cross-fase
+│   │   ├── bootloader-completo/
+│   │   ├── kernel-minimo/
+│   │   ├── shell-avancado/
+│   │   ├── sistema-arquivos/
+│   │   └── drivers-basicos/
+│   └── recursos-globais/            # 📚 Templates + automação
+│       ├── referencias/
+│       ├── ferramentas/
+│       ├── scripts-automacao/
+│       └── templates/
+├── 📚 app-aprender/                 # Trilha original (referência)
+├── ⚙️ .claude/                      # 🤖 Configurações dual-terminal
+│   ├── settings.json               # Permissions otimizadas
+│   ├── settings.local.json         # Estado aprendizado
+│   └── hooks/                      # Automação workflow
+│       ├── pre-learning-session.sh
+│       └── sync-results.sh
+├── 📝 sessoes/                     # Logs sessões dual-terminal
+├── 📝 minhas-anotacoes/            # Anotações + insights r2
+├── 🧪 exercicios/                  # Exercícios + análise binária
+├── 📋 checkpoints/                 # Validações OSR2
+├── 🛠️ ferramentas/                # Scripts + utilitários
+├── 📖 recursos/                    # Referências + comunidades
+├── 🎓 CLAUDE.md                    # Diretrizes sistema
+├── 📋 instrucoes-usuario.md        # Guia uso OSR2
+├── 🗂️ ESTRUTURA_ORGANIZACIONAL.md  # Este documento
+└── ✅ SISTEMA_PRONTO.md            # Status sistema OSR2
 ```
 
 ---
 
-## 🎯 Finalidade de Cada Seção
+## 🎯 Componentes Principais OSR2
 
-### 📊 Controle de Progresso
-- **PROGRESSO_TRACKER.md**: Dashboard principal com status atual
-- **checkpoints/**: Marcos de validação de cada fase
-- **exercicios/**: Exercícios práticos organizados por status
+### 🚀 app-aprender-osr2/ - TRILHA PRINCIPAL
+**O coração do sistema** - estrutura completa com integração Radare2:
+- **6 FASES** com progressão 420h total
+- **r2-analysis/** em cada fase para templates
+- **radare2-integration/** com recursos centralizados
+- **projetos-integrados/** spanning múltiplas fases
 
-### 📚 Conteúdo de Estudo
-- **app-aprender/**: Trilha principal (READ ONLY - não modificar)
-- **minhas-anotacoes/**: Suas anotações e insights pessoais
-- **recursos/**: Material complementar e referências
+### ⚙️ .claude/ - CONFIGURAÇÕES INTELIGENTES
+**Automação do workflow** dual-terminal:
+- **settings.json**: Permissions otimizadas Ubuntu/Arch
+- **hooks/**: Scripts que detectam tipo de tarefa
+- **settings.local.json**: Estado atual do aprendizado
 
-### 💻 Desenvolvimento Prático
-- **codigo-pratico/**: Todo código que você desenvolver
-- **ferramentas/**: Scripts utilitários para automação
-- Organização por fase para fácil navegação
+### 📊 PROGRESSO_TRACKER.md - DASHBOARD CENTRAL
+**Controle total** da evolução:
+- **420h tracking** com breakdown por fase
+- **r2 expertise levels** progressão
+- **Dual-terminal workflow** status
+- **Commands OSR2** contextuais
 
----
-
-## 📋 Convenções de Nomenclatura
-
-### 📝 Arquivos de Anotação
-- `sessao-2025-09-03.md` - Anotações de sessão específica
-- `conceito-ponteiros.md` - Notas sobre conceito específico
-- `problema-wsl-resolvido.md` - Troubleshooting resolvido
-
-### 💻 Projetos de Código
-- `memory-manager/` - Nome descritivo, minúsculas, hífens
-- `01-hello-kernel/` - Numeração para ordem de desenvolvimento
-- `exercicio-lista-ligada/` - Prefixo para exercícios
-
-### ✅ Arquivos de Checkpoint
-- `fase-0-ambiente-ok.md` - Formato: fase-X-nome-status
-- `checkpoint-bootloader-funcional.md` - Marcos importantes
+### 📋 instrucoes-usuario.md - GUIA DEFINITIVO
+**Manual completo** uso sistema:
+- **Workflow dual-terminal** step-by-step
+- **Comandos por tipo** de atividade
+- **Windows Terminal** setup recomendado
+- **Troubleshooting** comum
 
 ---
 
-## 🔄 Fluxo de Trabalho Sugerido
+## 🔄 Workflow de Arquivos OSR2
 
-### 1. Início de Sessão de Estudo
+### 📝 Durante Desenvolvimento (Arch WSL)
 ```bash
-# Claude Code atualiza progresso
-cd /home/notebook/workspace/especialistas/fundamentos
-# Verificar status atual
-cat PROGRESSO_TRACKER.md | head -20
+# Usuário executa no terminal Arch:
+wsl -d Arch
+cd /home/osdev/workspace
+gcc programa.c -o programa
+r2 programa
+# ... documentar outputs r2 em .txt
 ```
 
-### 2. Durante o Estudo
-- Fazer anotações em `minhas-anotacoes/sessao-YYYY-MM-DD.md`
-- Desenvolver código em `codigo-pratico/fase-X/`
-- Resolver exercícios em `exercicios/em-andamento/`
-
-### 3. Fim de Sessão
-- Mover exercícios completos para `exercicios/resolvidos/`
-- Atualizar `PROGRESSO_TRACKER.md`
-- Commit git dos progressos
-
-### 4. Validação de Fase
-- Completar todos checkpoints da fase
-- Criar arquivo `checkpoints/fase-X-validado.md`
-- Atualizar progresso para próxima fase
-
----
-
-## 🤖 Automações com Claude Code
-
-### Comandos Disponíveis
-
-#### Gestão de Progresso
-```markdown
-"Claude, atualizar meu progresso - completei o exercício X"
-"Claude, marcar FASE 1 como iniciada"
-"Claude, registrar 3 horas de estudo na sessão de hoje"
-```
-
-#### Criação de Conteúdo
-```markdown
-"Claude, criar anotações para sessão de hoje"
-"Claude, gerar exercício sobre ponteiros em C"
-"Claude, criar checkpoint para validar FASE 0"
-```
-
-#### Organização
-```markdown
-"Claude, organizar arquivos da pasta codigo-pratico"
-"Claude, fazer backup do progresso atual"
-"Claude, criar estrutura para novo projeto"
-```
-
-#### Análise e Revisão
-```markdown
-"Claude, revisar meu código do memory-manager"
-"Claude, explicar conceito X da trilha"
-"Claude, sugerir próximos passos baseado no progresso"
-```
-
----
-
-## 🎨 Templates Úteis
-
-### Template: Anotação de Sessão
-```markdown
-# Sessão de Estudo - [DATA]
-
-## 🎯 Objetivos da Sessão
-- [ ] 
-- [ ] 
-- [ ] 
-
-## 📚 Conteúdo Estudado
-- **Fase:** 
-- **Módulo:** 
-- **Tópicos:** 
-
-## 💻 Código Desenvolvido
-- **Projeto:** 
-- **Arquivos:** 
-- **Status:** 
-
-## 🧠 Conceitos Aprendidos
-- 
-- 
-- 
-
-## ❓ Dúvidas Surgidas
-- 
-- 
-
-## ✅ Conquistas
-- 
-- 
-
-## ➡️ Próximos Passos
-- 
-- 
-
-**Duração:** ___ horas  
-**Dificuldade:** ⭐⭐⭐⭐⭐  
-**Satisfação:** ⭐⭐⭐⭐⭐
-```
-
-### Template: Checkpoint de Fase
-```markdown
-# ✅ Checkpoint - FASE X: [NOME]
-
-## 📋 Critérios de Validação
-- [ ] Critério 1
-- [ ] Critério 2
-- [ ] Critério 3
-
-## 💻 Projetos Obrigatórios
-- [ ] Projeto A - Status: ___
-- [ ] Projeto B - Status: ___
-
-## 🧪 Testes Realizados
-- [ ] Teste 1: Resultado ___
-- [ ] Teste 2: Resultado ___
-
-## 📝 Evidências
-- **Screenshots:** 
-- **Código:** 
-- **Logs:** 
-
-## 🎯 Autoavaliação
-- **Compreensão Teórica:** ⭐⭐⭐⭐⭐
-- **Habilidade Prática:** ⭐⭐⭐⭐⭐
-- **Confiança:** ⭐⭐⭐⭐⭐
-
-**Data Conclusão:** ___  
-**Tempo Total Fase:** ___ horas  
-**Status:** 🟢 Aprovado / 🔴 Revisar
-```
-
----
-
-## 🚀 Configuração Inicial
-
-### Scripts de Setup
+### 📚 Durante Documentação (Ubuntu WSL)
 ```bash
-#!/bin/bash
-# setup-estrutura.sh - Criar estrutura completa
+# Claude processa no Ubuntu:
+- Lê outputs r2 de shared folders
+- Atualiza PROGRESSO_TRACKER.md  
+- Cria próximos guias em app-aprender-osr2/
+- Suggests next steps baseado em progresso
+```
 
-cd /home/notebook/workspace/especialistas/fundamentos
-
-# Criar diretórios
-mkdir -p {minhas-anotacoes,codigo-pratico/{fase-{0..5}},exercicios/{em-andamento,resolvidos,desafios},checkpoints,ferramentas,recursos/{livros-pdfs}}
-
-# Arquivos iniciais
-touch minhas-anotacoes/conceitos-importantes.md
-touch recursos/referencias.md
-touch recursos/links-uteis.md
-
-echo "✅ Estrutura criada com sucesso!"
+### 🔗 Sincronização Automática
+```bash
+# Hooks .claude/ fazem automaticamente:
+1. Detectam tipo de tarefa (dev vs docs)
+2. Preparam templates apropriados
+3. Processam resultados Arch → Ubuntu
+4. Atualizam tracking e métricas
 ```
 
 ---
 
-## 📊 Métricas de Organização
+## 📁 Convenções de Nomenclatura OSR2
 
-### Indicadores de Saúde do Sistema
-- **Arquivos organizados:** ✅ / ❌
-- **Progresso atualizado:** ✅ / ❌  
-- **Backup recente:** ✅ / ❌
-- **Estrutura consistente:** ✅ / ❌
+### 📄 Arquivos de Análise r2
+```bash
+programa-r2-analysis.txt         # Análise static completa
+bootloader-debug-session.log     # Sessão debugging r2
+kernel-crash-postmortem.md       # Post-mortem analysis
+```
 
-### Review Semanal
-- [ ] Organizar arquivos dispersos
-- [ ] Atualizar PROGRESSO_TRACKER.md
-- [ ] Fazer backup do conteúdo
-- [ ] Limpar arquivos temporários
+### 📂 Estrutura de Projetos
+```bash
+FASE_X_NOME/projetos/projeto-Y/
+├── src/                         # Código fonte
+├── bin/                         # Binários compilados
+├── r2-analysis/                 # Análises r2 específicas
+├── docs/                        # Documentação projeto
+└── README.md                    # Overview projeto
+```
+
+### 🗂️ Templates Padronizados
+```bash
+recursos-globais/templates/
+├── template-exercicio-r2.md     # Exercícios com r2
+├── template-projeto-integrado.md # Projetos com análise
+├── template-sessao-dual.md       # Sessões dual-terminal
+└── template-checkpoint-osr2.md  # Validações OSR2
+```
 
 ---
 
-**Sistema Criado:** 2025-09-03  
-**Versão:** 1.0  
-**Status:** 🟢 Ativo e funcional
+## 🎯 Navegação Rápida OSR2
+
+### 🚀 Iniciar Nova Fase
+```markdown
+"Claude, iniciar FASE X da trilha OSR2"
+→ Cria workspace em app-aprender-osr2/FASE_X_NOME/
+→ Prepara templates em r2-analysis/
+→ Gera guia dual-terminal específico
+```
+
+### 🔍 Buscar Conteúdo
+```bash
+# Encontrar exercícios r2 por tópico:
+find app-aprender-osr2/ -name "*r2*" -type f
+
+# Localizar análises de fase específica:
+ls app-aprender-osr2/FASE_*/r2-analysis/
+
+# Ver templates disponíveis:
+ls recursos-globais/templates/
+```
+
+### 📊 Verificar Status
+```markdown
+"Claude, status progresso trilha OSR2"
+→ Mostra PROGRESSO_TRACKER.md atualizado
+→ Lista próximos passos recomendados
+→ Indica nível r2 expertise atual
+```
+
+---
+
+## 🛠️ Manutenção e Organização
+
+### 🧹 Limpeza Automática
+- **Backup automático** após cada sessão
+- **Remoção** arquivos temporários .tmp
+- **Organização** outputs r2 por data/fase
+
+### 📈 Métricas Coletadas
+- **Tempo investido** por fase
+- **Comandos r2** mais usados
+- **Dificuldades** recorrentes  
+- **Velocity** de aprendizado
+
+### 🔄 Sincronização Cross-Platform
+- **Windows Terminal** profiles
+- **WSL paths** padronizados
+- **Shared folders** otimizados
+- **Git integration** automática
+
+---
+
+## 🎓 Benefícios da Organização OSR2
+
+### ✅ **Eficiência Máxima**
+- **Tudo no lugar certo** sempre
+- **Templates prontos** para uso
+- **Automação** reduz overhead
+- **Focus** no aprendizado
+
+### ✅ **Tracking Profissional**
+- **Métricas detalhadas** progresso
+- **Portfolio automático** construído
+- **Skills validation** sistemática
+- **Career readiness** documentada
+
+### ✅ **Escalabilidade**
+- **Adicionar fases** facilmente
+- **Customizar templates** conforme necessário
+- **Extend automations** conforme crescimento
+- **Adapt workflow** para preferências
+
+---
+
+**Estrutura Criada:** 2025-09-04  
+**Sistema:** OSR2 - OS Development + r2 Integration  
+**Status:** 🟢 Completamente Organizacional  
+**Diferencial:** Única estrutura dual-terminal otimizada**
