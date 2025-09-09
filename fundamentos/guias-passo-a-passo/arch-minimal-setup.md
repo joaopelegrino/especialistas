@@ -384,7 +384,7 @@ EOF
 # 📖 Explicação: Cria/edita configuração r2 usando vim
 # 📝 INSTRUÇÕES NO VIM:
 # 1. vim ~/.radare2rc → Enter (abre arquivo de config)
-# 2. Pressione 'i' → insert mode
+# 2. Pressione 'i' → entra em insert mode
 # 3. Digite as configurações:
 #    # Radare2 Configuration File - OSR2
 #    # Syntax highlighting
@@ -422,7 +422,24 @@ ls -la ~/.radare2rc
 ## ✅ Validação de Sucesso
 
 ### 📚 Introdução aos Scripts de Validação
-Agora vamos **verificar se tudo foi instalado corretamente** usando scripts bash. Não se preocupe se você não conhece bash ainda - vou explicar cada comando detalhadamente.
+Agora vamos **verificar se tudo foi instalado corretamente** usando scripts bash. No OSR2, seguimos o padrão de **usar vim para criar todos os arquivos** quando possível.
+
+#### 🎯 Quando Usar Vim vs Here Documents:
+
+**📝 Usar VIM (Padrão OSR2):**
+- Criação de arquivos .c, .asm, .sh individuais 
+- Scripts de validação e automação
+- Configurações (.vimrc, .radare2rc)
+- Qualquer arquivo que será editado posteriormente
+
+**📜 Usar Here Documents (cat << 'EOF'):**
+- Dentro de scripts bash para criar arquivos temporários
+- Conteúdo fixo que não precisa edição
+- Templates dentro de scripts automatizados
+
+**💡 Princípio:** Vim para desenvolvimento, here documents para automação.
+
+Não se preocupe se você não conhece bash ainda - vou explicar cada comando detalhadamente.
 
 #### 🔍 Conceitos Básicos de Script que Usaremos:
 
@@ -483,7 +500,7 @@ done
 # 3. Digite o script completo (veja modelo abaixo)
 # 4. Esc → :wq → Enter (salva e sai)
 # 
-# 🎯 Conteúdo do script para digitar no vim:
+# 🎯 Template do script para digitar no vim:
 #    #!/bin/bash
 #    echo "🔍 Validando ferramentas OSR2..."
 #    for cmd in gcc nasm make r2 qemu-system-i386 gdb; do
@@ -526,40 +543,36 @@ echo 'int main(){return 42;}'
 
 #### 🚀 Executando o Teste:
 ```bash
-# PASSO 1: Criar arquivo fonte C
+# PASSO 1: Criar arquivo fonte C com Vim
 
-# OPÇÃO A: Método rápido com echo (para este teste)
-# echo 'int main(){return 42;}' > test.c
-# 📖 Explicação: Cria arquivo test.c com programa C mínimo
-# 🔧 Operadores:
-#    echo: imprime o texto
-#    'int main(){return 42;}': código C literal
-#    >: redireciona output para arquivo test.c
-# 💡 Programa C: função main que retorna código 42
-# ✅ Resultado: arquivo test.c criado
-echo 'int main(){return 42;}' > test.c
-
-# OPÇÃO B: Usando vim (Recomendado para desenvolvimento real)
 # vim test.c
-# 📖 Explicação: Abre vim para criar/editar arquivo test.c
+# 📖 Explicação: Cria programa C teste usando vim (método padrão OSR2)
 # 📝 INSTRUÇÕES NO VIM para criar programa C:
-# 1. vim test.c → Enter (abre arquivo novo)
+# 1. vim test.c → Enter (abre arquivo novo para edição)
 # 2. Pressione 'i' → entra em insert mode
-# 3. Digite o código C:
+# 3. Digite o código C completo:
 #    int main() {
 #        return 42;
 #    }
 # 4. Pressione Esc → volta ao command mode
 # 5. Digite :wq → Enter (salva e sai)
 # 
-# 🎯 Vantagens do vim para programação:
-#    - Syntax highlighting (cores no código)
-#    - Indentação automática
-#    - Navegação rápida
-#    - Preparação para projetos maiores
+# 🎯 Por que vim é padrão para OSR2:
+#    - Syntax highlighting automático para C
+#    - Indentação automática (configurada no .vimrc)
+#    - Integração com F9 (compilar), F10 (executar), F11 (r2)
+#    - Preparação para projetos OSR2 maiores
+#    - Consistency com workflow de desenvolvimento
 # 
-# 💡 Para projetos OSR2 futuros, sempre use vim para scripts e programas
-# vim test.c
+# 💡 Programa C explicado:
+#    int main(): função principal do programa
+#    return 42: código de saída (será analisado com r2)
+# 
+# ⚡ Template para digitar no vim:
+#    int main() {
+#        return 42;
+#    }
+vim test.c
 
 # PASSO 2: Compilar programa C
 # gcc test.c -o test
@@ -660,7 +673,7 @@ Este teste **consolida tudo em um script** usando vim para criar um validador co
 # 📖 Explicação: Cria script de validação completo usando vim
 # 📝 INSTRUÇÕES NO VIM:
 # 1. vim osr2-complete-test.sh → Enter (cria novo script)
-# 2. Pressione 'i' → insert mode  
+# 2. Pressione 'i' → entra em insert mode  
 # 3. Digite o script completo (template abaixo)
 # 4. Esc → :wq → Enter (salva script)
 #
@@ -702,9 +715,14 @@ Este teste **consolida tudo em um script** usando vim para criar um validador co
 #        echo "❌ Arquivo .radare2rc: não encontrado"
 #    fi
 #    
-#    # Teste 4: Compilação teste
+#    # Teste 4: Compilação teste (usando vim para criar arquivo)
 #    echo -e "\n💻 Testando compilação:"
-#    echo 'int main(){return 0;}' > /tmp/test_osr2.c
+#    # Criar arquivo C teste usando vim dentro do script
+#    cat > /tmp/test_osr2.c << 'EOF'
+#int main(){
+#    return 0;
+#}
+#EOF
 #    if gcc /tmp/test_osr2.c -o /tmp/test_osr2 2>/dev/null; then
 #        echo "✅ Compilação C: funcionando"
 #        rm -f /tmp/test_osr2.c /tmp/test_osr2
@@ -938,7 +956,7 @@ Esta configuração **usa apenas vim vanilla** (sem plugins) e é otimizada para
 # 📖 Explicação: Cria arquivo de configuração do vim
 # 📝 INSTRUÇÕES NO VIM:
 # 1. vim ~/.vimrc → Enter (abre arquivo de config)
-# 2. Pressione 'i' → insert mode
+# 2. Pressione 'i' → entra em insert mode
 # 3. Digite a configuração completa (template abaixo)
 # 4. Esc → :wq → Enter (salva configuração)
 vim ~/.vimrc
@@ -1399,15 +1417,252 @@ set foldenable
 " ⚡ Impacto: Controle fino da visualização do código
 " 📚 Referência: :help folding
 
+" ── SISTEMA DE LINTING NATIVO OSR2 ─────────────────────────
+" 📖 TÓPICO: Integração de linters sem plugins externos
+" 🎯 Por que no OSR2: Compilação C e análise assembly precisam
+"    de feedback instantâneo de erros - o sistema nativo do vim
+"    oferece quickfix list profissional
+
+" C/C++ com GCC (análise de erros de compilação)
+autocmd FileType c setlocal makeprg=gcc\ -Wall\ -Wextra\ -g\ %\ -o\ %<
+autocmd FileType c setlocal errorformat=%f:%l:%c:\ %t%*[^:]:(\ %m
+" 📖 Explicação: makeprg define comando para :make, errorformat interpreta erros
+" 🔧 makeprg breakdown:
+"    gcc: compilador C
+"    -Wall -Wextra: máximo de warnings para detectar problemas
+"    -g: símbolos de debug para análise posterior
+"    %: arquivo atual, %<: nome sem extensão
+" 🔧 errorformat breakdown:
+"    %f: nome do arquivo com erro
+"    %l: linha do erro, %c: coluna do erro
+"    %t: tipo (E=error, W=warning)
+"    %m: mensagem completa do erro
+" ⚡ Impacto: Erro de compilação vira clicável na quickfix list
+
+" Shell scripts com shellcheck (análise de erros bash)
+autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ %
+autocmd FileType sh setlocal errorformat=%f:%l:%c:\ %t%*[^:]:(\ %m
+" 📖 Explicação: shellcheck analisa scripts bash para problemas comuns
+" 🔧 shellcheck flags:
+"    -f gcc: formato compatível com errorformat do vim
+"    %: arquivo atual sendo editado
+" 💡 Exemplo prático: Detecta variáveis não declaradas, aspas faltando
+" ⚡ Impacto: Scripts bash sem erros sintáticos ou lógicos
+" ⚠️ Nota Arch minimal: Instalar com 'pacman -S shellcheck'
+
+" Assembly NASM (análise de sintaxe)
+autocmd FileType nasm setlocal makeprg=nasm\ -f\ elf64\ %\ -o\ /tmp/%<.o
+autocmd FileType nasm setlocal errorformat=%f:%l:\ %t%*[^:]:(\ %m
+" 📖 Explicação: NASM verifica sintaxe assembly e gera object file
+" 🔧 nasm flags:
+"    -f elf64: formato ELF 64-bit (padrão Linux)
+"    -o /tmp/%<.o: output para /tmp (não polui diretório)
+" 💡 Exemplo prático: Detecta labels inexistentes, sintaxe incorreta
+" ⚡ Impacto: Assembly válido antes de linking
+
+" ── COMANDOS DE LINTING ─────────────────────────────────────
+" 📖 TÓPICO: Atalhos para linting rápido durante desenvolvimento
+" 🎯 Por que no OSR2: Ciclo compile-debug-analyze requer velocidade
+
+nnoremap <F12> :make!<CR>:copen<CR>
+" 📖 Explicação: F12 executa linting e abre quickfix list
+" 🔧 Comando breakdown:
+"    :make!: executa makeprg sem saltar para primeiro erro
+"    :copen: abre janela com lista de erros
+"    <CR>: Enter (executa comando)
+" ⚡ Impacto: Feedback visual imediato de todos os problemas
+" 💡 Uso OSR2: F12 após editar código → vê todos os erros listados
+
+" Navegação na quickfix list (lista de erros)
+nnoremap <leader>cn :cnext<CR>
+nnoremap <leader>cp :cprev<CR>  
+nnoremap <leader>co :copen<CR>
+nnoremap <leader>cc :cclose<CR>
+" 📖 Explicação: \cn = próximo erro, \cp = erro anterior
+" 💡 Uso OSR2: Debug sistemático de código C e assembly
+" 🔧 Comandos quickfix:
+"    :cnext: salta para próximo erro na lista
+"    :cprev: salta para erro anterior
+"    :copen: abre janela de erros
+"    :cclose: fecha janela de erros
+" ⚡ Impacto: Navegação rápida entre todos os problemas encontrados
+
+" ── ABBREVIATIONS OSR2 ESPECÍFICAS ─────────────────────────
+" 📖 TÓPICO: Expansões automáticas para desenvolvimento OS
+" 🎯 Por que no OSR2: Código repetitivo de baixo nível precisa
+"    de automação inteligente para ganhar velocidade
+
+" Headers C comuns em OS development
+iabbrev <expr> hguard toupper(substitute(expand('%:t'), '\.', '_', 'g')).'_H'
+" 📖 Explicação: hguard expande para ARQUIVO_H (header guard)
+" 🔧 Função breakdown:
+"    expand('%:t'): nome do arquivo atual
+"    substitute(..., '\\.', '_', 'g'): troca . por _
+"    toupper(...): converte para maiúsculas
+"    .'_H': adiciona sufixo _H
+" 💡 Exemplo: kernel.h → KERNEL_H, boot.h → BOOT_H
+" ⚡ Impacto: Header guards automáticos sem digitação manual
+
+" Assembly NASM comum
+autocmd FileType nasm iabbrev <buffer> sectext section .text<CR>global _start<CR>_start:
+" 📖 Explicação: sectext cria seção .text com entry point padrão
+" 🔧 Template assembly:
+"    section .text: seção de código executável
+"    global _start: torna _start visível ao linker
+"    _start:: label de entrada do programa
+" 💡 Uso OSR2: Início rápido de programas assembly
+" <CR>: quebra de linha automática
+
+autocmd FileType nasm iabbrev <buffer> secdata section .data
+" 📖 Explicação: secdata cria seção de dados inicializados
+" ⚡ Impacto: Setup rápido de seções assembly
+
+autocmd FileType nasm iabbrev <buffer> syscall mov eax, 1<CR>int 0x80
+" 📖 Explicação: syscall gera chamada de sistema Linux 32-bit
+" 🔧 Syscall breakdown:
+"    mov eax, 1: sys_exit (código 1)
+"    int 0x80: interrupção de sistema
+" 💡 Uso OSR2: Exit rápido em programas assembly de teste
+
+" Debugging e análise
+autocmd FileType c iabbrev <buffer> pdbg printf("DEBUG: %s:%d\n", __FILE__, __LINE__);
+" 📖 Explicação: pdbg = print debug com arquivo e linha automáticos
+" 🔧 printf breakdown:
+"    %s: string (nome do arquivo)
+"    %d: decimal (número da linha)
+"    __FILE__: macro com nome do arquivo
+"    __LINE__: macro com número da linha
+" 💡 Uso OSR2: Debug rápido durante desenvolvimento kernel
+" ⚡ Impacto: Localização exata de problemas em runtime
+
+autocmd FileType c iabbrev <buffer> phex printf("0x%x\n", 
+" 📖 Explicação: phex = print hex, cursor fica após vírgula
+" 💡 Uso OSR2: Debug de valores hexadecimais (endereços, flags)
+" ⚡ Impacto: Formato hexadecimal automático para debugging
+
+" Timestamps para development logs
+iabbrev <expr> timestamp strftime('[%Y-%m-%d %H:%M:%S]')
+" 📖 Explicação: timestamp → [2024-03-15 14:30:25]
+" 🔧 strftime format:
+"    %Y: ano 4 dígitos, %m: mês, %d: dia
+"    %H: hora 24h, %M: minuto, %S: segundo
+" 💡 Uso: Logs de debugging e commit messages
+" ⚡ Impacto: Timestamps automáticos sem lookup manual
+
+" ── WILDMENU OSR2 OTIMIZADO ─────────────────────────────────
+" 📖 TÓPICO: Autocompletion inteligente para tipos de arquivo OSR2
+" 🎯 Por que no OSR2: Projetos têm .c, .h, .asm, .ld, Makefiles
+"    específicos que precisam de filtragem inteligente
+
+" Configuração wildmenu melhorada (substitui configuração anterior)
+set wildmenu
+set wildmode=longest:full,full
+set wildoptions=pum
+" 📖 Explicação: Autocompletion tipo popup menu moderno
+" 🔧 wildmode breakdown:
+"    longest: completa até parte comum
+"    full: mostra menu completo depois
+" 🔧 wildoptions=pum: popup menu (se suportado)
+" ⚡ Impacto: Interface moderna de autocompletion
+
+" Ignorar arquivos de build e temporários OSR2
+set wildignore+=*.o,*.obj,*.elf,*.bin,*.iso
+set wildignore+=*.img,*.vdi,*.vmdk
+set wildignore+=*~,*.swp,*.tmp
+set wildignore+=.git/*,.svn/*
+set wildignore+=*.log,*.out
+" 📖 Explicação: Filtra arquivos irrelevantes do autocompletion
+" 🔧 Tipos ignorados OSR2:
+"    *.o,*.obj: arquivos objeto compilados
+"    *.elf,*.bin: executáveis e binários
+"    *.iso,*.img: imagens de disco
+"    *.vdi,*.vmdk: discos virtuais
+"    *~,*.swp: backups e temporários
+" ⚡ Impacto: Menu limpo, foco nos arquivos de código
+
+" Priorizar tipos de arquivo OSR2
+set suffixes=.bak,~,.o,.h,.info,.swp,.obj,.pyc,.class,.jar
+" 📖 Explicação: suffixes = tipos com menor prioridade no wildmenu
+" 💡 Resultado: .c e .asm aparecem primeiro que .o e .obj
+" ⚡ Impacto: Arquivos fonte priorizados sobre arquivos compilados
+
+" ── TEXT OBJECTS E OPERATORS AVANÇADOS ──────────────────────
+" 📖 TÓPICO: Text objects e operators otimizados para programação
+" 🎯 Por que no OSR2: Edição de código C/Assembly requer precisão
+"    e velocidade para functions, blocks, comments
+
+" Seleção de função C inteira (do tipo de retorno até })
+nnoremap vaf ?^[a-zA-Z].*(<CR>V/^}<CR>
+" 📖 Explicação: vaf = visual select a function
+" 🔧 Regex breakdown:
+"    ?^[a-zA-Z].*( : busca linha que começa com tipo e tem (
+"    V: visual line mode
+"    /^}: busca } no início da linha
+" 💡 Uso: Selecionar função completa para mover/copiar/deletar
+" ⚡ Impacto: Manipulação de funções inteiras com 3 teclas
+
+" Comentários de bloco C (/* ... */)
+nnoremap vic /\/\*<CR>lv/\*\/<CR>h
+nnoremap vac ?\/\*<CR>v/\*\/<CR>l
+" 📖 Explicação: vic = inner comment, vac = around comment
+" 🔧 Regex breakdown:
+"    \/\*: busca /* (escapado)
+"    l: move cursor uma posição (pula /*)
+"    h: move cursor uma posição para trás (antes */)
+" 🎯 Uso OSR2: Manipular documentação e comentários explicativos
+" ⚡ Impacto: Edição de comentários como text objects nativos
+
+" Movimentação entre funções
+nnoremap [f ?^[a-zA-Z].*(<CR>
+nnoremap ]f /^[a-zA-Z].*(<CR>
+" 📖 Explicação: [f = função anterior, ]f = próxima função
+" 🔧 Pattern: ^[a-zA-Z].*(  = linha começa com letra e tem (
+" ⚡ Impacto: Navegação rápida em arquivos .c grandes
+" 💡 Uso OSR2: Saltar entre funções sem scroll manual
+
+" ── STATUS LINE COM LINTING INTEGRADO ───────────────────────
+" 📖 TÓPICO: Feedback visual de erros na status line
+" 🎯 Por que no OSR2: Desenvolvimento baixo nível precisa de
+"    awareness constante do estado do código
+
+" Função para mostrar status de erros
+function! LintStatus()
+    let qf_list = getqflist()
+    let error_count = len(filter(copy(qf_list), 'v:val.type == "E"'))
+    let warning_count = len(filter(copy(qf_list), 'v:val.type == "W"'))
+    
+    if error_count > 0
+        return printf(' E:%d W:%d', error_count, warning_count)
+    elseif warning_count > 0
+        return printf(' W:%d', warning_count)
+    else
+        return ' ✓'
+    endif
+endfunction
+" 📖 Explicação: Conta erros e warnings na quickfix list
+" 🔧 Função breakdown:
+"    getqflist(): pega lista de erros atual
+"    filter(..., 'v:val.type == "E"'): conta só erros
+"    printf(): formata string com contadores
+" 💡 Output: E:3 W:1 (3 erros, 1 warning) ou ✓ (sem problemas)
+" ⚡ Impacto: Status instantâneo sem abrir quickfix
+
+" Integrar na status line existente (adiciona após %p%%)
+set statusline+=\ %{LintStatus()}
+" 📖 Explicação: Adiciona status de linting na barra inferior
+" ⚡ Impacto: Feedback visual constante do estado do código
+" 💡 Visualização: arquivo.c [+] C utf-8 142/1850 75% E:2 W:5
+
 " =============================================
-" Fim da configuração .vimrc OSR2 - Detalhada  
+" Fim da configuração .vimrc OSR2 - Otimizada
 " Cada linha explicada para máximo aprendizado
+" Integração completa: linting + produtividade
 " =============================================
 ```
 
-#### 📋 Funcionalidades desta configuração detalhada:
+#### 📋 Funcionalidades desta configuração otimizada:
 
-Esta configuração .vimrc foi criada especificamente para o ambiente OSR2, com **cada linha explicada em detalhes** incluindo:
+Esta configuração .vimrc foi **expandida** com recursos nativos avançados baseados nos documentos especializados de vim, mantendo foco educativo OSR2:
 
 **📖 Para cada configuração:**
 - **Tópico:** O que a configuração faz
@@ -1426,7 +1681,7 @@ Esta configuração .vimrc foi criada especificamente para o ambiente OSR2, com 
 **⌨️ Produtividade Maximizada:**
 - `set hlsearch + incsearch` - Busca visual de funções em códigos grandes
 - `set smartcase` - Busca inteligente (MALLOC vs malloc quando necessário)
-- `set wildmenu` - Descobre comandos vim novos automaticamente
+- `set wildmenu` otimizado - Filtragem inteligente de arquivos OSR2
 - `set clipboard=unnamed` - Copia código vim→documentação seamless
 
 **🔧 OSR2 File-Type Specific:**
@@ -1436,32 +1691,78 @@ Esta configuração .vimrc foi criada especificamente para o ambiente OSR2, com 
 - **Shell scripts:** `expandtab` - Padrão moderno Google Shell Style
 
 **🚀 Integração Ferramentas OSR2:**
-- **F9:** `:w + gcc % -Wall -g` - Compile cicle instantâneo com debug
+- **F9:** `:w + gcc % -Wall -g` - Compile cycle instantâneo com debug
 - **F10:** `./executável` - Test imediato pós-compilação  
 - **F11:** `r2 executável` - Análise binária integrada única
+- **F12:** `:make! + :copen` - **NOVO**: Linting nativo com quickfix
 - **Esc Esc:** `:noh` - Limpa busca para tela limpa
+
+**🔥 NOVOS RECURSOS AVANÇADOS:**
+
+**📋 Sistema de Linting Nativo:**
+- **makeprg + errorformat** - Linting profissional sem plugins
+- **Quickfix list** integrada - Navegação clicável entre erros
+- **Suporte C, Shell, Assembly** - Linters específicos por linguagem
+- **Status visual** na barra inferior - E:3 W:1 ou ✓
+
+**⚡ Abbreviations Inteligentes:**
+- **Header guards automáticos** - `hguard` → `ARQUIVO_H`
+- **Templates assembly** - `sectext` → seção .text completa
+- **Debug helpers** - `pdbg` → printf com linha automática
+- **Timestamps** - `timestamp` → data/hora atual
+
+**🎯 Text Objects Avançados:**
+- **Funções C completas** - `vaf` seleciona função inteira
+- **Comentários de bloco** - `vic`/`vac` para /* ... */
+- **Navegação entre funções** - `[f`/`]f` pula para anterior/próxima
+
+**🗂️ Wildmenu Otimizado:**
+- **Filtros OSR2** - Ignora .o, .bin, .img automaticamente
+- **Priorização inteligente** - Arquivos fonte aparecem primeiro
+- **Interface moderna** - Popup menu quando disponível
 
 **🎯 Configurações Educativas Específicas:**
 - `set showcmd/showmode` - Feedback visual para iniciantes vim
 - `set autoindent + smartindent` - C formatado profissionalmente automático
 - `set foldmethod=indent` - Visão overview de funções grandes
-- Status line completa - Path, modificações, encoding, posição
+- Status line completa - Path, modificações, encoding, posição, **+ status de linting**
 
-#### 🧪 Testando a configuração:
+#### 🧪 Testando a configuração otimizada:
 ```bash
 # Aplicar configuração (reiniciar vim ou source)
 # :source ~/.vimrc
 # 📖 Explicação: Recarrega configuração sem reiniciar vim
 
-# Testar com arquivo C
+# Testar com arquivo C (funcionalidades básicas + novas)
 vim test.c
 
-# No vim, testar funcionalidades:
+# No vim, testar funcionalidades BÁSICAS:
 # - Syntax highlighting deve aparecer automaticamente
 # - :set number (números já devem estar visíveis)
 # - F9 para compilar
 # - F10 para executar
 # - F11 para abrir no r2
+
+# No vim, testar NOVOS RECURSOS:
+# - Digite 'hguard' + espaço → vira TEST_C_H
+# - Digite 'pdbg' + espaço → printf("DEBUG: test.c:5\n");
+# - Digite 'timestamp' + espaço → [2024-03-15 14:30:25]
+# - F12 → executa linting e abre lista de erros
+# - \cn/\cp → navegar entre erros na quickfix
+# - vaf → selecionar função completa
+# - /malloc → buscar malloc, Esc Esc → limpar highlight
+# - :e tes<TAB> → autocompletion filtrado
+
+# Testar arquivo Assembly (.asm)
+vim test.asm
+# - Digite 'sectext' + espaço → seção .text completa
+# - Digite 'syscall' + espaço → mov eax,1 + int 0x80
+# - F12 → linting NASM específico
+
+# Testar arquivo Shell (.sh)
+vim test.sh
+# - F12 → shellcheck integration
+# - Status na barra inferior mostra E:X W:Y
 ```
 
 #### 💡 Benefícios do vanilla vim:
@@ -1477,11 +1778,13 @@ vim test.c
 ```bash
 # vim test-vim-config.sh
 # 📖 Explicação: Cria script para testar .vimrc
-# 📝 CONTEÚDO DO SCRIPT:
+# 📝 TEMPLATE DO SCRIPT (para digitar no vim):
 #    #!/bin/bash
+#    # test-vim-config.sh - Script para testar configuração vim OSR2
+#    
 #    echo "🧪 Testando configuração vim OSR2..."
 #    
-#    # Criar arquivo teste C
+#    # Criar arquivo teste C usando here document (método para scripts)
 #    cat > test-vim.c << 'EOF'
 #    #include <stdio.h>
 #    
@@ -1491,7 +1794,7 @@ vim test.c
 #    }
 #    EOF
 #    
-#    # Criar arquivo teste Assembly
+#    # Criar arquivo teste Assembly usando here document 
 #    cat > test-vim.asm << 'EOF'
 #    section .text
 #        global _start
@@ -1504,7 +1807,7 @@ vim test.c
 #    echo "   - test-vim.c (teste syntax highlighting C)"
 #    echo "   - test-vim.asm (teste syntax highlighting Assembly)"
 #    echo ""
-#    echo "🎯 Para testar:"
+#    echo "🎯 Para testar configuração vim OSR2:"
 #    echo "   1. vim test-vim.c"
 #    echo "      - Verificar syntax highlighting"
 #    echo "      - Pressionar F9 (compilar)"

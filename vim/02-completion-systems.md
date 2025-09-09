@@ -115,6 +115,242 @@ let g:mucomplete#user_mappings = {
 4. Use LSP para suporte avançado de linguagem
 5. Crie completions personalizados para fluxos de trabalho específicos
 
+## Sistemas Nativos de Completion Avançado
+
+### Completion via Tags (Ctrl+X Ctrl+])
+
+#### Configuração de CTags
+```bash
+# Instalação do Universal CTags (recomendado)
+sudo apt install universal-ctags
+
+# Geração de tags para projeto Python
+ctags -R --languages=Python --python-kinds=-i .
+
+# Geração de tags para projeto JavaScript
+ctags -R --languages=JavaScript .
+
+# Tags para C/C++
+ctags -R --c++-kinds=+p --fields=+iaS --extras=+q .
+```
+
+#### Configuração no Vim
+```vim
+" Configurar tags files
+set tags=./tags,tags,../tags,../../tags
+
+" Auto-regenerar tags ao salvar
+autocmd BufWritePost *.py,*.js,*.c,*.cpp silent! !ctags -R .
+
+" Mapeamento para regenerar tags manualmente
+nnoremap <leader>rt :!ctags -R .<CR>
+```
+
+#### Uso Prático
+- `Ctrl+X Ctrl+]` em modo Insert para completion baseado em tags
+- `Ctrl+]` em modo Normal para saltar para definição
+- `Ctrl+T` para voltar após salto
+- `:tags` para ver stack de tags
+
+### Include File Completion (Ctrl+X Ctrl+I)
+
+#### Configuração
+```vim
+" Definir padrões de arquivos include
+set include=^\s*#\s*include\s*[<"]
+set includeexpr=substitute(v:fname,'\\.','/','g')
+
+" Para Python
+autocmd FileType python set include=^\s*from\\|^\s*import
+autocmd FileType python set includeexpr=substitute(v:fname,'\\.','/','g').'py'
+
+" Para JavaScript/Node.js
+autocmd FileType javascript set include=^\s*[a-zA-Z_].*require(\s*['\"]\zs[^'\"]*
+autocmd FileType javascript set includeexpr=v:fname.'.js'
+```
+
+#### Funcionalidade
+- Busca em arquivos incluídos/importados
+- Completion baseado no conteúdo dos includes
+- Útil para APIs de bibliotecas
+
+### Define Completion (Ctrl+X Ctrl+D)
+
+#### Configuração para C/C++
+```vim
+" Definir padrões de define/macro
+set define=^\s*#\s*define
+
+" Para outros padrões de definição
+set define=^\s*\(#\s*define\|const\s\+\w\+\s*=\)
+```
+
+#### Uso Prático
+- Completion de macros e constantes
+- Busca em `#define`, `const`, etc.
+- Útil para constantes de sistema
+
+### Thesaurus Completion Avançado (Ctrl+X Ctrl+T)
+
+#### Configuração de Thesaurus
+```bash
+# Download de thesaurus para inglês
+mkdir -p ~/.vim/thesaurus
+wget https://www.gutenberg.org/files/3202/files/mthesaur.txt -O ~/.vim/thesaurus/english.txt
+```
+
+```vim
+" Configuração de thesaurus
+set thesaurus+=~/.vim/thesaurus/english.txt
+set thesaurus+=~/.vim/thesaurus/technical.txt
+
+" Thesaurus específico por filetype
+autocmd FileType markdown,text set thesaurus+=~/.vim/thesaurus/writing.txt
+autocmd FileType tex set thesaurus+=~/.vim/thesaurus/academic.txt
+```
+
+#### Criação de Thesaurus Personalizado
+```vim
+" Função para adicionar sinônimos
+function! AddSynonyms(word, ...)
+    let synonyms = join([a:word] + a:000, ',')
+    execute '!echo "' . synonyms . '" >> ~/.vim/thesaurus/custom.txt'
+    echo 'Sinônimos adicionados: ' . synonyms
+endfunction
+
+command! -nargs=+ Syn call AddSynonyms(<f-args>)
+
+" Uso: :Syn fast quick rapid swift
+```
+
+### Spell Completion Inteligente (Ctrl+X Ctrl+S)
+
+#### Configuração Multi-idioma
+```vim
+" Configuração de spell checking
+set spell spelllang=pt_br,en
+set spellfile=~/.vim/spell/custom.utf-8.add
+
+" Completion que inclui sugestões de spell
+set complete+=kspell
+
+" Função para alternar idiomas
+function! ToggleSpellLang()
+    if &spelllang == 'pt_br,en'
+        setlocal spelllang=en
+        echo 'Spell: Inglês'
+    else
+        setlocal spelllang=pt_br,en
+        echo 'Spell: Português + Inglês'
+    endif
+endfunction
+
+nnoremap <leader>sl :call ToggleSpellLang()<CR>
+```
+
+#### Completion com Correção Automática
+```vim
+" Função para completion com correção inteligente
+function! SmartSpellComplete()
+    let word = expand('<cword>')
+    let suggestions = spellsuggest(word, 5)
+    
+    if len(suggestions) > 0
+        call complete(col('.') - len(word), suggestions)
+    endif
+    return ''
+endfunction
+
+inoremap <C-x><C-z> <C-r>=SmartSpellComplete()<CR>
+```
+
+### Line Completion Inteligente (Ctrl+X Ctrl+L)
+
+#### Configuração Avançada
+```vim
+" Completion de linhas com contexto
+function! ContextualLineComplete()
+    let current_line = getline('.')
+    let indent = matchstr(current_line, '^\s*')
+    
+    " Buscar linhas com mesmo indentamento
+    let pattern = '^' . indent . '[^ \t]'
+    let matches = []
+    
+    for lnum in range(1, line('$'))
+        let line = getline(lnum)
+        if line =~ pattern && line != current_line
+            call add(matches, substitute(line, '^\s*', '', ''))
+        endif
+    endfor
+    
+    if len(matches) > 0
+        call complete(col('.'), matches)
+    endif
+    return ''
+endfunction
+
+inoremap <C-x><C-x> <C-r>=ContextualLineComplete()<CR>
+```
+
+### Vim Command Completion (Ctrl+X Ctrl+V)
+
+#### Funcionalidade Nativa
+- Completion de comandos Vim
+- Completion de funções built-in
+- Completion de variáveis Vim
+- Útil ao escrever scripts Vim
+
+#### Exemplo de Uso
+```vim
+" Ao digitar em um script Vim:
+echo g:my_var<Ctrl+X Ctrl+V>  " Completa variáveis globais
+set number<Ctrl+X Ctrl+V>     " Completa opções do Vim
+```
+
+## Configuração Completa de Sources
+
+### Ordem Otimizada de Completion
+```vim
+" Configuração otimizada do complete
+set complete=.,w,b,u,t,i,kspell
+
+" Explicação:
+" . = buffer atual
+" w = buffers em outras janelas
+" b = outros buffers carregados
+" u = buffers não carregados
+" t = tags
+" i = arquivos incluídos
+" kspell = dicionário de spell
+```
+
+### Completion Context-Aware
+```vim
+" Completion baseado no contexto do arquivo
+function! ContextCompletion()
+    let line = getline('.')
+    let col = col('.')
+    
+    " Diferentes estratégias baseadas no contexto
+    if line =~ '#include\s*[<"]*$'
+        " Completion de headers
+        return "\<C-x>\<C-f>"
+    elseif line =~ '\w\+($' || line =~ '\w\+\s*($'
+        " Completion de função via tags
+        return "\<C-x>\<C-]>"
+    elseif &filetype == 'vim' && line =~ ':'
+        " Completion de comandos Vim
+        return "\<C-x>\<C-v>"
+    else
+        " Completion padrão
+        return "\<C-n>"
+    endif
+endfunction
+
+inoremap <expr> <Tab> ContextCompletion()
+```
+
 ## Criando Portfólio de Dicionários Personalizados
 
 ### Estrutura de Diretórios
@@ -394,9 +630,93 @@ autocmd BufNewFile *.py call SmartTemplate()
     └── library/
 ```
 
+## Configuração de Performance
+
+### Otimização de Completion
+```vim
+" Configurações para melhor performance
+set completeopt=menuone,longest,noselect
+set pumheight=15                    " Altura máxima do popup
+set complete-=i                     " Remover include files se muito lento
+set complete-=t                     " Remover tags se muito lento
+
+" Timeout para completion
+set updatetime=100
+```
+
+### Completion Assíncrono Simulado
+```vim
+" Para Vim 8+ com job support
+function! AsyncComplete()
+    if exists('*job_start')
+        let job = job_start(['grep', '-r', expand('<cword>'), '.'], {
+            \ 'out_cb': function('CompleteCallback')
+            \ })
+    endif
+endfunction
+
+function! CompleteCallback(channel, msg)
+    " Processar resultado assíncrono
+    echo 'Completion async: ' . a:msg
+endfunction
+```
+
+## Troubleshooting e Debugging
+
+### Debugging de Completion
+```vim
+" Verificar configurações de completion
+:set complete?
+:set completeopt?
+:set omnifunc?
+:set dictionary?
+:set thesaurus?
+:set tags?
+
+" Testar completion sources individualmente
+:echo tagfiles()              " Ver arquivos de tags
+:echo &omnifunc               " Ver função omnifunc atual
+:echo globpath(&rtp, 'autoload/*complete.vim')  " Ver completions disponíveis
+```
+
+### Diagnóstico de Performance
+```vim
+" Medir tempo de completion
+function! ProfileCompletion()
+    let start_time = reltime()
+    execute "normal! \<C-n>"
+    let end_time = reltime(start_time)
+    echo 'Completion time: ' . reltimestr(end_time)
+endfunction
+
+command! ProfileComp call ProfileCompletion()
+```
+
 ## Solução de Problemas
+
+### Problemas Comuns
 - **Sem omni completion**: Verifique se `omnifunc` está configurado para tipo de arquivo
 - **Completion lento**: Reduza fontes de completion ou ajuste timing
 - **Conflitos**: Use `inoremap` em vez de `imap` para mapeamentos de tecla
 - **Dicionários não carregam**: Verifique caminhos com `:set dictionary?`
 - **Templates não expandem**: Confirme se vsnip está ativo com `:echo vsnip#available(1)`
+- **Tags não funcionam**: Verifique se ctags está instalado e tags foram gerados
+- **Include completion falha**: Configurar `includeexpr` apropriadamente para o filetype
+
+### Configurações de Fallback
+```vim
+" Fallback para completion quando omnifunc falha
+function! CleverTab()
+    if pumvisible()
+        return "\<C-n>"
+    elseif strpart(getline('.'), 0, col('.') - 1) =~ '^\s*$'
+        return "\<Tab>"
+    elseif exists('&omnifunc') && &omnifunc != ''
+        return "\<C-x>\<C-o>"
+    else
+        return "\<C-n>"
+    endif
+endfunction
+
+inoremap <expr> <Tab> CleverTab()
+```

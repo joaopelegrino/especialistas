@@ -1,6 +1,6 @@
-# Documentação Especializada de Fundamentos do Vim
+# Documentação Especializada do Vim: Do Iniciante ao Profissional
 
-Este repositório contém documentação técnica para uso avançado do Vim e técnicas de produtividade.
+Este repositório contém documentação técnica completa sobre o Vim vanilla, desde conceitos básicos até técnicas avançadas de produtividade. **Foco especial em recursos nativos** que rivalizam com editores modernos, sem necessidade de plugins complexos.
 
 ## Estrutura da Documentação
 
@@ -15,10 +15,13 @@ Este repositório contém documentação técnica para uso avançado do Vim e t�
 ### [02-completion-systems.md](02-completion-systems.md) 
 **Sistemas de Completion do Vim**
 - Métodos nativos de completion (Ctrl+n, combinações Ctrl+x)
+- Tag completion via CTags (Ctrl+X Ctrl+])
+- Include file completion (Ctrl+X Ctrl+I) 
+- Dictionary e Thesaurus completion avançado
 - Omni completion para sugestões conscientes da linguagem
 - Plugin MuComplete para UX aprimorada
 - Criação de funções de completion personalizadas
-- Estratégias de integração LSP
+- Configuração de performance e debugging
 
 ### [03-vim-manual-highlights.md](03-vim-manual-highlights.md)
 **Páginas Essenciais do Manual do Vim**
@@ -36,6 +39,25 @@ Este repositório contém documentação técnica para uso avançado do Vim e t�
 - Built-ins do shell vs comandos externos
 - Sistemas de ajuda alternativos
 
+### [06-vim-vanilla-lint-systems.md](06-vim-vanilla-lint-systems.md)
+**Sistemas Nativos de Linting do Vim**
+- Sistema makeprg/errorformat para linting sem plugins
+- 96+ compiler plugins nativos já incluídos no Vim
+- Configuração de quickfix list para navegação entre erros
+- Linting automático ao salvar arquivos
+- Criação de compiler plugins personalizados
+- Integração com sistemas externos (CI/CD, Git hooks)
+
+### [07-vim-productivity-vanilla.md](07-vim-productivity-vanilla.md)
+**Recursos de Produtividade Vanilla: Guia Para Iniciantes**
+- Sistema completo de abbreviations (estáticas e dinâmicas)
+- Wildmenu otimizado para linha de comando
+- Text objects e operators: a "gramática" do Vim
+- Digraphs para caracteres especiais sem complicação
+- Técnicas de edição avançada (incremento, formatação, join)
+- Configuração .vimrc completa para produtividade
+- Plano de aprendizado estruturado de 4 semanas
+
 ## Referência Rápida
 
 ### Teclas Essenciais de Completion do Vim
@@ -44,6 +66,22 @@ Este repositório contém documentação técnica para uso avançado do Vim e t�
 - `Ctrl+x Ctrl+f` - Completion de caminho de arquivo
 - `Ctrl+x Ctrl+o` - Omni completion
 - `Ctrl+x Ctrl+s` - Completion de ortografia
+- `Ctrl+x Ctrl+]` - Tag completion (CTags)
+- `Ctrl+x Ctrl+i` - Include file completion
+- `Ctrl+x Ctrl+d` - Define/macro completion
+
+### Text Objects e Operators Essenciais
+- `diw` - Delete inner word
+- `ci(` - Change inside parentheses
+- `yi"` - Yank inside quotes
+- `vit` - Visual select inner tag
+- `=ip` - Format inner paragraph
+
+### Linting Nativo
+- `:make` - Executar linter configurado
+- `:cnext/:cprev` - Navegar entre erros
+- `:copen/:cclose` - Abrir/fechar quickfix
+- `:compiler <nome>` - Ativar compiler plugin
 
 ### Seções Principais do Manual
 - `:help holy-grail` - Todos os comandos de dois pontos
@@ -61,14 +99,59 @@ Este repositório contém documentação técnica para uso avançado do Vim e t�
 
 ## Caminho de Aprendizado
 
-1. **Comece com sistemas de completion** - Ganhos imediatos de produtividade
-2. **Explore os destaques do manual** - Descubra recursos poderosos
-3. **Domine os sistemas de ajuda** - Autossuficiência no aprendizado
-4. **Adicione plugins de produtividade** - Ferramentas de fluxo de trabalho aprimoradas
+### Para Iniciantes Completos
+1. **Leia o Guia de Produtividade Vanilla** ([07-vim-productivity-vanilla.md](07-vim-productivity-vanilla.md)) - Base sólida com explicações passo-a-passo
+2. **Implemente a configuração .vimrc** - Ambiente produtivo desde o início
+3. **Pratique text objects e operators** - Fundamento da eficiência no Vim
+4. **Configure sistemas de completion** - Ganhos imediatos de produtividade
+
+### Para Usuários Intermediários  
+1. **Configure linting nativo** ([06-vim-vanilla-lint-systems.md](06-vim-vanilla-lint-systems.md)) - Qualidade de código profissional
+2. **Expanda sistemas de completion** ([02-completion-systems.md](02-completion-systems.md)) - Autocompletion avançado
+3. **Explore os destaques do manual** ([03-vim-manual-highlights.md](03-vim-manual-highlights.md)) - Descubra recursos poderosos
+4. **Domine os sistemas de ajuda** ([04-help-and-man-pages.md](04-help-and-man-pages.md)) - Autossuficiência no aprendizado
+
+### Para Organização de Projetos
+- **Use o plugin Vim-Org Markdown** ([01-markdown-organization.md](01-markdown-organization.md)) - Gerenciamento avançado de tarefas
 
 ## Dicas de Integração
 
-- Pratique uma seção por vez
-- Crie folhas de cola pessoais para comandos usados frequentemente
-- Configure cadeias de completion para suas linguagens mais utilizadas
-- Integre gradualmente com sua configuração existente do Vim
+### Abordagem Gradual
+- **Semana 1:** Abbreviations básicas + Text objects essenciais
+- **Semana 2:** Wildmenu + Operators composicionais  
+- **Semana 3:** Linting nativo + Digraphs personalizados
+- **Semana 4:** Completion avançado + Automação personalizada
+
+### Melhores Práticas
+- Pratique 10 minutos diariamente com exemplos reais
+- Crie folhas de cola pessoais para comandos frequentes
+- Configure abbreviations específicas para seus projetos
+- Use o plano estruturado de 4 semanas do guia de produtividade
+- Meça progresso por fluidez, não velocidade
+
+### Configuração Recomendada
+1. **Base:** Use o .vimrc do guia de produtividade como ponto de partida
+2. **Linting:** Configure para suas linguagens principais
+3. **Completion:** Expanda gradualmente com suas necessidades
+4. **Personalização:** Adicione abbreviations e digraphs úteis ao seu workflow
+
+## Filosofia da Documentação
+
+Esta documentação foi criada com foco pedagógico e prático, priorizando:
+
+**🎯 Para Iniciantes:**
+- Explicações passo-a-passo com "porquê" por trás de cada conceito
+- Exemplos práticos testáveis imediatamente
+- Progressão lógica de aprendizado sem sobrecarga
+
+**🚀 Para Produtividade:**
+- Recursos nativos do Vim que rivalizam com editores modernos
+- Configurações prontas para usar em ambiente profissional
+- Técnicas que economizam centenas de teclas por dia
+
+**📚 Para Referência:**
+- Documentação organizada por complexidade crescente
+- Índices e referências cruzadas para navegação rápida
+- Exemplos reais de casos de uso profissionais
+
+**O objetivo é provar que o Vim vanilla já é uma ferramenta extremamente poderosa, sem necessidade de plugins complexos para alcançar produtividade profissional.**
