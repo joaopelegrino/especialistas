@@ -117,13 +117,26 @@ Siga os passos de `useradd`, `passwd` e `EDITOR=vim visudo` do guia `arch.md`.
 
         " Mapeamento universal para compilar/verificar e abrir a lista de erros
         nnoremap <F12> :make!<CR>:copen<CR>
+        
+        " === CAMADA INSTRUTIVA: SISTEMAS DE COMPLETION ===
+        " Completion básico: Ctrl+n (próxima) e Ctrl+p (anterior)
+        " Para ativar completion especializado: Ctrl+x seguido de:
+        "   Ctrl+f = arquivos/caminhos    (ex: /home/user<C-x><C-f>)
+        "   Ctrl+l = linhas inteiras      (ex: def func<C-x><C-l>)  
+        "   Ctrl+o = omni (inteligente)   (ex: import <C-x><C-o>)
+        "   Ctrl+] = tags                 (ex: função<C-x><C-]>)
+        " Configurações de UI para melhor experiência visual:
+        set pumheight=10                    " Altura máxima do menu popup
+        set completeopt=menu,menuone,noselect " Opções do menu completion
         ```
-*   **Exercício Prático:**
+*   **Exercício Prático - Completion Systems:**
     1.  Crie um script: `vim test.sh`.
     2.  Digite `#!/bin/bash` e `echo "Hello`.
-    3.  Em uma nova linha, digite `ec` e pressione `Ctrl+P`. O Vim autocompletará para `echo`.
-    4.  Adicione uma variável com erro, como `msg="hello"`, e na linha seguinte `echo $mesg`.
-    5.  Salve (`:w`) e pressione `<F12>`. O `shellcheck` será executado e a "quickfix list" abrirá na parte inferior, mostrando o erro de variável. Use `:cclose` para fechá-la.
+    3.  **Teste Completion Básico:** Em uma nova linha, digite `ec` e pressione `Ctrl+P`. O Vim autocompletará para `echo`.
+    4.  **Teste File Completion:** Digite `/home/` e pressione `Ctrl+x Ctrl+f` para completar caminhos.
+    5.  **Teste Line Completion:** Após digitar uma linha, em nova linha digite as primeiras palavras e use `Ctrl+x Ctrl+l` para completar linhas similares.
+    6.  Adicione uma variável com erro, como `msg="hello"`, e na linha seguinte `echo $mesg`.
+    7.  **Teste Linting:** Salve (`:w`) e pressione `<F12>`. O `shellcheck` será executado e a "quickfix list" abrirá na parte inferior, mostrando o erro de variável. Use `:cclose` para fechá-la.
 
 ---
 
@@ -153,14 +166,27 @@ Siga os passos de `useradd`, `passwd` e `EDITOR=vim visudo` do guia `arch.md`.
         " Navegação por Tags
         set tags=./tags,tags;
         nnoremap <leader>rt :!ctags -R .<CR>
+        
+        " === CAMADA INSTRUTIVA: COMANDOS READ EXTERNAL ===
+        " Inserir output de comandos externos no buffer:
+        " :r !comando               - insere saída do comando
+        " :r !man curl | head -10   - manual resumido  
+        " :r !date                  - data atual
+        " :r !ls -la | grep ".c"    - listagem filtrada
+        " Pipelines complexos com grep e regex:
+        " :r !man gcc | grep -E "^\s*-[a-zA-Z]" | head -15
+        nnoremap <leader>rh :r !man<Space>
+        nnoremap <leader>rd :r !date<CR>
         ```
 *   **Exercício de Workflow Integrado:**
     1.  Crie um projeto simples com `main.c` e `utils.c`/`utils.h`.
-    2.  Execute `<leader>rt` (ex: `\rt`) para gerar o arquivo `tags`.
-    3.  Escreva uma função em `utils.c` e sua declaração em `utils.h`.
-    4.  Chame a função em `main.c`. Coloque o cursor sobre a chamada e pressione `Ctrl+]`. Você saltará para a definição. Use `Ctrl+T` para voltar.
-    5.  Introduza um erro em `main.c`. Pressione `<F9>`. O Vim tentará compilar e a quickfix list mostrará o erro.
-    6.  Corrija o erro, pressione `<F9>` novamente (agora compila com sucesso), `<F10>` para executar e `<F11>` para analisar com Radare2.
+    2.  **Teste Read External:** Use `<leader>rh gcc` para inserir opções do gcc no buffer atual.
+    3.  Execute `<leader>rt` (ex: `\rt`) para gerar o arquivo `tags`.
+    4.  Escreva uma função em `utils.c` e sua declaração em `utils.h`.
+    5.  **Teste Tag Navigation:** Chame a função em `main.c`. Coloque o cursor sobre a chamada e pressione `Ctrl+]`. Você saltará para a definição. Use `Ctrl+T` para voltar.
+    6.  **Teste Documentation Integration:** Use `:r !man printf | head -5` para inserir documentação da função printf.
+    7.  Introduza um erro em `main.c`. Pressione `<F9>`. O Vim tentará compilar e a quickfix list mostrará o erro.
+    8.  Corrija o erro, pressione `<F9>` novamente (agora compila com sucesso), `<F10>` para executar e `<F11>` para analisar com Radare2.
 
 ---
 
@@ -168,13 +194,24 @@ Siga os passos de `useradd`, `passwd` e `EDITOR=vim visudo` do guia `arch.md`.
 
 **Objetivo:** Utilizar as ferramentas de busca e Regex do Vim para navegar e modificar código em larga escala, uma habilidade crucial para trabalhar em kernels ou bases de código grandes.
 
-### Habilidade 6: `vimgrep` e Regex para Código
-*   **Contexto:** Seu projeto está crescendo. Como encontrar todas as vezes que uma variável específica é usada?
-*   **Aprendizado (de `05-1-grep-os.md` e `10-regex-do-basico-ao-avansado.md`):**
+### Habilidade 6: `find`, `vimgrep` e Regex para Código
+*   **Contexto:** Seu projeto está crescendo. Como encontrar arquivos por nome E conteúdo dentro deles?
+*   **Conceitos Fundamentais:**
+    *   **`:find`** localiza ARQUIVOS por nome (usa 'path')  
+    *   **`:vimgrep`** busca CONTEÚDO dentro de arquivos (popula quickfix)
+    *   **Quickfix System:** Lista unificada de resultados navegável
+*   **Aprendizado Técnico:**
     *   `\v` (very magic): Simplifica a sintaxe de regex no Vim.
     *   `\<word\>`: Busca pela palavra exata.
     *   Grupos de Captura `()`: Essencial para substituições.
-*   **Exercício de Refatoração:**
+    *   `**/*.ext`: Padrão glob recursivo para extensões específicas.
+*   **Exercício Prático de Find vs Vimgrep:**
+    1.  **Configurar Path:** `:set path=.,src/**,include/**` (adiciona diretórios)
+    2.  **Encontrar Arquivo:** `:find utils.h` (localiza arquivo por nome)  
+    3.  **Buscar Conteúdo:** `:vimgrep /\v\<user_count\>/ **/*.c` (busca variável)
+    4.  **Navegar Resultados:** `:copen` → `:cnext` → `:cprev` → `:cclose`
+
+*   **Exercício de Refatoração Avançada:**
     1.  Suponha que você tem uma variável `int user_count = 0;` usada em vários lugares.
     2.  Para encontrar todos os usos, execute: `:vimgrep /\v\<user_count\>/ **/*.c`.
     3.  Abra a quickfix list com `:copen` para revisar todos os locais.
@@ -187,7 +224,21 @@ Siga os passos de `useradd`, `passwd` e `EDITOR=vim visudo` do guia `arch.md`.
         :cfdo %s/\<user_count\>/userCount/gc | update
         ```
         O Vim irá parar em cada ocorrência e perguntar `replace with userCount (y/n/a/q/l/^E/^Y)?`. Isso lhe dá controle total sobre a refatoração.
-    *   **Exercício de Pesquisa:** Use `:help :vimgrep`, `:help :cfdo`, `:help s/\<`, e `:help s_flags` (para a flag `c`) para entender cada parte deste workflow.
+    *   **Mapeamentos para Workflow:** Adicione ao `.vimrc`:
+        ```vim
+        " === CAMADA INSTRUTIVA: FIND E VIMGREP INTEGRATION ===
+        " Configurações para busca eficiente
+        set path=.,src/**,include/**,/usr/include,,  " Paths de busca  
+        set wildmenu wildmode=list:longest           " Menu completion
+        " Mapeamentos para workflows de busca
+        nnoremap <leader>f :find<Space>              " Find arquivo
+        nnoremap <leader>g :vimgrep //<Space>**/*<Left><Left><Left><Left><Left>  " Vimgrep
+        nnoremap <leader>cn :cnext<CR>               " Próximo resultado  
+        nnoremap <leader>cp :cprev<CR>               " Resultado anterior
+        nnoremap <leader>co :copen<CR>               " Abrir quickfix
+        nnoremap <leader>cc :cclose<CR>              " Fechar quickfix
+        ```
+    *   **Exercício de Pesquisa:** Use `:help :find`, `:help :vimgrep`, `:help :cfdo`, `:help s/\<`, e `:help s_flags` para entender cada parte deste workflow.
 
 ---
 
@@ -238,6 +289,48 @@ Siga os passos de `useradd`, `passwd` e `EDITOR=vim visudo` do guia `arch.md`.
 
 ---
 
+## 🎯 Síntese das Camadas Instrucionais Adicionadas
+
+### **Completion Systems (Fase 2)**
+- **Completion Básico:** `Ctrl+n/p` para navegação em palavras
+- **Completion Especializado:** `Ctrl+x` + tipo (`Ctrl+f` arquivos, `Ctrl+l` linhas, `Ctrl+o` omni)
+- **Configurações UI:** `pumheight`, `completeopt` para melhor experiência visual
+
+### **Read External Commands (Fase 3)**  
+- **Inserção Dinâmica:** `:r !comando` para inserir output de comandos
+- **Documentation Integration:** `:r !man comando | head -N` para documentação inline
+- **Mapeamentos Eficientes:** `<leader>rh` para man pages, `<leader>rd` para data
+
+### **Find e Vimgrep Integration (Fase 4)**
+- **Dual Search Philosophy:** `:find` para arquivos vs `:vimgrep` para conteúdo  
+- **Quickfix Mastery:** Navegação com `:cnext/:cprev`, gerenciamento com `:copen/:cclose`
+- **Path Configuration:** `set path=` para controlar onde `:find` busca
+- **Refactoring Workflows:** `:cfdo` para operações em massa nos resultados
+
+### **Mapeamentos Unificados**
+```vim
+" Completion shortcuts
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+
+" External documentation  
+nnoremap <leader>rh :r !man<Space>
+
+" Search workflows
+nnoremap <leader>f :find<Space>
+nnoremap <leader>g :vimgrep //<Space>**/*<Left><Left><Left><Left><Left>
+nnoremap <leader>cn :cnext<CR>
+nnoremap <leader>co :copen<CR>
+```
+
 ## Conclusão
 
-Ao seguir este guia, você não apenas instalou um ambiente, mas construiu um sistema. Você ordenou a instalação de forma que as ferramentas aprendidas em uma etapa facilitassem a próxima. Você tem um `.vimrc` que cresceu com suas necessidades e que você entende completamente. A partir de agora, seu fluxo de trabalho para aprender qualquer nova ferramenta ou linguagem está definido: **Experimente -> Pesquise na Documentação -> Crie Notas -> Automatize -> Repita.**
+Ao seguir este guia, você não apenas instalou um ambiente, mas construiu um **sistema de aprendizado integrado**. Cada ferramenta introduzida se conecta às anteriores, criando um workflow onde:
+
+1. **Read External** integra documentação diretamente no código
+2. **Completion Systems** aceleram a escrita com context-awareness  
+3. **Find/Vimgrep** unificam descoberta de arquivos e conteúdo
+4. **Quickfix** centraliza navegação em resultados de todas as operações
+
+Você tem um `.vimrc` que cresceu organicamente com suas necessidades e que você entende completamente. A partir de agora, seu fluxo de trabalho para aprender qualquer nova ferramenta ou linguagem está definido: **Experimente -> Pesquise na Documentação -> Crie Notas -> Automatize -> Repita.**
+
+**🔍 Próximos Passos:** Use `:help usr_toc` para explorar outros sistemas do Vim que seguem os mesmos padrões de decomposição técnica que você acabou de dominar.

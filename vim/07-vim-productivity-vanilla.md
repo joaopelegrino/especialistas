@@ -459,7 +459,7 @@ Com o texto: `function calculateSum(a, b) { return a + b; }`
 **Exemplos práticos:**
 - `=ip` → formatar parágrafo atual
 - `>i{` → indentar dentro das chaves
-- `<ap` → des-indentar parágrafo
+`<ap` → des-indentar parágrafo
 
 #### Operators de Capitalização
 
@@ -495,7 +495,7 @@ ci{ - change everything inside braces
 yi" - yank everything inside double quotes
 ```
 
-**Para Texto:**
+ap**Para Texto:**
 ```vim
 dap - delete a paragraph
 cap - change a paragraph
@@ -506,7 +506,7 @@ yip - yank inner paragraph
 
 **Cenário 1:** Trocar nome de variável
 ```python
-old_variable_name = 42
+old_variable_name = teste
 ```
 Cursor na variável → `ciw` → digite novo nome → ESC
 
@@ -691,7 +691,7 @@ Ctrl+X " decrementar número sob o cursor (-1)
 ```
 
 **🎯 Teste Rápido:**
-1. Digite: `Versão 5`
+1. Digite: `Versão 4`
 2. Posicione cursor no `5`  
 3. Pressione `Ctrl+A` → `Versão 6`
 4. Pressione `Ctrl+X` → `Versão 5`

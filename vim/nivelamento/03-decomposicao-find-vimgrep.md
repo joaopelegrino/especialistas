@@ -57,48 +57,48 @@ Comando → Parser → Path Resolution → File Discovery → Content Search →
 
 ### Elementos Ex Commands
 
-| Elemento | Nome Técnico | Categoria | Função | Pesquisar |
-|----------|-------------|-----------|---------|-----------|
-| `:` | **Command-line mode indicator** | Vim mode | Entra modo comando | `:help :` |
-| `:find` | **Find command** | Vim Ex command | Localiza arquivos por nome | `:help :find` |
-| `:vimgrep` | **Vim grep command** | Vim Ex command | Busca padrões em arquivos | `:help :vimgrep` |
-| `:copen` | **Quickfix open** | Vim Ex command | Abre janela quickfix | `:help :copen` |
+| Elemento | Nome Técnico | Categoria | Função | Pesquisar | Comando Otimizado |
+|----------|-------------|-----------|---------|-----------|-------------------|
+| `:` | **Command-line mode indicator** | Vim mode | Entra modo comando | `:help :` | `:r !man vim \| grep -E "^\s*:" \| head -10` |
+| `:find` | **Find command** | Vim Ex command | Localiza arquivos por nome | `:help :find` | `:r !man vim \| grep -A2 ":find" \| head -5` |
+| `:vimgrep` | **Vim grep command** | Vim Ex command | Busca padrões em arquivos | `:help :vimgrep` | `:r !man vim \| grep -A3 "vimgrep" \| head -6` |
+| `:copen` | **Quickfix open** | Vim Ex command | Abre janela quickfix | `:help :copen` | `:r !man vim \| grep -A2 "quickfix" \| head -5` |
 
 ### Elementos de Glob Patterns
 
-| Elemento | Nome Técnico | Categoria | Função | Pesquisar |
-|----------|-------------|-----------|---------|-----------|
-| `*` | **Single-level wildcard** | Glob metacharacter | Corresponde a qualquer string | "shell globbing" |
-| `**` | **Recursive wildcard** | Glob metacharacter | Corresponde a subdiretórios | "recursive glob" |
-| `?` | **Single character wildcard** | Glob metacharacter | Corresponde a um caractere | "glob patterns" |
-| `[abc]` | **Character class** | Glob bracket expression | Corresponde a a, b ou c | "glob character classes" |
+| Elemento | Nome Técnico | Categoria | Função | Pesquisar | Comando Otimizado |
+|----------|-------------|-----------|---------|-----------|-------------------|
+| `*` | **Single-level wildcard** | Glob metacharacter | Corresponde a qualquer string | "shell globbing" | `:r !man bash \| grep -A2 "Pathname Expansion" \| head -5` |
+| `**` | **Recursive wildcard** | Glob metacharacter | Corresponde a subdiretórios | "recursive glob" | `:r !man bash \| grep -A3 "globstar" \| head -6` |
+| `?` | **Single character wildcard** | Glob metacharacter | Corresponde a um caractere | "glob patterns" | `:r !man bash \| grep -B1 -A1 "\\?" \| head -4` |
+| `[abc]` | **Character class** | Glob bracket expression | Corresponde a a, b ou c | "glob character classes" | `:r !man bash \| grep -A2 "bracket expression" \| head -5` |
 
 ### Elementos de Pattern Matching
 
-| Elemento | Nome Técnico | Categoria | Função | Pesquisar |
-|----------|-------------|-----------|---------|-----------|
-| `/pattern/` | **Pattern delimiter** | Vim regex | Delimita expressão regular | `:help pattern` |
-| `g` | **Global flag** | Vim flag | Busca todas ocorrências | `:help :vimgrep` |
-| `j` | **Jump flag** | Vim flag | Não pula para primeiro match | `:help :vimgrep` |
-| `\v` | **Very magic mode** | Vim regex | Sintaxe regex estendida | `:help \v` |
+| Elemento | Nome Técnico | Categoria | Função | Pesquisar | Comando Otimizado |
+|----------|-------------|-----------|---------|-----------|-------------------|
+| `/pattern/` | **Pattern delimiter** | Vim regex | Delimita expressão regular | `:help pattern` | `:r !man vim \| grep -A2 "pattern" \| grep -E "^\s*[/]" \| head -3` |
+| `g` | **Global flag** | Vim flag | Busca todas ocorrências | `:help :vimgrep` | `:r !man vim \| grep -A1 "global.*flag" \| head -3` |
+| `j` | **Jump flag** | Vim flag | Não pula para primeiro match | `:help :vimgrep` | `:r !man vim \| grep -A2 "jump.*flag" \| head -4` |
+| `\v` | **Very magic mode** | Vim regex | Sintaxe regex estendida | `:help \v` | `:r !man vim \| grep -A2 "very magic" \| head -5` |
 
 ### Sistema Quickfix
 
-| Elemento | Nome Técnico | Categoria | Função | Pesquisar |
-|----------|-------------|-----------|---------|-----------|
-| **Quickfix list** | **Error/match container** | Vim data structure | Armazena resultados de busca | `:help quickfix` |
-| `:cnext` | **Next error command** | Quickfix navigation | Próximo item na lista | `:help :cnext` |
-| `:cprev` | **Previous error command** | Quickfix navigation | Item anterior na lista | `:help :cprev` |
-| `:cwindow` | **Conditional quickfix window** | Quickfix display | Abre janela se há erros | `:help :cwindow` |
+| Elemento | Nome Técnico | Categoria | Função | Pesquisar | Comando Otimizado |
+|----------|-------------|-----------|---------|-----------|-------------------|
+| **Quickfix list** | **Error/match container** | Vim data structure | Armazena resultados de busca | `:help quickfix` | `:r !man vim \| grep -A3 "quickfix list" \| head -6` |
+| `:cnext` | **Next error command** | Quickfix navigation | Próximo item na lista | `:help :cnext` | `:r !man vim \| grep -A1 ":cnext" \| head -3` |
+| `:cprev` | **Previous error command** | Quickfix navigation | Item anterior na lista | `:help :cprev` | `:r !man vim \| grep -A1 ":cprev" \| head -3` |
+| `:cwindow` | **Conditional quickfix window** | Quickfix display | Abre janela se há erros | `:help :cwindow` | `:r !man vim \| grep -A2 ":cwindow" \| head -4` |
 
 ### Configurações de Sistema
 
-| Elemento | Nome Técnico | Categoria | Função | Pesquisar |
-|----------|-------------|-----------|---------|-----------|
-| `'path'` | **Path option** | Vim setting | Diretórios para busca find | `:help 'path'` |
-| `'wildmenu'` | **Wild menu option** | Vim setting | Menu de completion visual | `:help 'wildmenu'` |
-| `'grepprg'` | **Grep program option** | Vim setting | Programa grep externo | `:help 'grepprg'` |
-| `'errorformat'` | **Error format option** | Vim setting | Parser de output de erro | `:help 'errorformat'` |
+| Elemento | Nome Técnico | Categoria | Função | Pesquisar | Comando Otimizado |
+|----------|-------------|-----------|---------|-----------|-------------------|
+| `'path'` | **Path option** | Vim setting | Diretórios para busca find | `:help 'path'` | `:r !man vim \| grep -A2 "'path'" \| head -5` |
+| `'wildmenu'` | **Wild menu option** | Vim setting | Menu de completion visual | `:help 'wildmenu'` | `:r !man vim \| grep -A2 "wildmenu" \| head -5` |
+| `'grepprg'` | **Grep program option** | Vim setting | Programa grep externo | `:help 'grepprg'` | `:r !man vim \| grep -A2 "grepprg" \| head -5` |
+| `'errorformat'` | **Error format option** | Vim setting | Parser de output de erro | `:help 'errorformat'` | `:r !man vim \| grep -A3 "errorformat" \| head -6` |
 
 ## 🎓 Progressão de Aprendizado
 
