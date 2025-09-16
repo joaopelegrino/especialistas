@@ -1,0 +1,103 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**/*.{ex,exs,js,ts,py,rb,go,java,cpp,c,rs,php,md,json,yml,yaml,toml,xml,sql,sh,bat,dockerfile,makefile})",
+      "Glob(**/*)",
+      "Grep(**/*)",
+      "Bash(git *)",
+      "Bash(find *)",
+      "Bash(ls *)",
+      "Bash(tree *)",
+      "Bash(wc *)",
+      "Bash(cloc *)",
+      "Bash(grep *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(cat *)"
+    ],
+    "ask": [
+      "Edit(**/*)",
+      "Write(**/*)",
+      "Bash(!git *)",
+      "Bash(*install*)",
+      "Bash(*build*)",
+      "Bash(*test*)",
+      "Bash(*deploy*)"
+    ],
+    "deny": [
+      "Read(**/.env*)",
+      "Read(**/secrets/**)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/*.p12)",
+      "Read(**/*.jks)",
+      "Read(**/node_modules/**)",
+      "Read(**/vendor/**)",
+      "Read(**/.git/objects/**)",
+      "Read(**/target/**)",
+      "Read(**/build/**)",
+      "Read(**/dist/**)",
+      "Read(**/__pycache__/**)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": {
+          "message": ".*diagnóstico.*|.*diagnostic.*|.*analysis.*"
+        },
+        "hooks": [
+          {
+            "type": "command",
+            "command": ["python3", "/home/notebook/workspace/especialistas/diagnosticos-code-base/.claude/hooks/pre-analysis-adapter.py"]
+          }
+        ]
+      },
+      {
+        "matcher": {},
+        "hooks": [
+          {
+            "type": "command",
+            "command": ["echo", "🔍 Diagnóstico universal com protocolo_verificacao ativo"]
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": {"tools": ["Edit", "Write"]},
+        "hooks": [
+          {
+            "type": "command",
+            "command": ["echo", "⚠️  Verificar alterações contra metodologia_diagnostico e protocolo_verificacao"]
+          }
+        ]
+      },
+      {
+        "matcher": {"tools": ["Read", "Grep", "Glob"]},
+        "hooks": [
+          {
+            "type": "command",
+            "command": ["echo", "📋 Lembrete: Aplicar zero-trust - validar claims empíricamente"]
+          }
+        ]
+      }
+    ]
+  },
+  "customCommands": {
+    "scan-todos": "rg -i 'todo|fixme|hack|deprecated|security|vulnerability|xxx|warn|bugfix' -A2 -B1 --type-add 'code:*.{js,ts,py,ex,exs,rb,go,java,cpp,c,rs,php}' -t code",
+    "complexity-report": "find . -type f \\( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.ex' -o -name '*.exs' -o -name '*.rb' -o -name '*.go' -o -name '*.java' -o -name '*.cpp' -o -name '*.c' -o -name '*.rs' -o -name '*.php' \\) -exec wc -l {} + | sort -nr | head -20",
+    "deps-scan": "/home/notebook/workspace/especialistas/diagnosticos-code-base/.claude/bin/deps-scan",
+    "detect-stack": "/home/notebook/workspace/especialistas/diagnosticos-code-base/.claude/bin/detect-stack",
+    "full-discovery": "/home/notebook/workspace/especialistas/diagnosticos-code-base/.claude/bin/full-discovery",
+    "validate-claims": "python3 /home/notebook/workspace/especialistas/diagnosticos-code-base/.claude/hooks/validation-protocol.py",
+    "security-scan": "rg -i 'password|secret|api_key|token|auth|credential|private_key' --type-add 'config:*.{json,yml,yaml,env,conf,config}' -t config",
+    "duplication-check": "rg -U --multiline '(?s)^(.{50,})\\n(?:.*\\n){0,10}\\1$' --type-add 'code:*.{js,ts,py,ex,exs,rb,go,java,cpp,c,rs,php}' -t code || echo 'No obvious duplications found'"
+  },
+  "projectContext": {
+    "type": "universal-diagnostics",
+    "methodology": "CLAUDE.md",
+    "adaptable": true,
+    "autoDetection": true
+  }
+}

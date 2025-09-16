@@ -1,0 +1,228 @@
+#!/bin/bash
+
+# Universal Stack Detection Script
+# Automatically detects technology stack, framework, and architecture patterns
+
+echo "🔍 UNIVERSAL STACK DETECTION"
+echo "=========================="
+
+PROJECT_PATH="${1:-$(pwd)}"
+cd "$PROJECT_PATH" || exit 1
+
+echo "📁 Project Path: $PROJECT_PATH"
+echo ""
+
+# Language Detection based on file extensions
+echo "🔧 PRIMARY LANGUAGE DETECTION:"
+echo "------------------------------"
+
+declare -A languages
+languages["js"]="JavaScript"
+languages["ts"]="TypeScript"
+languages["py"]="Python"
+languages["ex"]="Elixir"
+languages["exs"]="Elixir"
+languages["rb"]="Ruby"
+languages["go"]="Go"
+languages["rs"]="Rust"
+languages["java"]="Java"
+languages["php"]="PHP"
+languages["cpp"]="C++"
+languages["c"]="C"
+languages["cs"]="C#"
+
+# Count files by extension
+for ext in "${!languages[@]}"; do
+    count=$(find . -name "*.${ext}" -not -path "./node_modules/*" -not -path "./vendor/*" -not -path "./.git/*" | wc -l)
+    if [ "$count" -gt 0 ]; then
+        echo "  ${languages[$ext]}: $count files (.${ext})"
+    fi
+done
+
+echo ""
+
+# Framework Detection
+echo "🚀 FRAMEWORK DETECTION:"
+echo "----------------------"
+
+# JavaScript/TypeScript frameworks
+if [ -f "package.json" ]; then
+    echo "  📦 Node.js project detected (package.json)"
+
+    # Check for specific frameworks
+    if grep -q "\"react\"" package.json; then
+        echo "  ⚛️  React detected"
+    fi
+    if grep -q "\"vue\"" package.json; then
+        echo "  🖖 Vue.js detected"
+    fi
+    if grep -q "\"angular\"" package.json; then
+        echo "  🅰️  Angular detected"
+    fi
+    if grep -q "\"express\"" package.json; then
+        echo "  🚂 Express.js detected"
+    fi
+    if grep -q "\"next\"" package.json; then
+        echo "  ▲ Next.js detected"
+    fi
+    if grep -q "\"nuxt\"" package.json; then
+        echo "  💚 Nuxt.js detected"
+    fi
+fi
+
+# Python frameworks
+if [ -f "requirements.txt" ] || [ -f "pyproject.toml" ] || [ -f "Pipfile" ]; then
+    echo "  🐍 Python project detected"
+
+    if grep -q "Django" requirements.txt 2>/dev/null || grep -q "django" requirements.txt 2>/dev/null; then
+        echo "  🦄 Django detected"
+    fi
+    if grep -q "Flask" requirements.txt 2>/dev/null || grep -q "flask" requirements.txt 2>/dev/null; then
+        echo "  🌶️  Flask detected"
+    fi
+    if grep -q "FastAPI" requirements.txt 2>/dev/null || grep -q "fastapi" requirements.txt 2>/dev/null; then
+        echo "  ⚡ FastAPI detected"
+    fi
+fi
+
+# Elixir/Phoenix
+if [ -f "mix.exs" ]; then
+    echo "  🧪 Elixir project detected (mix.exs)"
+    if grep -q "phoenix" mix.exs; then
+        echo "  🔥 Phoenix detected"
+    fi
+fi
+
+# Ruby/Rails
+if [ -f "Gemfile" ]; then
+    echo "  💎 Ruby project detected (Gemfile)"
+    if grep -q "rails" Gemfile; then
+        echo "  🛤️  Ruby on Rails detected"
+    fi
+fi
+
+# Go
+if [ -f "go.mod" ]; then
+    echo "  🐹 Go project detected (go.mod)"
+    if grep -q "gin" go.mod; then
+        echo "  🍸 Gin detected"
+    fi
+    if grep -q "echo" go.mod; then
+        echo "  📢 Echo detected"
+    fi
+fi
+
+# Java
+if [ -f "pom.xml" ]; then
+    echo "  ☕ Java/Maven project detected (pom.xml)"
+    if grep -q "spring" pom.xml; then
+        echo "  🌱 Spring detected"
+    fi
+elif [ -f "build.gradle" ]; then
+    echo "  ☕ Java/Gradle project detected (build.gradle)"
+fi
+
+# Rust
+if [ -f "Cargo.toml" ]; then
+    echo "  🦀 Rust project detected (Cargo.toml)"
+    if grep -q "axum" Cargo.toml; then
+        echo "  🪓 Axum detected"
+    fi
+    if grep -q "actix-web" Cargo.toml; then
+        echo "  🕸️  Actix-web detected"
+    fi
+fi
+
+# PHP
+if [ -f "composer.json" ]; then
+    echo "  🐘 PHP project detected (composer.json)"
+    if grep -q "laravel" composer.json; then
+        echo "  🎼 Laravel detected"
+    fi
+    if grep -q "symfony" composer.json; then
+        echo "  🎵 Symfony detected"
+    fi
+fi
+
+echo ""
+
+# Architecture Pattern Detection
+echo "🏗️  ARCHITECTURE PATTERNS:"
+echo "-------------------------"
+
+# Directory structure analysis
+if [ -d "src" ] || [ -d "lib" ]; then
+    echo "  📂 Source code organization: Structured"
+fi
+
+if [ -d "controllers" ] || [ -d "views" ] || [ -d "models" ]; then
+    echo "  🏛️  MVC pattern detected"
+fi
+
+if [ -d "components" ] || [ -d "hooks" ] || [ -d "context" ]; then
+    echo "  🧩 Component-based architecture"
+fi
+
+if [ -d "services" ] || [ -d "repositories" ] || [ -d "entities" ]; then
+    echo "  🏢 Service layer architecture"
+fi
+
+if [ -d "microservices" ] || [ -f "docker-compose.yml" ] && grep -q "services:" docker-compose.yml 2>/dev/null; then
+    echo "  🔬 Microservices architecture detected"
+fi
+
+if [ -f "serverless.yml" ] || [ -f "sam-template.yaml" ]; then
+    echo "  ☁️  Serverless architecture detected"
+fi
+
+echo ""
+
+# Database Detection
+echo "💾 DATABASE DETECTION:"
+echo "---------------------"
+
+if [ -f "prisma/schema.prisma" ]; then
+    echo "  🔷 Prisma ORM detected"
+fi
+
+if find . -name "*.sql" -o -name "*migration*" | head -1 | grep -q .; then
+    echo "  🗃️  SQL database detected (migration files found)"
+fi
+
+if grep -r "mongodb\|mongoose" . 2>/dev/null | head -1 | grep -q .; then
+    echo "  🥬 MongoDB detected"
+fi
+
+if grep -r "redis" . 2>/dev/null | head -1 | grep -q .; then
+    echo "  🔴 Redis detected"
+fi
+
+echo ""
+
+# Project Type Detection
+echo "📋 PROJECT TYPE DETECTION:"
+echo "-------------------------"
+
+if [ -f "package.json" ] && grep -q "\"type\": \"module\"" package.json; then
+    echo "  📦 ES Module project"
+fi
+
+if [ -d "public" ] || [ -d "static" ] || [ -d "assets" ]; then
+    echo "  🌐 Web application"
+fi
+
+if grep -r "express\|koa\|fastify" package.json 2>/dev/null | grep -q .; then
+    echo "  🔗 Backend API/Server"
+fi
+
+if [ -f "bin" ] || [ -d "cmd" ] || grep -q "#!/usr/bin/env" $(find . -maxdepth 2 -type f 2>/dev/null) 2>/dev/null; then
+    echo "  💻 CLI application"
+fi
+
+if grep -r "library\|package" package.json 2>/dev/null | grep -q .; then
+    echo "  📚 Library/Package"
+fi
+
+echo ""
+echo "✅ Stack detection complete!"
+echo "Use this information to customize the diagnostic methodology."

@@ -13,12 +13,14 @@ Usando o <conhecimento> e <fontes_confiaveis> crie um arquivo educativo detalhad
 ├── 02-completion-systems.md
 ├── 03-vim-manual-highlights.md
 ├── 04-help-and-man-pages.md
-├── 05-1-grep-os.md
-├── 05-grep.md
+├── 05-sistemas-busca-completo.md
 ├── 06-vim-vanilla-lint-systems.md
 ├── 07-vim-productivity-vanilla.md
 ├── 08-navegacao-help-tags.md
 ├── 09-comandos-read-external.md
+├── 10-comando-command.md
+├── 10-regex-do-basico-ao-avansado.md
+├── nivelamento/
 └── README.md
 
 </conhecimento>

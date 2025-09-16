@@ -1,0 +1,208 @@
+#!/bin/bash
+
+# Universal Codebase Discovery Script
+# Executes complete stack detection and analysis pipeline
+
+echo "🚀 UNIVERSAL CODEBASE DISCOVERY PIPELINE"
+echo "========================================"
+
+PROJECT_PATH="${1:-$(pwd)}"
+cd "$PROJECT_PATH" || exit 1
+
+echo "📁 Target Project: $PROJECT_PATH"
+echo "🕐 Started at: $(date)"
+echo ""
+
+# Get script directory (where this script is located)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "🔍 Phase 1: Stack Detection"
+echo "==========================="
+if [ -f "$SCRIPT_DIR/detect-stack" ]; then
+    "$SCRIPT_DIR/detect-stack" "$PROJECT_PATH"
+else
+    echo "❌ detect-stack script not found"
+fi
+
+echo ""
+echo "📦 Phase 2: Dependencies Analysis"
+echo "================================="
+if [ -f "$SCRIPT_DIR/deps-scan" ]; then
+    "$SCRIPT_DIR/deps-scan" "$PROJECT_PATH"
+else
+    echo "❌ deps-scan script not found"
+fi
+
+echo ""
+echo "📊 Phase 3: Code Metrics"
+echo "========================"
+
+# Complexity report (using commands from settings.json)
+echo "🧮 COMPLEXITY ANALYSIS:"
+echo "----------------------"
+
+echo "  📏 Lines of code by file type:"
+
+# Count lines by language (excluding common ignore patterns)
+exclude_patterns="node_modules|vendor|.git|build|dist|target|__pycache__|.env"
+
+for ext in js ts py ex exs rb go rs java php cpp c cs; do
+    count=$(find . -name "*.$ext" | grep -vE "$exclude_patterns" | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}' 2>/dev/null || echo 0)
+    if [ "$count" -gt 0 ]; then
+        echo "    .$ext files: $count lines"
+    fi
+done
+
+echo ""
+echo "  📈 Largest files (potential complexity hotspots):"
+
+find . -type f \( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.ex' -o -name '*.exs' -o -name '*.rb' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.php' -o -name '*.cpp' -o -name '*.c' \) | \
+grep -vE "$exclude_patterns" | \
+xargs wc -l 2>/dev/null | \
+sort -nr | \
+head -10 | \
+while read -r line count file; do
+    [ "$line" != "total" ] && echo "    $count lines: $file"
+done
+
+echo ""
+echo "🔍 Phase 4: Code Quality Scan"
+echo "============================="
+
+# TODO/FIXME scan
+echo "📝 TODO/FIXME/HACK ANALYSIS:"
+echo "---------------------------"
+
+todo_patterns=("TODO" "FIXME" "HACK" "XXX" "WARN" "DEPRECATED")
+
+for pattern in "${todo_patterns[@]}"; do
+    count=$(find . -type f \( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.ex' -o -name '*.exs' -o -name '*.rb' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.php' \) | \
+            grep -vE "$exclude_patterns" | \
+            xargs grep -i "$pattern" 2>/dev/null | wc -l)
+
+    if [ "$count" -gt 0 ]; then
+        echo "  $pattern: $count occurrences"
+
+        # Show some examples
+        echo "    Examples:"
+        find . -type f \( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.ex' -o -name '*.exs' -o -name '*.rb' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.php' \) | \
+        grep -vE "$exclude_patterns" | \
+        xargs grep -i -n "$pattern" 2>/dev/null | \
+        head -3 | \
+        sed 's/^/      /'
+    fi
+done
+
+echo ""
+echo "🛡️  Phase 5: Security Quick Scan"
+echo "================================"
+
+echo "🔒 POTENTIAL SECRETS SCAN:"
+echo "-------------------------"
+
+# Security patterns
+security_patterns=(
+    "password.*=.*[\"'][^\"']*[\"']"
+    "secret.*=.*[\"'][^\"']*[\"']"
+    "api_key.*=.*[\"'][^\"']*[\"']"
+    "token.*=.*[\"'][^\"']*[\"']"
+)
+
+for pattern in "${security_patterns[@]}"; do
+    matches=$(find . -type f \( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.json' -o -name '*.yml' -o -name '*.yaml' -o -name '*.env*' \) | \
+              grep -vE "$exclude_patterns" | \
+              xargs grep -l -i -E "$pattern" 2>/dev/null | head -5)
+
+    if [ -n "$matches" ]; then
+        echo "  ⚠️  Potential secrets pattern '$pattern' found in:"
+        echo "$matches" | sed 's/^/    - /'
+    fi
+done
+
+echo ""
+echo "📂 Phase 6: Project Structure Analysis"
+echo "======================================"
+
+echo "🏗️  ARCHITECTURE INDICATORS:"
+echo "---------------------------"
+
+# Common architectural patterns
+arch_indicators=(
+    "controllers:Controllers pattern"
+    "models:Models pattern"
+    "views:Views pattern"
+    "services:Service layer"
+    "repositories:Repository pattern"
+    "middleware:Middleware pattern"
+    "components:Component architecture"
+    "modules:Modular architecture"
+    "api:API structure"
+    "lib:Library structure"
+    "src:Source organization"
+    "test:Testing structure"
+    "spec:Specification structure"
+    "docs:Documentation"
+    "scripts:Scripts/tooling"
+)
+
+for indicator in "${arch_indicators[@]}"; do
+    dir="${indicator%:*}"
+    desc="${indicator#*:}"
+    if [ -d "$dir" ]; then
+        file_count=$(find "$dir" -type f | wc -l)
+        echo "  ✅ $desc: $dir/ ($file_count files)"
+    fi
+done
+
+echo ""
+echo "📋 Phase 7: Git Repository Analysis"
+echo "==================================="
+
+if [ -d ".git" ]; then
+    echo "🌿 GIT REPOSITORY HEALTH:"
+    echo "------------------------"
+
+    # Recent activity
+    echo "  📈 Recent commits (last 10):"
+    git log --oneline --graph -10 2>/dev/null | sed 's/^/    /'
+
+    echo ""
+    echo "  🌳 Branch information:"
+    git branch -a 2>/dev/null | head -10 | sed 's/^/    /'
+
+    echo ""
+    echo "  📊 Repository stats:"
+    total_commits=$(git rev-list --all --count 2>/dev/null || echo "0")
+    echo "    Total commits: $total_commits"
+
+    contributors=$(git shortlog -sn 2>/dev/null | wc -l || echo "0")
+    echo "    Contributors: $contributors"
+
+    latest_commit=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
+    echo "    Latest commit: $latest_commit"
+else
+    echo "📂 Not a git repository"
+fi
+
+echo ""
+echo "🎯 DISCOVERY SUMMARY"
+echo "==================="
+
+echo "  🔍 Stack detection: ✅ Complete"
+echo "  📦 Dependencies: ✅ Analyzed"
+echo "  📊 Code metrics: ✅ Generated"
+echo "  🔒 Security scan: ✅ Basic scan complete"
+echo "  🏗️  Architecture: ✅ Structure analyzed"
+echo "  🌿 Git analysis: ✅ Repository analyzed"
+
+echo ""
+echo "✅ Universal discovery pipeline completed!"
+echo "🕐 Finished at: $(date)"
+
+echo ""
+echo "📋 NEXT STEPS:"
+echo "  1. Review the findings above"
+echo "  2. Run focused analysis on identified issues"
+echo "  3. Use results to customize diagnostic methodology"
+echo "  4. Apply stack-specific security scans"
+echo "  5. Generate detailed technical debt report"

@@ -1,0 +1,262 @@
+#!/bin/bash
+
+# Universal Dependencies Scanner
+# Scans and analyzes dependencies across different technology stacks
+
+echo "📦 UNIVERSAL DEPENDENCIES SCANNER"
+echo "================================="
+
+PROJECT_PATH="${1:-$(pwd)}"
+cd "$PROJECT_PATH" || exit 1
+
+echo "📁 Project: $PROJECT_PATH"
+echo "🕐 Timestamp: $(date)"
+echo ""
+
+# Function to check file age
+check_file_age() {
+    local file="$1"
+    local name="$2"
+
+    if [ -f "$file" ]; then
+        local age_days=$(( ($(date +%s) - $(stat -c %Y "$file" 2>/dev/null || stat -f %m "$file" 2>/dev/null || echo 0)) / 86400 ))
+        echo "  📄 $name: $file (${age_days} days old)"
+
+        if [ "$age_days" -gt 30 ]; then
+            echo "    ⚠️  File is older than 30 days - may need updates"
+        elif [ "$age_days" -gt 7 ]; then
+            echo "    ⚡ Consider checking for updates"
+        fi
+        return 0
+    fi
+    return 1
+}
+
+# Function to count dependencies
+count_deps() {
+    local file="$1"
+    local pattern="$2"
+
+    if [ -f "$file" ]; then
+        local count=$(grep -c "$pattern" "$file" 2>/dev/null || echo 0)
+        echo "    Dependencies count: $count"
+    fi
+}
+
+echo "🔍 DEPENDENCY FILES DETECTION:"
+echo "-----------------------------"
+
+# JavaScript/Node.js
+if check_file_age "package.json" "Node.js Dependencies"; then
+    count_deps "package.json" "\"dependencies\""
+    if [ -f "package-lock.json" ]; then
+        echo "    🔒 package-lock.json present (npm)"
+    elif [ -f "yarn.lock" ]; then
+        echo "    🔒 yarn.lock present (Yarn)"
+    elif [ -f "pnpm-lock.yaml" ]; then
+        echo "    🔒 pnpm-lock.yaml present (pnpm)"
+    else
+        echo "    ⚠️  No lock file found - dependencies may be inconsistent"
+    fi
+fi
+
+# Python
+if check_file_age "requirements.txt" "Python Dependencies"; then
+    count_deps "requirements.txt" "^[a-zA-Z]"
+fi
+
+if check_file_age "pyproject.toml" "Python Project Config"; then
+    echo "    📋 Modern Python project (pyproject.toml)"
+fi
+
+if check_file_age "Pipfile" "Python Pipenv Dependencies"; then
+    if [ -f "Pipfile.lock" ]; then
+        echo "    🔒 Pipfile.lock present"
+    fi
+fi
+
+# Elixir
+if check_file_age "mix.exs" "Elixir Dependencies"; then
+    count_deps "mix.exs" "def deps"
+    if [ -f "mix.lock" ]; then
+        echo "    🔒 mix.lock present"
+    fi
+fi
+
+# Ruby
+if check_file_age "Gemfile" "Ruby Dependencies"; then
+    count_deps "Gemfile" "^gem"
+    if [ -f "Gemfile.lock" ]; then
+        echo "    🔒 Gemfile.lock present"
+    fi
+fi
+
+# Go
+if check_file_age "go.mod" "Go Dependencies"; then
+    count_deps "go.mod" "require"
+    if [ -f "go.sum" ]; then
+        echo "    🔒 go.sum present"
+    fi
+fi
+
+# Rust
+if check_file_age "Cargo.toml" "Rust Dependencies"; then
+    count_deps "Cargo.toml" "^[a-zA-Z]"
+    if [ -f "Cargo.lock" ]; then
+        echo "    🔒 Cargo.lock present"
+    fi
+fi
+
+# Java Maven
+if check_file_age "pom.xml" "Java Maven Dependencies"; then
+    local deps=$(grep -c "<dependency>" pom.xml 2>/dev/null || echo 0)
+    echo "    Dependencies count: $deps"
+fi
+
+# Java Gradle
+if check_file_age "build.gradle" "Java Gradle Dependencies" || check_file_age "build.gradle.kts" "Java Gradle Dependencies (Kotlin DSL)"; then
+    echo "    🔧 Gradle build system detected"
+fi
+
+# PHP Composer
+if check_file_age "composer.json" "PHP Dependencies"; then
+    count_deps "composer.json" "\"require\""
+    if [ -f "composer.lock" ]; then
+        echo "    🔒 composer.lock present"
+    fi
+fi
+
+echo ""
+
+# Security Vulnerability Check
+echo "🛡️  SECURITY VULNERABILITY SCAN:"
+echo "-------------------------------"
+
+# Check for known vulnerable patterns
+echo "  Scanning for potential security issues..."
+
+vulnerable_patterns=(
+    "password.*=.*[\"'][^\"']+[\"']"
+    "secret.*=.*[\"'][^\"']+[\"']"
+    "api_key.*=.*[\"'][^\"']+[\"']"
+    "token.*=.*[\"'][^\"']+[\"']"
+    "private_key.*=.*[\"'][^\"']+[\"']"
+)
+
+for pattern in "${vulnerable_patterns[@]}"; do
+    matches=$(find . -name "*.json" -o -name "*.yml" -o -name "*.yaml" -o -name "*.toml" -o -name "*.env*" | \
+              xargs grep -l -i "$pattern" 2>/dev/null | \
+              grep -v node_modules | \
+              head -3)
+
+    if [ -n "$matches" ]; then
+        echo "  ⚠️  Potential secrets found in:"
+        echo "$matches" | sed 's/^/    - /'
+    fi
+done
+
+echo ""
+
+# Dependency Age Analysis
+echo "📅 DEPENDENCY FRESHNESS ANALYSIS:"
+echo "--------------------------------"
+
+# Check for outdated dependency indicators
+if [ -f "package.json" ]; then
+    echo "  📦 Node.js dependencies analysis:"
+
+    # Look for version patterns that suggest outdated deps
+    old_versions=$(grep -E '".*": "\^?[0-9]\.[0-9]' package.json | grep -E '\^?[0-4]\.' | wc -l)
+    if [ "$old_versions" -gt 0 ]; then
+        echo "    ⚠️  $old_versions potentially outdated dependencies found (major version < 5)"
+    fi
+
+    # Check for exact version pinning (potential maintenance issue)
+    pinned=$(grep -E '".*": "[0-9]' package.json | grep -v '\^' | grep -v '~' | wc -l)
+    if [ "$pinned" -gt 5 ]; then
+        echo "    📌 $pinned exact version pins detected - may hinder updates"
+    fi
+fi
+
+echo ""
+
+# License Compatibility Check
+echo "⚖️  LICENSE COMPATIBILITY SCAN:"
+echo "------------------------------"
+
+license_files=(
+    "LICENSE"
+    "LICENSE.txt"
+    "LICENSE.md"
+    "COPYING"
+    "COPYRIGHT"
+)
+
+echo "  Project license files:"
+for license_file in "${license_files[@]}"; do
+    if [ -f "$license_file" ]; then
+        echo "    ✅ $license_file found"
+        license_type=$(head -n 5 "$license_file" | grep -i -E "MIT|Apache|GPL|BSD|ISC" | head -1)
+        if [ -n "$license_type" ]; then
+            echo "    📜 License type: $license_type"
+        fi
+    fi
+done
+
+if ! ls LICENSE* COPYING COPYRIGHT 2>/dev/null | head -1 | grep -q .; then
+    echo "    ⚠️  No license file found - legal compliance risk"
+fi
+
+echo ""
+
+# Supply Chain Risk Assessment
+echo "🔗 SUPPLY CHAIN RISK ASSESSMENT:"
+echo "-------------------------------"
+
+if [ -f "package.json" ]; then
+    echo "  📦 npm package analysis:"
+
+    # Check for scoped packages (generally safer)
+    scoped=$(grep -c '"@.*/' package.json 2>/dev/null || echo 0)
+    total=$(grep -c '": "' package.json 2>/dev/null || echo 0)
+
+    if [ "$total" -gt 0 ]; then
+        scoped_percentage=$((scoped * 100 / total))
+        echo "    🏢 Scoped packages: $scoped/$total (${scoped_percentage}%)"
+
+        if [ "$scoped_percentage" -lt 20 ]; then
+            echo "    ⚠️  Low percentage of scoped packages - higher supply chain risk"
+        fi
+    fi
+fi
+
+echo ""
+
+# Development vs Production Dependencies
+echo "🏗️  DEPENDENCY CATEGORIZATION:"
+echo "-----------------------------"
+
+if [ -f "package.json" ]; then
+    dev_deps=$(grep -A 50 '"devDependencies"' package.json | grep -c '": "' 2>/dev/null || echo 0)
+    prod_deps=$(grep -A 50 '"dependencies"' package.json | grep -c '": "' 2>/dev/null || echo 0)
+
+    echo "  📦 Node.js dependency breakdown:"
+    echo "    🏭 Production dependencies: $prod_deps"
+    echo "    🔧 Development dependencies: $dev_deps"
+
+    if [ "$dev_deps" -gt "$prod_deps" ] && [ "$prod_deps" -gt 0 ]; then
+        echo "    ⚡ Good separation: More dev deps than production"
+    elif [ "$dev_deps" -eq 0 ] && [ "$prod_deps" -gt 10 ]; then
+        echo "    ⚠️  No dev dependencies found - build tools may be in production deps"
+    fi
+fi
+
+echo ""
+echo "✅ Dependencies scan complete!"
+echo ""
+echo "💡 RECOMMENDATIONS:"
+echo "  1. Regularly update dependencies to latest stable versions"
+echo "  2. Use lock files to ensure consistent environments"
+echo "  3. Audit dependencies for security vulnerabilities"
+echo "  4. Review licenses for compatibility with your project"
+echo "  5. Minimize dependency count to reduce supply chain risk"

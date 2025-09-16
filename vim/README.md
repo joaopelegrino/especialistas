@@ -39,11 +39,12 @@ Este repositório contém documentação técnica completa sobre o Vim vanilla, 
 - Built-ins do shell vs comandos externos
 - Sistemas de ajuda alternativos
 
-### [05-grep.md](05-grep.md) e [05-1-grep-os.md](05-1-grep-os.md)
-**Sistemas de Busca e Grep**
-- Ferramentas de busca no sistema operacional
-- Técnicas avançadas de grep e ripgrep
-- Integração com fluxo de trabalho do Vim
+### [05-sistemas-busca-completo.md](05-sistemas-busca-completo.md)
+**Sistemas de Busca Completos: Find, Vimgrep e Quickfix**
+- Guia consolidado de todos os sistemas de busca do Vim
+- Decomposição técnica detalhada dos comandos :find e :vimgrep
+- Integração com ferramentas externas (ripgrep, ag)
+- Workflows avançados e troubleshooting completo
 
 ### [06-vim-vanilla-lint-systems.md](06-vim-vanilla-lint-systems.md)
 **Sistemas Nativos de Linting do Vim**
@@ -76,6 +77,24 @@ Este repositório contém documentação técnica completa sobre o Vim vanilla, 
 - Integração de man pages e documentação no buffer atual
 - Automação e comandos personalizados para produtividade
 - Templates e casos de uso avançados
+
+### [10-comando-command.md](10-comando-command.md)
+**Sistema de Comandos Personalizados do Vim**
+- Criação e gerenciamento de comandos customizados
+- Integração com workflows de desenvolvimento
+- Automação avançada e produtividade
+
+### [10-regex-do-basico-ao-avansado.md](10-regex-do-basico-ao-avansado.md)
+**Expressões Regulares: Do Básico ao Avançado**
+- Guia completo de regex no contexto Vim
+- Padrões avançados para busca e substituição
+- Técnicas de otimização e performance
+
+### [nivelamento/](nivelamento/)
+**Decomposições Técnicas Educativas**
+- Metodologia "Learn by Doing" para conceitos complexos
+- Análise elemento por elemento de comandos avançados
+- Exercícios práticos progressivos
 
 ## Referência Rápida
 
@@ -124,14 +143,20 @@ Este repositório contém documentação técnica completa sobre o Vim vanilla, 
 3. **Pratique text objects e operators** - Fundamento da eficiência no Vim
 4. **Configure sistemas de completion** - Ganhos imediatos de produtividade
 
-### Para Usuários Intermediários  
+### Para Usuários Intermediários
 1. **Configure linting nativo** ([06-vim-vanilla-lint-systems.md](06-vim-vanilla-lint-systems.md)) - Qualidade de código profissional
-2. **Expanda sistemas de completion** ([02-completion-systems.md](02-completion-systems.md)) - Autocompletion avançado
-3. **Explore os destaques do manual** ([03-vim-manual-highlights.md](03-vim-manual-highlights.md)) - Descubra recursos poderosos
-4. **Domine os sistemas de ajuda** ([04-help-and-man-pages.md](04-help-and-man-pages.md)) - Autossuficiência no aprendizado
+2. **Domine sistemas de busca** ([05-sistemas-busca-completo.md](05-sistemas-busca-completo.md)) - Find, vimgrep e quickfix
+3. **Expanda sistemas de completion** ([02-completion-systems.md](02-completion-systems.md)) - Autocompletion avançado
+4. **Explore os destaques do manual** ([03-vim-manual-highlights.md](03-vim-manual-highlights.md)) - Descubra recursos poderosos
+5. **Domine os sistemas de ajuda** ([04-help-and-man-pages.md](04-help-and-man-pages.md)) - Autossuficiência no aprendizado
+
+### Para Aprendizado Técnico Avançado
+- **Explore as decomposições técnicas** ([nivelamento/](nivelamento/)) - Metodologia educativa "Learn by Doing"
+- **Domine expressões regulares** ([10-regex-do-basico-ao-avansado.md](10-regex-do-basico-ao-avansado.md)) - Regex do básico ao avançado
 
 ### Para Organização de Projetos
 - **Use o plugin Vim-Org Markdown** ([01-markdown-organization.md](01-markdown-organization.md)) - Gerenciamento avançado de tarefas
+- **Crie comandos personalizados** ([10-comando-command.md](10-comando-command.md)) - Automação e produtividade
 
 ## Dicas de Integração
 
