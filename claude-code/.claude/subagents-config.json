@@ -1,0 +1,66 @@
+{
+  "nativeSubagents": {
+    "enabled": true,
+    "migrationDate": "2025-09-17",
+    "migrationFrom": "Legacy JSON agents",
+    "expectedPerformanceGain": "90.2%",
+    "modernization": "Claude Code 2025 Native Subagents"
+  },
+  "contextOptimization": {
+    "isolatedContexts": true,
+    "maxTokensPerAgent": 200000,
+    "autoGarbageCollection": true,
+    "parallelExecution": true,
+    "maxConcurrentAgents": 10
+  },
+  "performanceMonitoring": {
+    "trackTokenUsage": true,
+    "benchmarkParallelExecution": true,
+    "targetImprovement": "90.2%",
+    "baseline": "Legacy sequential execution"
+  },
+  "subagents": {
+    "bm-wizard-specialist": {
+      "description": "Phase BM-2 - 5-Step Content Wizard MVP implementation specialist",
+      "specialization": "Phoenix LiveView wizard implementation",
+      "status": "active",
+      "file": ".claude/subagents/bm-wizard-specialist.md"
+    },
+    "security-auditor": {
+      "description": "Security analysis and LGPD compliance specialist",
+      "specialization": "Medical application security and compliance",
+      "status": "active",
+      "file": ".claude/subagents/security-auditor.md"
+    },
+    "test-engineer": {
+      "description": "Comprehensive testing and evidence collection specialist",
+      "specialization": "Testing automation and visual evidence",
+      "status": "active",
+      "file": ".claude/subagents/test-engineer.md"
+    },
+    "documentation-specialist": {
+      "description": "Technical documentation and CENTRAL-DE-CONTROLE management",
+      "specialization": "Stakeholder communication and documentation",
+      "status": "active",
+      "file": ".claude/subagents/documentation-specialist.md"
+    },
+    "performance-optimizer": {
+      "description": "Performance analysis and WebAssembly optimization specialist",
+      "specialization": "Bundle optimization and performance tuning",
+      "status": "active",
+      "file": ".claude/subagents/performance-optimizer.md"
+    }
+  },
+  "migrationLog": {
+    "legacySystem": "Custom JSON config in .claude/core/projeto-bm-agents-config.json",
+    "targetSystem": "Native .md subagents with Task tool integration",
+    "migratedAgents": 5,
+    "expectedBenefits": [
+      "90.2% performance improvement (Anthropic benchmark)",
+      "Parallel execution up to 10 concurrent agents",
+      "Isolated context windows (200k tokens each)",
+      "Automatic Task tool delegation",
+      "Zero maintenance overhead (native tools)"
+    ]
+  }
+}

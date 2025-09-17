@@ -138,25 +138,6 @@ python .claude/hooks/gancho-basico.py
 - `templates-pt-br/servidor-mcp-basico.py` - Servidor MCP básico
 - **NOVO**: `templates-pt-br/claude-md-template.md` - Template base para CLAUDE.md de projetos
 
-### Exemplo de Aplicação Bem-Sucedida
-**Projeto Blog WebAssembly-First** (`/home/notebook/workspace/blog/`):
-- ✅ CLAUDE.md conciso (82 linhas) como sumário
-- ✅ PROMPTBASE-INICIAL.md (633 linhas) como contexto específico
-- ✅ Separação clara: sumário → contexto detalhado
-- ✅ Sistema Observatory (202 arquivos .claude/) implementado
-- ✅ **Dashboard Consolidado** ✨ **OTIMIZADO (09/09/2025)**
-  - CENTRAL-DE-CONTROLE.md como única fonte de verdade stakeholders
-  - 4 seções integradas: URLs & validação, status executivo, detalhes técnicos, configurações externas
-  - Sistema orquestrador 100% alinhado (documentation-sync.py, evidence-collector.js)
-  - Interactive Workflow Dashboard atualizado com fluxograma consolidado
-- ✅ **Interactive Workflow Dashboard** ✨ **IMPLEMENTADO (09/09/2025)**
-  - DAG Swimlane Diagram seguindo best practices 2025
-  - 8 swimlanes distintos (USUÁRIO → OBSERVATORY)
-  - Visualização M/A/S (Manual/Automático/Semi-manual)
-  - Integração completa com sistema de documentação
-  - 100% SVG nativo, <500ms rendering
-  - Acesso: `http://localhost:4000/claude/dashboard`
-
 ### Fases de Implementação
 1. **Fase 1** (30 min): Configuração inicial usando `06-guia-implementacao.md`
 2. **Fase 2**: Implementação do sistema de hooks
