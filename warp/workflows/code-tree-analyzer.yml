@@ -1,0 +1,198 @@
+# Workflow: Análise de Código com Tree Otimizado
+# Baseado no Sistema Especialista em Comandos Tree
+# Data: 2025-09-18
+# Ambiente: WSL2 Ubuntu 24.04 + Zsh + Claude Code v1.0.113
+
+name: "Code Tree Analyzer"
+description: "Analisa código da pasta atual e gera comandos tree otimizados usando Claude CLI como especialista"
+command: |
+  echo "🔍 ANALISADOR DE CÓDIGO - TREE ESPECIALISTA"
+  echo "==========================================="
+  echo ""
+  
+  # Cores para output
+  BLUE='\033[0;34m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[1;33m'
+  CYAN='\033[0;36m'
+  NC='\033[0m'
+  
+  # Função para log
+  log() {
+      echo -e "${BLUE}[$(date '+%H:%M:%S')]${NC} $1"
+  }
+  
+  # Detectar pasta atual
+  CURRENT_DIR="${ANALYSIS_PATH:-$(pwd)}"
+  log "Analisando diretório: ${YELLOW}$CURRENT_DIR${NC}"
+  
+  # Fazer scan básico da estrutura
+  log "Fazendo scan inicial da estrutura..."
+  
+  # Detectar tipo de projeto
+  PROJECT_TYPES=""
+  if [[ -f "$CURRENT_DIR/package.json" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}JavaScript/Node.js "
+  fi
+  if [[ -f "$CURRENT_DIR/requirements.txt" ]] || [[ -f "$CURRENT_DIR/setup.py" ]] || [[ -f "$CURRENT_DIR/pyproject.toml" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}Python "
+  fi
+  if [[ -f "$CURRENT_DIR/Cargo.toml" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}Rust "
+  fi
+  if [[ -f "$CURRENT_DIR/go.mod" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}Go "
+  fi
+  if [[ -f "$CURRENT_DIR/Dockerfile" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}Docker "
+  fi
+  if [[ -d "$CURRENT_DIR/.git" ]]; then
+    PROJECT_TYPES="${PROJECT_TYPES}Git "
+  fi
+  
+  # Contar arquivos e diretórios
+  TOTAL_FILES=$(find "$CURRENT_DIR" -type f 2>/dev/null | wc -l)
+  TOTAL_DIRS=$(find "$CURRENT_DIR" -type d 2>/dev/null | wc -l)
+  
+  # Detectar profundidade da estrutura
+  MAX_DEPTH=$(find "$CURRENT_DIR" -type d 2>/dev/null | awk -F/ '{print NF}' | sort -n | tail -1)
+  RELATIVE_DEPTH=$((MAX_DEPTH - $(echo "$CURRENT_DIR" | awk -F/ '{print NF}') + 1))
+  
+  log "Projeto detectado: ${GREEN}${PROJECT_TYPES:-'Genérico'}${NC}"
+  log "Arquivos: $TOTAL_FILES | Diretórios: $TOTAL_DIRS | Profundidade máxima: $RELATIVE_DEPTH"
+  
+  echo ""
+  log "${CYAN}🤖 Consultando Claude CLI - Sistema Especialista em Tree...${NC}"
+  echo ""
+  
+  # === CHAMADA ÚNICA DO CLAUDE CLI ===
+  # Prompt completo baseado no Sistema Especialista fornecido
+  claude -p "Você é um especialista em gerar comandos \`tree\` otimizados para visualização limpa e eficiente de estruturas de diretórios.
+
+## CONTEXTO FORNECIDO:
+- **Caminho da pasta**: $CURRENT_DIR
+- **Tipos de projeto detectados**: ${PROJECT_TYPES:-'Genérico/Misto'}
+- **Estatísticas**: $TOTAL_FILES arquivos, $TOTAL_DIRS diretórios, profundidade máxima $RELATIVE_DEPTH níveis
+- **Arquivos encontrados na raiz**: $(ls -la "$CURRENT_DIR" 2>/dev/null | head -10 | tail -n +2 | awk '{print $9}' | tr '\n' ', ' | sed 's/,$//')
+
+## INSTRUÇÕES ESPECÍFICAS:
+1. Gere comandos \`tree\` otimizados para este projeto
+2. Foque em **visualização limpa** removendo ruído desnecessário
+3. Considere os tipos de projeto detectados para filtros específicos
+4. Proporcione 3 alternativas: visão geral, estrutura detalhada, e apenas diretórios
+5. Explique cada comando gerado
+
+## DIRETRIZES OBRIGATÓRIAS:
+- Use filtros \`-I 'pattern'\` para excluir elementos desnecessários
+- Limite profundidade com \`-L n\` quando apropriado
+- Use \`--dirsfirst\` para melhor legibilidade
+- Considere \`--prune\` para remover diretórios vazios
+- Adapte filtros baseado nos tipos de projeto detectados
+
+## FORMATO DE RESPOSTA OBRIGATÓRIO:
+\`\`\`markdown
+## 🎯 COMANDO PRINCIPAL RECOMENDADO
+\`[comando tree otimizado]\`
+
+## ⚙️ EXPLICAÇÃO DAS OPÇÕES
+- \`-L n\`: [explicação]
+- \`-I 'pattern'\`: [explicação dos padrões excluídos]
+- [outras opções]: [justificativas]
+
+## 🔄 ALTERNATIVAS SUGERIDAS
+
+### 1. Visão Geral Limpa
+\`[comando para visão macro]\`
+
+### 2. Estrutura Detalhada  
+\`[comando para análise profunda]\`
+
+### 3. Apenas Diretórios
+\`[comando só com estrutura de pastas]\`
+
+## 📝 PADRÕES EXCLUÍDOS E JUSTIFICATIVAS
+- \`pattern1\`: [motivo da exclusão]
+- \`pattern2\`: [motivo da exclusão]
+
+## 💡 RECOMENDAÇÃO ESPECÍFICA
+[Recomendação personalizada baseada no contexto detectado]
+\`\`\`
+
+Gere a análise completa agora." > analysis_result.md
+  
+  # Verificar se a análise foi bem-sucedida
+  if [[ -f "analysis_result.md" ]] && [[ -s "analysis_result.md" ]]; then
+    log "${GREEN}✅ Análise concluída com sucesso!${NC}"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════"
+    echo "📊 RESULTADO DA ANÁLISE ESPECIALISTA"
+    echo "═══════════════════════════════════════════════════════════"
+    echo ""
+    
+    # Exibir resultado
+    cat analysis_result.md
+    
+    echo ""
+    echo "═══════════════════════════════════════════════════════════"
+    echo ""
+    
+    # Tentar extrair e executar o comando principal
+    log "${CYAN}🚀 Executando comando tree principal recomendado...${NC}"
+    echo ""
+    
+    # Extrair primeiro comando tree da análise
+    MAIN_COMMAND=$(grep -A 1 "COMANDO PRINCIPAL RECOMENDADO" analysis_result.md | grep "^\`tree" | sed 's/^`//' | sed 's/`$//' | head -1)
+    
+    if [[ -n "$MAIN_COMMAND" ]]; then
+      log "Executando: ${YELLOW}$MAIN_COMMAND${NC}"
+      echo ""
+      
+      # Substituir [path] ou similar pelo diretório atual se necessário
+      FINAL_COMMAND=$(echo "$MAIN_COMMAND" | sed "s|\[path\]|$CURRENT_DIR|g" | sed "s|\[PATH\]|$CURRENT_DIR|g")
+      
+      # Executar o comando
+      if eval "$FINAL_COMMAND"; then
+        log "${GREEN}✅ Comando executado com sucesso!${NC}"
+      else
+        log "${YELLOW}⚠️ Comando não pôde ser executado (possivelmente tree não instalado)${NC}"
+        log "Comando que seria executado: $FINAL_COMMAND"
+      fi
+    else
+      log "${YELLOW}⚠️ Não foi possível extrair comando tree da análise${NC}"
+    fi
+    
+  else
+    log "${RED}❌ Erro na análise. Verificando Claude CLI...${NC}"
+    
+    # Teste básico Claude
+    if claude --version > /dev/null 2>&1; then
+      log "${YELLOW}Claude CLI está instalado, mas houve erro na análise${NC}"
+    else
+      log "${RED}Claude CLI não está disponível ou configurado${NC}"
+      log "Execute: claude doctor"
+    fi
+  fi
+  
+  echo ""
+  log "${CYAN}📁 Arquivos gerados:${NC}"
+  ls -la analysis_result.md 2>/dev/null || echo "Nenhum arquivo gerado"
+  
+  echo ""
+  log "${GREEN}🎯 Análise finalizada!${NC}"
+  log "Arquivo de análise: ${YELLOW}analysis_result.md${NC}"
+  
+  if [[ "${SHOW_BASIC_TREE:-}" == "true" ]]; then
+    echo ""
+    log "${CYAN}📊 Tree básico para comparação:${NC}"
+    tree -L 2 "$CURRENT_DIR" 2>/dev/null || ls -la "$CURRENT_DIR"
+  fi
+
+arguments:
+  - name: "ANALYSIS_PATH"
+    description: "Caminho para análise (padrão: diretório atual)"
+    default_value: ""
+  - name: "SHOW_BASIC_TREE"
+    description: "Mostrar tree básico para comparação (true/false)"
+    default_value: "false"
+
+tags: ["analysis", "code", "tree", "claude", "specialist", "optimization"]
