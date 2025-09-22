@@ -4,6 +4,80 @@
 Realize a <tarefa> seguindo as <praticas>.
 
 <tarefa>
+
+/home/notebook/workspace/blog/docs 
+
+É necessário verificar e limpara as configuracaos descontinuadas. Bem como
+atualizar as informacoes sobre a estrutura de hooks implementada
+usando elixir que forma dadas como superiores às propostas iniciais.
+Gerando/atualizando arquivos de decricao de uso, arquitetura logica usada e intrucoes para o usuario.
+/home/notebook/workspace/blog/.claude/commands/README-commands-workflow.md.
+É necessário gerar documentos apontando tecnicamente a estrutura elixr como os
+arquivos descrevem a logica e codigo /home/notebook/workspace/especialistas/claude-code/plano-otimizacao-blog-seven-layer-python-2025.md
+
+📁 /home/notebook/workspace/blog/.claude
+
+🌳 Estrutura do diretório:
+.
+|-- 2025-09-21
+|   |-- compliance
+|   |-- documentation
+|   |-- errors
+|   |-- medical
+|   |-- performance
+|   |-- reports
+|   |-- results
+|   |-- screenshots
+|   |-- tasks
+|   |-- testing
+|   |-- daily_control.md
+|   |-- documentation_diagnostic_report.md
+|   |-- documentation_transformation_summary.md
+|   `-- roadmap_integration_summary.md
+|-- agents-DEPRECATED-20250922
+|   |-- mcp-diagnostician.md
+|   |-- playwright-specialist.md
+|   |-- roadmap-planner-medical.md
+|   `-- seven-layer-docs-architect.md
+|-- commands
+|   |-- diagnostico-aprofundado.md
+|   |-- executar-roadmap-expandido.md
+|   |-- LLM-diretrizes.md
+|   |-- LLM-main.md
+|   |-- planejamento-roadmap-expandido.md
+|   |-- proposta.md
+|   |-- README-commands-workflow.md
+|   |-- validacao-entrega.md
+|   `-- VALIDATION-MATRIX.md
+|-- configs
+|   |-- agents-registry.yaml
+|   |-- claude-code-settings.json
+|   `-- mcp-master.json
+|-- daily
+|   |-- 2025-09-21
+|   `-- templates
+|-- docs
+|   |-- setup
+|   `-- README.md
+|-- mcp
+|   |-- browser-automation
+|   |-- evidence
+|   |-- integrations
+|   |-- templates
+|   |-- test-output
+|   `-- test-mcp-integration.js
+|-- monitoring
+|   |-- compliance
+|   |-- errors
+|   `-- performance
+|-- workflows
+|   |-- daily-automation.yaml
+|   `-- medical-platform.yaml
+`-- migration-completion-report.md
+
+31 directories, 25 files
+
+📋 Conteúdo copiado para clipboard!
 </tarefa>
 
 <-SESSÃO DE RESPONSABILIDADE DO USUÁRIO - APENAS PARA LEITURA->
