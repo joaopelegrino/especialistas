@@ -1,6 +1,6 @@
 <-SESSÃO DE RESPONSABILIDADE DO USUÁRIO - APENAS PARA LEITURA->
 
-Realize a <tarefa> seguindo as <praticas>.
+Realize a <tarefa> seguindo as <praticas> com metodologia DSM integrada.
 
 <tarefa>
 
@@ -102,6 +102,227 @@ S.4.1: Content Generator → s.4-1.1-3-texto-final.md
 ```
 
 **Contextos Disponíveis:** 12 contextos especializados em `.claude/fluxo-de-sistemas-texto-suporte-simples/contextos/`
+
+## Implementação do Roadmap Healthcare Stack
+
+### Metodologia de Implementação DSM-Enhanced
+
+#### Fase 1: Foundation Setup (Semanas 1-4)
+1. **Environment Preparation:**
+   - Setup Elixir/OTP 27 + Phoenix 1.8 development environment
+   - Configure PostgreSQL 16 + TimescaleDB for healthcare data
+   - Initialize Zero Trust Policy Engine básico (OTP Supervisors)
+   - Implement basic Extism WebAssembly runtime integration
+
+2. **DSM Implementation Requirements:**
+   - Create `.dsm-config.yml` with healthcare context
+   - Setup `llms.txt` for LLM context optimization
+   - Apply DSM tags L1-L4 to all code modules
+   - Implement dependency matrix tracking
+
+3. **Compliance Foundation:**
+   - LGPD data classification engine (Art. 7º-11)
+   - CFM professional validation basics
+   - ANVISA medical device compliance framework
+   - Audit trail infrastructure (TimescaleDB)
+
+#### Fase 2: Healthcare Pipeline Implementation (Semanas 5-12)
+
+1. **Sistema S.1.1 - LGPD Analyzer (Rust WASM):**
+   ```elixir
+   # Implementation priority: CRITICAL
+   # DSM Tags: DOMAIN:healthcare|compliance COMPLEXITY:expert
+   # Performance SLA: <5s for 10k words, >95% accuracy
+   defmodule Healthcare.Pipeline.S11.LGPDAnalyzer do
+     # Real-time PII/PHI detection
+     # Dynamic consent form generation
+     # Risk scoring (0-100)
+     # CFM professional data validation
+   end
+   ```
+
+2. **Sistema S.1.2 - Medical Claims Extractor (AssemblyScript WASM):**
+   ```elixir
+   # Implementation priority: HIGH
+   # DSM Tags: DOMAIN:healthcare|medical_validation COMPLEXITY:expert
+   # Performance SLA: <2s for 5k words
+   defmodule Healthcare.Pipeline.S12.MedicalClaims do
+     # Medical assertions identification
+     # Evidence requirement mapping
+     # CFM/CRP compliance validation
+   end
+   ```
+
+3. **Sistema S.2-1.2 - Scientific Search Engine (Go WASM):**
+   ```elixir
+   # Implementation priority: HIGH
+   # DSM Tags: DOMAIN:integration|scientific_apis COMPLEXITY:medium
+   # Performance SLA: <30s for 10 references
+   defmodule Healthcare.Pipeline.S212.ScientificSearch do
+     # PubMed/SciELO integration
+     # Context-Aware Generation (CAG)
+     # Reference quality scoring
+   end
+   ```
+
+4. **Pipeline Orchestration:**
+   ```elixir
+   # DSM:HEALTHCARE:workflow_orchestration PERFORMANCE:<5min_total
+   defmodule Healthcare.Pipeline.Orchestrator do
+     # S.1.1 → S.1.2 → S.2-1.2 → S.3-2 → S.4-1.1-3
+     # Real-time progress tracking via Phoenix LiveView
+     # Compliance validation at each step
+     # Error handling and rollback mechanisms
+   end
+   ```
+
+#### Fase 3: Security & Compliance (Semanas 13-18)
+
+1. **Zero Trust Architecture (NIST SP 800-207):**
+   ```elixir
+   # DSM:SECURITY:zero_trust COMPLIANCE:NIST_SP_800_207
+   defmodule Healthcare.Security.ZeroTrust do
+     # Policy Engine with healthcare scoring
+     # Policy Enforcement Points (PEPs)
+     # Continuous verification
+     # Medical professional authentication
+   end
+   ```
+
+2. **Post-Quantum Cryptography:**
+   ```elixir
+   # DSM:SECURITY:quantum_safe DEPS:ex_oqs_library
+   defmodule Healthcare.Crypto.PostQuantum do
+     # CRYSTALS-Kyber key establishment
+     # CRYSTALS-Dilithium digital signatures
+     # Hybrid classical-quantum transition
+   end
+   ```
+
+3. **Multi-Tenant Admin Blind:**
+   ```elixir
+   # DSM:SECURITY:admin_blind COMPLIANCE:LGPD_Art_11
+   defmodule Healthcare.MultiTenant.AdminBlind do
+     # Field-level encryption per tenant
+     # Zero admin access to patient data
+     # Tenant-specific key management
+   end
+   ```
+
+#### Fase 4: Production Readiness (Semanas 19-26)
+
+1. **Performance Optimization:**
+   - Horizontal scaling (2M+ concurrent users)
+   - Database optimization (PostgreSQL + TimescaleDB)
+   - CDN integration for static assets
+   - Real-time monitoring (Prometheus + Grafana)
+
+2. **Integration APIs:**
+   - RESTful API with OpenAPI documentation
+   - GraphQL endpoint for complex queries
+   - Webhook system for real-time notifications
+   - FHIR R4 compatibility
+
+3. **Production Deployment:**
+   - Kubernetes manifests for healthcare
+   - Multi-region disaster recovery
+   - Automated backup and recovery
+   - Compliance monitoring dashboard
+
+### Implementation Best Practices
+
+#### Code Quality Standards
+1. **DSM Tag Requirements:**
+   ```elixir
+   # Every healthcare function must include:
+   # DSM:HEALTHCARE:phi_handling|clinical_decision_support
+   # DSM:PERFORMANCE:response_time:<50ms
+   # DSM:COMPLIANCE:LGPD|CFM|ANVISA
+   ```
+
+2. **Testing Strategy:**
+   - Unit tests: 90%+ coverage for healthcare functions
+   - Integration tests: All API endpoints + database
+   - WASM plugin tests: Isolated sandbox testing
+   - Security tests: OWASP compliance validation
+   - Performance tests: SLA validation (<50ms, 2M+ users)
+
+3. **Documentation Requirements:**
+   - All public APIs documented with examples
+   - Healthcare context preserved in comments
+   - DSM dependency matrix updated
+   - Compliance validation procedures documented
+
+#### Security Implementation
+1. **Healthcare Data Protection:**
+   ```elixir
+   # Always encrypt PHI/PII at field level
+   # Log all access for audit trail
+   # Validate consent before processing
+   # Apply data minimization principles
+   ```
+
+2. **Zero Trust Validation:**
+   - Every request evaluated by Policy Engine
+   - Continuous verification of user/device trust
+   - Real-time anomaly detection
+   - Medical professional scope validation
+
+3. **Compliance Automation:**
+   - LGPD risk assessment in CI/CD pipeline
+   - CFM medical content validation
+   - ANVISA medical device compliance checks
+   - Automated compliance reporting
+
+#### Performance Benchmarks
+1. **SLA Targets:**
+   - API Response Time: <50ms p95
+   - Concurrent Users: 2M+ supported
+   - WASM Plugin Execution: <5s per system
+   - Database Queries: <10ms average
+   - System Availability: 99.99%
+
+2. **Healthcare-Specific Metrics:**
+   - LGPD Risk Analysis: <5s for 10k words
+   - Medical Claims Extraction: <2s for 5k words
+   - Scientific Search: <30s for 10 references
+   - Content Generation: <5min total pipeline
+
+#### Deployment Strategy
+1. **Blue-Green Deployment:**
+   - Zero downtime for healthcare systems
+   - Automated rollback on health check failure
+   - Database migration validation
+   - Compliance verification before switch
+
+2. **Monitoring & Alerting:**
+   - Real-time compliance violation alerts
+   - Performance degradation notifications
+   - Security incident automated response
+   - Healthcare-specific dashboards
+
+### Quality Gates & Validation
+
+#### Pre-Development Checklist
+- [ ] DSM configuration complete (.dsm-config.yml)
+- [ ] Healthcare context templates applied
+- [ ] Dependency matrix mapped
+- [ ] Compliance requirements documented
+- [ ] Performance SLAs defined
+
+#### Development Phase Validation
+- [ ] DSM healthcare tags applied to all code
+- [ ] Performance SLA context included
+- [ ] Compliance validation implemented
+- [ ] Security boundaries documented
+- [ ] Test coverage >90% achieved
+
+#### Production Readiness Criteria
+- [ ] 80%+ DSM quality score achieved
+- [ ] 100% compliance context coverage
+- [ ] All performance benchmarks met
+- [ ] Security penetration testing passed
+- [ ] Disaster recovery procedures validated
 
 ### Implementação e Roadmap
 
@@ -308,25 +529,6 @@ VALIDATION_RESULTS:
   - Context_Preservation: "Well-implemented"
 ```
 
-#### **Integration with Seven-Layer Method**
-```yaml
-DSM_Seven_Layer_Integration:
-  evidence_validation:
-    - "DSM tags validate real vs alleged functionality"
-    - "Dependency matrices prevent broken references"
-    - "Healthcare context ensures compliance accuracy"
-
-  stakeholder_protection:
-    - "Healthcare-specific context prevents medical misinformation"
-    - "Compliance tags ensure regulatory accuracy"
-    - "Performance context prevents safety-critical failures"
-
-  continuous_validation:
-    - "DSM validation script runs weekly"
-    - "Context preservation rules enforce standards"
-    - "Quality metrics track implementation health"
-```
-
 #### **Healthcare Stack Context Template**
 ```yaml
 Healthcare_Project_DSM_Template:
@@ -368,12 +570,38 @@ def analyze_medical_claim(claim_text) do
 end
 ```
 
-#### **DSM Implementation Files Created**
-- `.dsm-config.yml` - Configuração completa do sistema DSM
-- `llms.txt` - Otimização de contexto para LLMs
-- `.context-preservation-rules.md` - Regras obrigatórias de preservação
-- `.dsm-validation.sh` - Script de validação automática
-- **Quality Score Achieved**: 86% (GOOD) - Ready for healthcare production
+### Risk Mitigation
+
+#### Technical Risks
+1. **WASM Ecosystem Maturity:**
+   - Mitigation: Thorough PoC validation + fallback plans
+   - Monitoring: Monthly ecosystem evolution review
+
+2. **Post-Quantum Performance:**
+   - Mitigation: Hybrid classical-quantum approach
+   - Monitoring: Continuous performance benchmarking
+
+3. **Zero Trust Complexity:**
+   - Mitigation: Phased implementation + expert consultation
+   - Monitoring: Policy effectiveness metrics
+
+#### Compliance Risks
+1. **Regulatory Changes:**
+   - Mitigation: Automated regulatory monitoring
+   - Response: Flexible compliance engine architecture
+
+2. **Multi-Jurisdictional Requirements:**
+   - Mitigation: Strictest standard implementation
+   - Validation: Regular compliance audits
+
+#### Operational Risks
+1. **Talent Acquisition:**
+   - Mitigation: Early recruitment + training programs
+   - Backup: Remote work to expand talent pool
+
+2. **Vendor Dependencies:**
+   - Mitigation: Multi-cloud architecture design
+   - Strategy: Open source preference where possible
 
 ### **Mandatory DSM Process Integration**
 
@@ -401,5 +629,5 @@ end
 3. **Documentation Currency**: Weekly context preservation reviews
 4. **Continuous Monitoring**: Automated validation in CI/CD pipeline
 
-
 </praticas>
+
