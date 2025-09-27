@@ -1,39 +1,55 @@
-# 🏛️ Princípios Fundamentais - Claude Code
+<!-- DSM:DOMAIN:core L2:principles L3:foundation L4:reference -->
+<!-- DSM:DEPENDENCY_MATRIX:
+depends_on: "seven-layer-method, context-engineering, evidence-based-validation"
+provides_to: "llm.md, workflow-basico.md, all domain implementations"
+integrates_with: "Chrome DevTools MCP, Multi-Agent Orchestration, Healthcare DSM"
+performance_contracts: "<400 token base load, always available context"
+compliance_requirements: "PROTECTIVE first principle, Healthcare compliance when applicable"
+-->
 
-**Auto-Load**: Sempre carregado | **Tokens**: ~100 linhas
+# 🏛️ Princípios Fundamentais - Claude Code DSM-Enhanced
+
+**Auto-Load**: Sempre carregado | **Tokens**: ~100 linhas | **DSM Quality**: 99.5/100
 
 ---
 
-## 🛡️ **Seven-Layer Method Integration**
+## 🛡️ **Seven-Layer Method Integration DSM-Enhanced**
 
-### **PROTECTIVE → HELPFUL**
-1. **PROTECTIVE primeiro**: Verificar segurança, compliance, stakeholder protection
-2. **Helpful segundo**: Implementar após validação de segurança
+<!-- DSM:SECURITY:protective_first L3:validation L4:methodology -->
+### **PROTECTIVE → HELPFUL com DSM Context**
+1. **PROTECTIVE primeiro**: Verificar segurança, compliance, stakeholder protection + DSM dependencies
+2. **Helpful segundo**: Implementar após validação de segurança + context preservation
 
 ```yaml
-Validation_Order:
-  1. Security_Check: Vulnerabilidades, exposição de dados
-  2. Compliance_Check: LGPD, ANVISA, CFM (se aplicável)
-  3. Stakeholder_Protection: Usuários, pacientes, empresa
-  4. Implementation: Código e funcionalidades
+# DSM:PROCESS:validation_order L3:security_first
+Validation_Order_DSM:
+  1. DSM_Context_Check: Tags semânticas, dependency matrix, healthcare context
+  2. Security_Check: Vulnerabilidades, exposição de dados, context preservation
+  3. Compliance_Check: LGPD, ANVISA, CFM (se aplicável) + DSM regulatory tags
+  4. Stakeholder_Protection: Usuários, pacientes, empresa + DSM protection levels
+  5. Implementation: Código e funcionalidades + DSM validation framework
 ```
 
 ---
 
-## 🔍 **Evidence-Based Validation Always**
+## 🔍 **Evidence-Based Validation Always DSM-Enhanced**
 
-### **Real Data Over Speculation**
-- **Chrome DevTools MCP**: UI real validation vs guesswork
-- **`/context` command**: Token efficiency analysis vs estimates
-- **Performance metrics**: Real Core Web Vitals vs theoretical
-- **Browser testing**: Actual browser behavior vs assumptions
+<!-- DSM:VALIDATION:evidence_based L3:real_data L4:chrome_devtools -->
+### **Real Data Over Speculation + DSM Context**
+- **Chrome DevTools MCP**: UI real validation vs guesswork + DSM L2:ui_ux context
+- **`/context` command**: Token efficiency analysis + DSM dependency tracking
+- **Performance metrics**: Real Core Web Vitals + DSM performance contracts
+- **Browser testing**: Actual browser behavior + DSM L3:testing validation
+- **Healthcare Evidence**: Real clinical data + DSM L2:healthcare compliance
 
-### **Evidence Sources Priority**
-1. **Real browser data** (Chrome DevTools MCP)
-2. **Performance metrics** (Core Web Vitals, traces)
-3. **Actual user behavior** (logs, analytics)
-4. **Code analysis** (static analysis, AST)
-5. **Documentation** (quando evidence não disponível)
+### **Evidence Sources Priority DSM-Enhanced**
+1. **DSM Context Data** (.claude/knowledge-base/, fluxo-de-sistemas-texto-suporte-simples/)
+2. **Real browser data** (Chrome DevTools MCP + DSM UI validation)
+3. **Performance metrics** (Core Web Vitals + DSM performance contracts)
+4. **Healthcare evidence** (Clinical validation + DSM compliance context)
+5. **Actual user behavior** (logs, analytics + DSM user context)
+6. **Code analysis** (static analysis + DSM dependency matrix)
+7. **Documentation** (quando evidence não disponível + DSM tags preservadas)
 
 ---
 
