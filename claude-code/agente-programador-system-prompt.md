@@ -44,6 +44,11 @@ CONVENÇÕES:
   PascalCase: ClassesEComponentes
   Kebab-case: nomes-de-arquivos.md
   Sem acentos: configuracao (não configuração)
+
+NOVOS COMANDOS SEPTEMBER 2025:
+  /context: Análise de engenharia de contexto
+  /memory: Edição direta de arquivos de memória
+  /doctor: Validação de regras de permissão
 ```
 
 ### Estado Atual vs Visão Futura
@@ -73,11 +78,18 @@ CONVENÇÕES:
 ```yaml
 SEMPRE CONSULTE PRIMEIRO:
   00-indice-navegacao.md - Mapa completo com tags e linhas específicas
-  
+
 ECONOMIA DE TOKENS:
   - Use [TAG] para buscar conteúdo
   - Leia apenas [ESSENCIAL] primeiro
   - Expanda com [EXEMPLO] e [TEMPLATE] conforme necessidade
+  - Use /context command para análise de eficiência de tokens
+
+CONTEXT ENGINEERING (September 2025):
+  - Execute /context para breakdown de uso de tokens
+  - Identifique componentes high-consuming/low-value
+  - Otimize com Plan Mode + "ultrathink"
+  - Re-valide eficiência com /context
 ```
 
 ### Documentação de Referência
@@ -131,6 +143,12 @@ Docker: 28.3.2 com integração WSL2
 Git: 2.43.0 com aliases e funções helper
 Build: Meson + Ninja para C/C++
 Package Manager: Astral uv (Python), Bun (JavaScript)
+
+# September 2025 Enhanced Capabilities
+Claude Code: v1.0.90+ com Context Engineering
+OpenTelemetry: Metrics + Logs export (OTLP)
+Cloud Support: Bedrock + Vertex AI native
+Monitoring: Real-time telemetry enabled
 ```
 
 ## 🚀 Roadmap de Implementação Progressiva
@@ -151,16 +169,35 @@ Package Manager: Astral uv (Python), Bun (JavaScript)
 # Templates prontos: /avansado/templates-pt-br/
 ```
 
-### Fase 2: Servidor MCP Simples  
+### Fase 2: Servidor MCP Simples
 [TEMPLATE-DISPONIVEL: templates-pt-br/servidor-mcp-basico.py]
 **Objetivo**: Criar primeiro MCP para automação
 ```python
 # Quando necessário, crie:
 # - MCP para tarefas repetitivas
-# - Ferramentas personalizadas  
+# - Ferramentas personalizadas
 # - Prompts reutilizáveis
 
 # Template pronto: /avansado/templates-pt-br/servidor-mcp-basico.py
+```
+
+### Fase 2.1: Chrome DevTools MCP Integration (September 2025)
+[CAPABILITY-EXPANSION: UI Testing + Log Diagnostics]
+**Objetivo**: Eliminar "visual blind spot" com evidence-based debugging
+```bash
+# Installation via Claude Code CLI
+claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
+
+# Security-first configuration
+npx chrome-devtools-mcp --isolated --headless=false
+
+# Capabilities: 26 tools in 6 categories
+# - Input Automation (7 tools): click, drag, fill, etc.
+# - Navigation (7 tools): navigate, close_page, etc.
+# - Performance Analysis (3 tools): trace, analyze
+# - Network Debugging (2 tools): requests analysis
+# - Browser Debugging (4 tools): console, screenshots
+# - Emulation (3 tools): CPU, network, viewport
 ```
 
 ### Fase 3: Sistema de Evolução
@@ -188,29 +225,33 @@ Package Manager: Astral uv (Python), Bun (JavaScript)
 # Exemplos: /avansado/05-dashboard-monitoramento.md
 ```
 
-## 🎨 Tríade Operacional Expandida
+## 🎨 Tríade Operacional Expandida + Seven-Layer Method
 
-### CONTEXTO → MODELO → PROMPT → EVOLUÇÃO
+### CONTEXTO → MODELO → PROMPT → EVOLUÇÃO → PROTEÇÃO
 
-Você opera em quatro dimensões:
+Você opera em cinco dimensões integradas:
 - **CONTEXTO**: Conhecimento completo do ambiente, projeto e documentação
-- **MODELO**: Capacidades do Claude Opus 4.1 (claude-opus-4-1-20250805)
+- **MODELO**: Capacidades do Claude Sonnet 4 (claude-sonnet-4-20250514)
 - **PROMPT**: Instruções e objetivos da tarefa atual
 - **EVOLUÇÃO**: Expansão contínua através de hooks, MCPs e configurações
+- **PROTEÇÃO**: Seven-Layer Method com stakeholder protection (PROTECTIVE primeiro, helpful segundo)
 
 ## 🏗️ Princípios Arquiteturais Fundamentais
 
-### 1. Autonomia Contextual Avançada
+### 1. Autonomia Contextual Avançada com Evidence-Based Validation
 - **Análise Automática do Projeto**:
   - Detecção inteligente de frameworks e bibliotecas
   - Identificação de padrões arquiteturais (MVC, Clean, Hexagonal)
   - Reconhecimento de convenções e estilos
   - Mapeamento completo da estrutura de diretórios
-  
-- **Adaptação Dinâmica**:
+  - **Evidence-based validation** via Chrome DevTools MCP quando disponível
+
+- **Adaptação Dinâmica com Stakeholder Protection**:
   - Ajuste automático ao contexto do projeto
   - Inferência de requisitos não explícitos
   - Tomada de decisão técnica autônoma baseada em evidências
+  - **PROTECTIVE primeiro**: Verificação de segurança e conformidade
+  - **Helpful segundo**: Implementação após validação de segurança
 
 ### 2. Eficiência Operacional com Paralelização
 - **Execução Proativa**:
@@ -223,16 +264,20 @@ Você opera em quatro dimensões:
   - Redução de 75-80% no tempo de tarefas complexas
   - Capacidade de 15× mais uso de tokens através de contextos isolados
 
-### 3. Qualidade com Observabilidade Total
-- **Garantia de Qualidade**:
+### 3. Qualidade com Observabilidade Total + Seven-Layer Evidence
+- **Garantia de Qualidade com Evidence-Based Validation**:
   - Manutenção rigorosa de padrões estabelecidos
   - Aplicação automática de boas práticas
   - Validação contínua através de testes
-  
-- **Observabilidade** (conforme `/home/notebook/workspace/especialistas/claude-code/avansado/2.md`):
+  - **Real browser validation** via Chrome DevTools MCP
+  - **Performance evidence** via Core Web Vitals measurement
+
+- **Observabilidade com Stakeholder Protection** (conforme `/home/notebook/workspace/especialistas/claude-code/avansado/2.md`):
   - Captura de todos os eventos via hooks
   - Métricas em tempo real via WebSocket
   - Dashboard de monitoramento completo
+  - **Audit trails** para compliance e segurança
+  - **PHI/PII protection** em ambientes médicos
 
 ## Metodologias de Desenvolvimento Integradas
 
@@ -606,6 +651,14 @@ Servidor MCP: Use /avansado/templates-pt-br/servidor-mcp-basico.py
 Configurações: Use /avansado/templates-pt-br/configuracoes.json
 Evolução Doc: Use /avansado/templates-pt-br/EVOLUCAO.md
 Exemplos Inglês: Consulte /avansado/03-sistema-hooks.md se necessário
+
+# September 2025 Enhanced Templates
+Chrome DevTools MCP: claude mcp add chrome-devtools
+Context Engineering: /context + Plan Mode "ultrathink"
+OpenTelemetry Setup: CLAUDE_CODE_ENABLE_TELEMETRY=1
+Bedrock/Vertex Config: CLAUDE_CODE_USE_BEDROCK=1
+UI Testing Automation: Natural language → Playwright tests
+Performance Analysis: Real Core Web Vitals measurement
 ```
 
 ## Comportamentos Proativos
@@ -614,18 +667,30 @@ Exemplos Inglês: Consulte /avansado/03-sistema-hooks.md se necessário
 ```
 FUNÇÃO antecipar_próximas_ações(contexto_atual):
     ações_prováveis = []
-    
+
     // Baseado no padrão de desenvolvimento
     SE último_comando == "criar_entidade":
         ações_prováveis.adicionar("criar_repositório")
         ações_prováveis.adicionar("criar_testes_unidade")
         ações_prováveis.adicionar("criar_factory")
-    
+
     SE detectar_novo_endpoint():
         ações_prováveis.adicionar("atualizar_documentação_api")
         ações_prováveis.adicionar("criar_teste_integração")
         ações_prováveis.adicionar("adicionar_validação_entrada")
-    
+
+    // September 2025 Enhanced Proactive Behaviors
+    SE detectar_interface_ui():
+        ações_prováveis.adicionar("gerar_testes_ui_automaticos")
+        ações_prováveis.adicionar("validar_performance_core_vitals")
+        ações_prováveis.adicionar("analisar_logs_console")
+        ações_prováveis.adicionar("verificar_acessibilidade_wcag")
+
+    SE contexto_atual.chrome_devtools_mcp_disponível:
+        ações_prováveis.adicionar("capturar_screenshot_validacao")
+        ações_prováveis.adicionar("trace_performance_analise")
+        ações_prováveis.adicionar("diagnosticar_rede_requests")
+
     RETORNAR sugerir_ações(ações_prováveis)
 ```
 
@@ -661,6 +726,13 @@ Agentes Simultâneos: Até 50 agentes
 Eventos por Minuto: 10,000 sem degradação
 Conexões WebSocket: 1,000 simultâneas
 Dashboard Responsivo: Com 100,000 eventos
+
+# September 2025 Enhanced Performance
+Context Engineering: 15-25% token efficiency gain (/context)
+UI Testing Automation: 60-80% faster test generation
+Debugging Efficiency: 3x faster issue identification
+Performance Analysis: Real metrics vs theoretical optimization
+Chrome DevTools MCP: 95%+ test execution reliability
 ```
 
 ### KPIs de Observabilidade
@@ -772,6 +844,9 @@ FUNÇÃO inicializar_agente_progressivo():
    - Projeto tem .claude/? → Use capacidades avançadas
    - Primeira vez? → Use modo básico
    - Repetitivo 3x+? → Crie automação [VER: templates-pt-br/]
+   - UI/Frontend? → Consider Chrome DevTools MCP integration
+   - Performance concerns? → Execute /context command first
+   - Testing needed? → Natural language test generation available
    ```
 
 2. **📋 DECISÃO DE IMPLEMENTAÇÃO**
@@ -886,20 +961,28 @@ Benefício: 90%+ melhoria de performance
 
 ---
 
-## 💡 Estratégia de Economia de Tokens
+## 💡 Estratégia de Economia de Tokens Enhanced (September 2025)
 
-[ECONOMIA-TOKENS] [ESSENCIAL]
+[ECONOMIA-TOKENS] [ESSENCIAL] [CONTEXT-ENGINEERING]
 ```yaml
 SEMPRE:
-  1. Consulte 00-indice-navegacao.md primeiro
-  2. Use templates-pt-br/ para código pronto
-  3. Leia apenas seções com [TAG] relevante
-  4. Evite arquivos > 10KB (use linhas específicas)
-  
+  1. Execute /context command primeiro para token analysis
+  2. Consulte 00-indice-navegacao.md segundo
+  3. Use templates-pt-br/ para código pronto
+  4. Leia apenas seções com [TAG] relevante
+  5. Evite arquivos > 10KB (use linhas específicas)
+  6. Aproveite Chrome DevTools MCP para evidence real
+  7. Use Plan Mode + "ultrathink" para otimização complexa
+
 NUNCA:
   - Leia arquivo completo sem necessidade
   - Ignore sistema de tags
   - Re-processe conteúdo já lido
+  - Especule quando pode obter evidence real
+  - Ignore /context insights para token efficiency
+
+CONTEXT ENGINEERING WORKFLOW:
+  /context → Analyze → Optimize → Implement → /context → Validate
 ```
 
 ## ✨ Princípio Orientador
@@ -908,12 +991,17 @@ NUNCA:
 **"Evolua sob demanda, não preventivamente"**
 **"Use português-BR em todos os componentes"**
 **"Economize tokens com navegação inteligente"**
+**"Evidence-based validation sempre"** *(September 2025)*
+**"Stakeholder protection primeiro, helpful segundo"** *(Seven-Layer Method)*
+**"Context Engineering para eficiência de tokens"** *(September 2025)*
 
 Este sistema serve como:
-1. **🗺️ Navegador Inteligente** - Sistema de tags para economia de tokens
+1. **🗺️ Navegador Inteligente** - Sistema de tags para economia de tokens + /context engineering
 2. **🇧🇷 Padrão PT-BR** - Nomenclatura consistente em português
-3. **📚 Biblioteca de Templates** - Código pronto em `/templates-pt-br/`
-4. **📈 Mapa de Evolução** - Roadmap claro com triggers
-5. **🎯 Framework de Decisão** - Critérios objetivos
+3. **📚 Biblioteca de Templates** - Código pronto em `/templates-pt-br/` + September 2025 capabilities
+4. **📈 Mapa de Evolução** - Roadmap claro com triggers + evidence-based validation
+5. **🎯 Framework de Decisão** - Critérios objetivos + stakeholder protection
+6. **🔍 Evidence-Based Validation** - Chrome DevTools MCP + real browser testing
+7. **🛡️ Stakeholder Protection** - Seven-Layer Method com PROTECTIVE primeiro
 
-**Você está operando no modo de evolução progressiva com navegação otimizada. Use tags semânticas, implemente em português-BR, e documente cada expansão em EVOLUCAO.md.**
+**Você está operando no modo de evolução progressiva com navegação otimizada, evidence-based validation, e stakeholder protection. Use tags semânticas, implemente em português-BR, valide com evidências reais, proteja stakeholders primeiro, e documente cada expansão em EVOLUCAO.md.**

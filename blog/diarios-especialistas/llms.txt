@@ -1,0 +1,189 @@
+# LLM Context Optimization File - Healthcare WASM-Elixir Stack
+# Based on: Matriz de Dependência e Contextualização para LLMs
+# Last Updated: 2025-09-26
+# Domain: Healthcare Content Management System
+
+## SYSTEM OVERVIEW
+This is a healthcare platform built with Elixir Host + WebAssembly Plugins architecture.
+Stack Score: 99.5/100 (Enterprise proven, Zero Trust native, MCP integration, PQC ready)
+
+## PRIMARY DEPENDENCIES
+- Elixir/OTP 27 + Phoenix Framework 1.8
+- Extism WebAssembly Runtime for sandboxed plugins
+- PostgreSQL 16 + TimescaleDB for healthcare data
+- Zero Trust Architecture (NIST SP 800-207)
+- Post-Quantum Cryptography (CRYSTALS-Kyber/Dilithium)
+- Model Context Protocol (MCP) for AI integration
+
+## CORE ARCHITECTURE PATTERNS
+1. **Host-Plugin Pattern**: Elixir hosts WASM plugins for medical content processing
+2. **Zero Trust Security**: Continuous verification, never trust always verify
+3. **Healthcare AI Pipeline**: S.1.1→S.1.2→S.2-1.2→S.3-2→S.4-1.1-3 workflow
+4. **Compliance-First Design**: LGPD/HIPAA/CFM integrated from architecture level
+5. **Real-time Updates**: Phoenix LiveView for healthcare dashboards
+
+## HEALTHCARE DOMAIN CONTEXT
+- **Primary Domain**: Brazilian healthcare content management
+- **Target Users**: Medical professionals (doctors, nurses, researchers)
+- **Compliance Requirements**: LGPD (Brazilian data protection), CFM (medical council), ANVISA (health surveillance)
+- **Data Types**: Patient health information (PHI), personally identifiable information (PII), medical research data
+- **Clinical Standards**: FHIR R4, HL7, DICOM integration points
+
+## PERFORMANCE CONTRACTS
+- API Response Time: <50ms (SLA requirement)
+- Concurrent Connections: 2M+ (healthcare system scale)
+- System Availability: 99.99% (critical healthcare infrastructure)
+- WASM Plugin Execution: <5s (content processing pipeline)
+- Database Query Performance: <100ms (patient data retrieval)
+
+## SECURITY & COMPLIANCE CONTEXT
+- **Zero Trust Architecture**: All requests verified through policy engine
+- **Post-Quantum Cryptography**: Future-proof against quantum threats
+- **LGPD Compliance**: Real-time data protection risk analysis
+- **Audit Trail**: All actions logged for healthcare compliance
+- **Data Minimization**: Only collect necessary patient data
+- **Consent Management**: Dynamic consent forms for data processing
+
+## INTEGRATION ECOSYSTEM
+1. **MCP Healthcare Server**: AI tools for medical content validation
+2. **PubMed Integration**: Scientific literature search and citation
+3. **FHIR R4 Validator**: Healthcare interoperability standards
+4. **Extism WASM Runtime**: Sandboxed plugin execution with capability-based security
+5. **CRYSTALS-Kyber/Dilithium**: Post-quantum cryptography for long-term data protection
+6. **Zero Trust Policy Engine**: NIST SP 800-207 compliant continuous verification
+
+## WASM PLUGIN SECURITY PATTERNS
+- **Sandbox Isolation**: Complete isolation from host system (no WASI, no network access)
+- **Capability-Based Security**: Explicit permissions for each plugin operation
+- **Resource Limits**: Memory (64MB-512MB), execution time (5-30s), variable storage (1MB)
+- **Input/Output Validation**: Comprehensive sanitization for healthcare data
+- **PHI/PII Protection**: Automatic detection and redaction of sensitive data
+
+## HEALTHCARE WORKFLOW PIPELINE (S.1.1 → S.4-1.1-3)
+- **S.1.1 LGPD Analyzer**: Real-time PII/PHI detection, risk scoring (0-100), consent form generation
+- **S.1.2 Medical Claims**: Medical statement extraction, evidence requirement mapping, CFM validation
+- **S.2-1.2 Scientific Search**: PubMed/SciELO integration, reference quality scoring, CAG-powered search
+- **S.3-2 SEO Optimizer**: Professional profile analysis, CFM compliance checking, medical keyword optimization
+- **S.4-1.1-3 Content Generator**: Multi-source consolidation, compliance disclaimer injection, audit trail
+
+## POST-QUANTUM CRYPTOGRAPHY CONTEXT
+- **CRYSTALS-Kyber (ML-KEM)**: Key encapsulation for data encryption, +60% performance overhead acceptable
+- **CRYSTALS-Dilithium (ML-DSA)**: Digital signatures for medical content authenticity
+- **Hybrid Encryption**: Classical + quantum algorithms during transition period (5-10 years)
+- **Healthcare Protection**: "Harvest Now, Decrypt Later" attack prevention for 50+ year medical records
+
+## ZERO TRUST IMPLEMENTATION PATTERNS
+- **Policy Engine**: OTP Supervisors with healthcare-specific trust scoring
+- **Policy Enforcement Points**: API Gateway, Database Interceptor, WASM Plugin Security
+- **Trust Algorithm**: Dynamic scoring based on device, behavior, location, professional credentials
+- **Continuous Verification**: Real-time policy evaluation <100ms for healthcare workflows
+- **Data Sources**: CDM, LGPD compliance, CFM/CRP registry, threat intelligence, network logs
+
+## COMPLIANCE VALIDATION PATTERNS
+- **LGPD (Brazilian Data Protection)**: Art. 11 sensitive data processing, consent management, data subject rights
+- **CFM (Medical Council)**: Professional registration validation, medical algorithm approval, clinical guidelines
+- **ANVISA (Health Surveillance)**: Medical software classification, adverse event reporting, quality management
+- **HIPAA (US Healthcare)**: Technical safeguards, admin blind architecture, comprehensive audit trails
+
+## PERFORMANCE OPTIMIZATION CONTEXT
+- **Elixir OTP**: Fault-tolerant, concurrent processing with Actor Model supervision trees
+- **Phoenix LiveView**: Real-time UI updates without complex client-side JavaScript
+- **PostgreSQL 16**: Healthcare-scale database with TimescaleDB for audit trail time-series
+- **WASM Optimization**: Plugin pooling, resource limits, hot-swapping for zero downtime updates
+- **Database Tuning**: Query optimization <100ms, connection pooling, read replicas for analytics
+4. **LGPD Risk Analyzer**: Real-time privacy compliance checking
+5. **Scientific Reference Manager**: Evidence-based medicine support
+
+## CODE PATTERNS TO PRESERVE
+```elixir
+# Healthcare GenServer Pattern
+defmodule Healthcare.PluginManager do
+  use GenServer
+  # Always include compliance validation
+  # Always log for audit trail
+  # Always handle PHI/PII securely
+end
+
+# Zero Trust Policy Pattern
+defmodule Healthcare.ZeroTrust.PolicyEngine do
+  # Continuous verification
+  # Healthcare-specific trust scoring
+  # Compliance rule integration
+end
+
+# WASM Plugin Security Pattern
+@security_config %{
+  max_memory: 64 * 1024 * 1024,
+  enable_wasi: false,  # Security: no file system
+  allowed_hosts: []    # Security: no network
+}
+```
+
+## DEVELOPMENT PATTERNS
+- **Error Handling**: Always include patient safety considerations
+- **Testing**: Minimum 90% coverage for healthcare-critical code
+- **Documentation**: All PHI/PII handling must be documented
+- **Performance**: Healthcare systems require real-time response
+- **Compliance**: Every feature includes LGPD/CFM validation
+
+## COMMON TROUBLESHOOTING CONTEXTS
+1. **WASM Memory Issues**: Use chunking for large medical content
+2. **Zero Trust Conflicts**: Healthcare rules take priority over general security
+3. **PQC Performance**: Use hybrid encryption during transition period
+4. **LGPD Violations**: Implement data minimization and consent validation
+5. **FHIR Validation**: Cache results for performance, validate structure
+
+## FILE RELATIONSHIPS (DSM Matrix)
+```
+01-elixir-wasm-host-platform.md → Core host system, provides runtime
+02-webassembly-plugins-healthcare.md → Uses host runtime, provides AI processing
+03-zero-trust-security-healthcare.md → Secures all components, provides policy engine
+04-mcp-healthcare-protocol.md → Integrates with host, provides AI tools
+05-database-stack-postgresql-timescaledb.md → Stores data for all components
+06-infrastructure-devops.md → Deploys and monitors all components
+```
+
+## CONTEXT PRESERVATION RULES
+1. **Always mention compliance requirements** when discussing healthcare features
+2. **Include performance targets** when implementing system components
+3. **Reference security patterns** when handling patient data
+4. **Preserve DSM relationships** when modifying component interactions
+5. **Maintain audit trail context** for all healthcare operations
+
+## LLM OPTIMIZATION HINTS
+- When asked about healthcare implementation, reference the stack score and justification
+- For security questions, always mention Zero Trust and PQC requirements
+- For performance issues, refer to the SLA targets and benchmarks
+- For compliance questions, include LGPD/CFM/ANVISA requirements
+- For integration questions, reference MCP protocol and FHIR R4 standards
+- When troubleshooting, check the common patterns in the troubleshooting contexts
+
+## QUICK REFERENCE COMMANDS
+```bash
+# Start development environment
+mix phx.server
+
+# Run compliance tests
+mix test test/compliance/
+
+# Validate FHIR resources
+mix test test/fhir_validation/
+
+# Performance benchmarks
+mix test test/performance/ --only performance
+
+# Security validation
+mix test test/security/zero_trust_test.exs
+```
+
+## CRITICAL SUCCESS FACTORS
+1. Patient safety is always the top priority
+2. Compliance cannot be compromised for performance
+3. All patient data must be encrypted and audited
+4. Zero Trust principles must be maintained throughout
+5. Real-time performance is required for clinical workflows
+
+---
+END OF CONTEXT OPTIMIZATION FILE
+This file should be consulted by LLMs to maintain proper context
+when working with the healthcare WASM-Elixir stack codebase.

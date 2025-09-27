@@ -4,71 +4,11 @@
 Realize a <tarefa> seguindo as <praticas>.
 
 <tarefa>
-Verifique se
-o /home/notebook/workspace/blog/.claude/commands/diagnostico-aprofundado.md
-preve a necessidade do conhecumento da pasta para a execucao /home/notebook/workspace/blog/docs/01-internal-tech/requirements-and-vision
-
-.
-|-- 02_ARQUITETURA_TECNICA
-|   |-- 01_STACK_E_FRONTEND.md
-|   |-- 02_DADOS.md
-|   |-- 03_SEGURANCA.md
-|   |-- 04_QUANTUM_READY.md
-|   `-- 07_GUIA_USO_VERTEX_AI.md
-|-- 03_COMPLIANCE
-|   `-- PLANO_DE_COMPLIANCE.md
-|-- arquivos-para-referenciar
-|   |-- formatos-arquivos-requisitos.md
-|   `-- metodos-marcacao-codigo.md
-|-- assets
-|   |-- base-de-conhecimento-elixir
-|   `-- PROTOTIPO_INTERFACE.jsx
-|-- Fluxo de Exemplo
-|   |-- 1.png
-|   |-- 1.png:Zone.Identifier
-|   |-- 2.png
-|   |-- 2.png:Zone.Identifier
-|   |-- 3.png
-|   |-- 3.png:Zone.Identifier
-|   |-- 4.png
-|   |-- 4.png:Zone.Identifier
-|   |-- exemplo de fluxo de sistemas de LLM 1.png
-|   |-- exemplo de fluxo de sistemas de LLM 1.png:Zone.Identifier
-|   |-- exemplo de fluxo de sistemas de LLM 2.png
-|   |-- exemplo de fluxo de sistemas de LLM 2.png:Zone.Identifier
-|   |-- exemplo de fluxo de sistemas de LLM 3.png
-|   |-- exemplo de fluxo de sistemas de LLM 3.png:Zone.Identifier
-|   |-- exemplo de fluxo de sistemas de LLM 5.png
-|   |-- exemplo de fluxo de sistemas de LLM 5.png:Zone.Identifier
-|   |-- exemplo de fluxo de sistemas de LLM 6.png
-|   |-- exemplo de fluxo de sistemas de LLM 6.png:Zone.Identifier
-|   |-- screencapture-claude-ai-public-artifacts-4a0ccd85-24ab-4f11-a349-ff01921fc86c-2025-07-08-15_59_22.png
-|   `-- screencapture-claude-ai-public-artifacts-4a0ccd85-24ab-4f11-a349-ff01921fc86c-2025-07-08-15_59_22.png:Zone.Identifier
-|-- Playgrond
-|   |-- 1.png
-|   |-- 1.png:Zone.Identifier
-|   |-- 2.png
-|   |-- 2.png:Zone.Identifier
-|   |-- 3.png
-|   |-- 3.png:Zone.Identifier
-|   |-- Playground 2.1 - Apresentacao do elemento expandido para estudo e otimizacao.png
-|   |-- Playground 2 - Apresentacao do fluxo de sistemas existente para a funcao.png
-|   |-- Playground criar sistema - estrutura sem ainda sem a interacao com contexto.png
-|   `-- Playground criar sistema - estrutura sem ainda sem a interacao com contexto.png:Zone.Identifier
-|-- requisitos_desenvolvimento
-|   |-- features
-|   |-- ui_ux
-|   `-- 00_VISAO_GERAL_E_REGRAS.md
-|-- 00_VISAO_E_PRODUTO.md
-|-- 01_ARQUITETURA_FUNCIONAL.md
-|-- 04_REQUISITOS_NAO_FUNCIONAIS.md
-|-- 06_PARIDADE_FUNCIONAL.md
-|-- INTERFACES-PROJETO-BM.md
-|-- PLANO_DESENVOLVIMENTO.md
-|-- README.md
-`-- WORDPRESS_VISUAL_REQUIREMENTS.md
-
-11 directories, 48 files
+Adicone a pesquisa e atualizacao de documentos o lancamento do MCP dev tolls do
+google chrme, diretries de uso e todas as possibilidades que esse mcp abre para
+as capacidades de geracao de testes de UIs e diagnostivos de logs pelo claude
+code.
+$AUGMENT
 </tarefa>
 
 <-SESSÃO DE RESPONSABILIDADE DO USUÁRIO - APENAS PARA LEITURA->
@@ -78,9 +18,9 @@ preve a necessidade do conhecumento da pasta para a execucao /home/notebook/work
 
 ## Foco Principal
 
-**Especialista em Diagnóstico e Configuração para LLMs de Desenvolvimento + Seven-Layer Documentation Method**
+**Especialista em Diagnóstico e Configuração para LLMs de Desenvolvimento + Seven-Layer Documentation Method + Claude Code September 2025 Updates**
 
-Este repositório contém diretrizes, templates e recursos para **diagnosticar e configurar LLMs de Desenvolvimento em qualquer projeto** seguindo **evidence-based validation** e **stakeholder protection principles**. Minha função é atuar como especialista para otimizar fluxos de trabalho entre você e instâncias de LLMs em projetos de desenvolvimento de software, aplicando a **metodologia Seven-Layer Docs** (Phoenix Medical Platform) e **Anthropic 2025 best practices**.
+Sou especialista configurado para **diagnosticar, otimizar e configurar LLMs de Desenvolvimento em qualquer projeto** seguindo **evidence-based validation** e **stakeholder protection principles**. Aplico a **metodologia Seven-Layer Documentation** (Phoenix Medical Platform) e **Anthropic 2025 best practices** incluindo as **latest September 2025 Claude Code updates**: `/context` command para Bedrock/Vertex, OpenTelemetry enhancements, e context engineering tools.
 
 ### ⚠️ Separação de Responsabilidades
 
@@ -328,13 +268,22 @@ Evidence_Based_Validation:
     - maximum: "ultrathink"
 ```
 
-#### **Commands System (SEMPRE USAR)**
+#### **🔄 Commands System (Reorganizado 2025)**
 ```bash
-# OBRIGATÓRIO: Use o sistema de commands para TODOS os projetos
-/diagnostico-aprofundado          # Evidence validation + stakeholder analysis
-/planejamento-roadmap-expandido   # Seven-Layer planning + risk prioritization
-/executar-roadmap-expandido       # Evidence collection + implementation
-/validacao-entrega               # Zero-breakage + stakeholder protection
+# HUB CENTRAL ATIVO:
+/LLM-main                        # [ACTIVE] Hub central em .claude/commands/
+
+# COMMANDS UNIVERSAIS (reutilizáveis em qualquer projeto):
+commands-universais/diagnostico-aprofundado.md          # Evidence validation + stakeholder analysis
+commands-universais/planejamento-roadmap-expandido.md   # Seven-Layer planning + risk prioritization
+commands-universais/executar-roadmap-expandido.md       # Evidence collection + implementation
+commands-universais/validacao-entrega.md               # Zero-breakage + stakeholder protection
+
+# COMMANDS ESPECÍFICOS (por projeto/domínio):
+commands-blog-medico/PRD-ATT.md                        # Medical platform PRD generation
+
+# PARA USAR EM PROJETO:
+cp -r commands-universais/* /projeto/.claude/commands/  # Deploy universal commands
 ```
 
 #### **LLM Context Master Document Generation**
@@ -364,8 +313,14 @@ Todos os commands incluem resumos executivos:
 - 📤 **Outputs gerados**: Expected deliverables
 - ⚠️ **Critical**: Important methodologies/warnings
 
-- Sempre gere uma nova branch para realizar qualquer proposta aceita e não se esqueça de atualizar os arquivos de .claude/docs após a implementação
-- **CRÍTICO**: Use sempre o sistema de commands + Seven-Layer validation
+### ⚠️ **Diretrizes de Implementação (2025 Enhanced)**
+- **Branch Management**: Nova branch para propostas aceitas + update `.claude/docs`
+- **Commands Obrigatórios**: Use sistema reorganizado (universais + específicos)
+- **Seven-Layer Validation**: Evidence-based + stakeholder protection sempre
+- **Anthropic 2025 Compliance**: Subagents nativos + Task tool parallelization
+- **Template Usage**: Use `avansado/templates-pt-br/` para Python functionality
+- **Performance Focus**: Aplique +90.2% improvement practices validadas
+- **Continuous Validation**: Weekly accuracy reviews + evidence collection
 
 ## 🐍 Conhecimento Python Disponível para Otimização de LLMs
 
@@ -590,12 +545,290 @@ Commands_Integration_Benefits:
   zero_regression_testing: "Comprehensive validation framework"
 ```
 
-**Status**: Sistema completo Seven-Layer + Python + Commands integrado ✅
-**Cobertura**: Evidence-based validation, Stakeholder protection, Hooks, MCP, Performance, Automation, Multi-agent
-**Templates**: Funcionais + Seven-Layer enhanced + Commands system
-**Documentação**: Evidence-based + Anthropic 2025 compliance + Phoenix Medical Platform lessons
-**Commands**: Sistema completo diagnostic → planning → execution → validation
-**Methodology**: Seven-Layer Documentation Method + Continuous validation
-**Philosophy**: PROTECTIVE first, helpful second - Documentation prevents harm
+### 🚀 **Claude Code September 2025 Updates (Evidence-Based)**
+
+#### **NEW: Context Engineering Capabilities**
+```yaml
+September_2025_Features:
+  context_command:
+    tool: "/context"
+    purpose: "Context inspection and optimization"
+    platforms: "Bedrock + Vertex AI enabled"
+    capabilities:
+      - token_usage_breakdown: "System Prompt, MCP tools, Memory files, Messages"
+      - optimization_strategy: "Identifies high-consumption, low-value components"
+      - context_engineering: "Body-fat scale for Claude Code conversations"
+
+  enterprise_enhancements:
+    permission_doctor: "/doctor - Permission rule validation + fixes"
+    memory_editing: "/memory - Direct editing of imported memory files"
+    hot_reload_settings: "Settings apply immediately, no restart"
+    vertex_global_endpoints: "Cross-region availability improvement"
+```
+
+#### **OpenTelemetry Integration Enhanced**
+```bash
+# September 2025 Configuration
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_LOGS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer token"
+
+# Production Ready Features:
+# ✅ SigNoz, Datadog, Grafana Cloud integration
+# ✅ Comprehensive metrics and events export
+# ⚠️ mTLS not documented (use Collector workaround)
+```
+
+#### **Integration with Specialist Workflows**
+```bash
+# UPDATED Commands with Context Engineering:
+/context → /diagnostico-aprofundado    # Context analysis + evidence validation
+/memory → /planejamento-roadmap       # Memory optimization + strategic planning
+/doctor → /validacao-entrega          # Permission validation + delivery checks
+
+# Context Engineering Workflow:
+/context → Analyze → Plan Mode "ultrathink" → Optimize → /context → Validate
+```
+
+### 🔧 **Chrome DevTools MCP Integration (September 2025)**
+
+#### **NEW: Browser Debugging & UI Testing Capabilities**
+```yaml
+Chrome_DevTools_MCP_Launch:
+  release_date: "September 23, 2025"
+  status: "Public Preview by Google Chrome DevTools Team"
+  integration: "Native Claude Code support via claude mcp add"
+
+  capabilities:
+    tool_categories: "6 categories, 26 specialized tools"
+    ui_testing: "Natural language to Playwright test generation"
+    log_diagnostics: "Real-time console message analysis"
+    performance_analysis: "Core Web Vitals monitoring with AI insights"
+
+  installation:
+    claude_code: "claude mcp add chrome-devtools npx chrome-devtools-mcp@latest"
+    verification: "claude mcp list"
+    security: "--isolated flag mandatory for production safety"
+```
+
+#### **UI Testing Automation Revolution**
+```bash
+# Natural Language Test Generation
+# Input: "Test login form with valid credentials and check performance"
+# Output: Full Playwright test with performance validation
+
+# Chrome DevTools MCP Tools Available:
+# Input Automation (7): click, drag, fill, fill_form, handle_dialog, hover, upload_file
+# Navigation (7): close_page, list_pages, navigate_page, new_page, select_page, wait_for
+# Performance (3): performance_analyze_insight, performance_start_trace, performance_stop_trace
+# Network Debugging (2): get_network_request, list_network_requests
+# Browser Debugging (4): evaluate_script, list_console_messages, take_screenshot, take_snapshot
+# Emulation (3): emulate_cpu, emulate_network, resize_page
+```
+
+#### **Evidence-Based Debugging Enhancement**
+```yaml
+Debugging_Revolution:
+  before: "AI blind spots - theoretical code suggestions without runtime context"
+  after: "Evidence-based debugging with real browser data access"
+  breakthrough: "Eliminates 'visual blind spot' problem of AI programming assistants"
+
+  capabilities:
+    console_analysis: "Automatic error pattern recognition"
+    network_debugging: "CORS, performance, resource optimization insights"
+    performance_tracing: "Real Core Web Vitals measurement and optimization"
+    ui_validation: "Screenshot-based verification of generated code"
+
+  integration_with_specialist:
+    commands_enhanced: "All universal commands now support UI testing validation"
+    evidence_collection: "Browser runtime data for stakeholder protection"
+    continuous_validation: "Automated UI regression testing"
+```
+
+#### **Healthcare Platform Security Integration**
+```yaml
+Healthcare_MCP_Security:
+  mandatory_isolation: "--isolated flag for PHI/PII protection"
+  synthetic_data_only: "No production credentials in testing browser"
+  audit_logging: "Complete browser interaction logging for compliance"
+
+  medical_compliance:
+    lgpd_testing: "Automated consent flow validation"
+    anvisa_compliance: "Medical device software testing protocols"
+    cfm_ethics: "Professional interface guidelines validation"
+    accessibility_wcag: "Clinical interface accessibility compliance"
+```
+
+#### **Performance Integration with September 2025 Features**
+```bash
+# Enhanced Context Engineering with Browser Data
+/context + Chrome DevTools MCP → Real browser performance context
+/memory + UI Testing → Memory optimization with actual UI validation
+/doctor + Network Analysis → Permission validation with network debugging
+
+# Evidence-Based Workflow Enhancement
+Browser Evidence Collection → Seven-Layer Validation → Stakeholder Protection
+```
+
+## 🧩 **Matriz de Dependência e Contextualização para LLMs (DSM)**
+
+### **Implementação Evidence-Based Healthcare Stack**
+
+#### **Core DSM Methodology Integration**
+```yaml
+DSM_Healthcare_Implementation:
+  tagueamento_semantico:
+    L1_DOMAIN: "infrastructure, business_logic, data_layer, integration, security, ui_ux"
+    L2_SUBDOMAIN: "healthcare, compliance, scientific, performance, ai_pipeline"
+    L3_TECHNICAL: "architecture, implementation, configuration, testing, optimization, documentation"
+    L4_SPECIFICITY: "example, reference, guide, troubleshooting, benchmark, compliance_check"
+
+  dependency_structure_matrix:
+    format: "depends_on → provides_to → integrates_with"
+    healthcare_context: "PHI/PII handling, clinical decision support, integration requirements"
+    performance_contracts: "SLA targets with healthcare justification"
+    compliance_requirements: "LGPD, CFM, ANVISA, HIPAA, Zero Trust NIST SP 800-207"
+
+  context_preservation_rules:
+    mandatory_elements: "DSM tags, dependency matrix, healthcare context"
+    validation_metrics: "Completeness 90%+, Consistency 95%+, Currency weekly+"
+    quality_gates: "86% implementation score (GOOD), ready for healthcare production"
+```
+
+#### **Healthcare-Specific Context Enhancement**
+```yaml
+Healthcare_DSM_Extensions:
+  phi_pii_handling:
+    - "Always tag functions handling patient data"
+    - "Include data minimization context"
+    - "Document consent requirements (LGPD Art. 11)"
+    - "Preserve audit trail requirements"
+
+  clinical_decision_support:
+    - "Tag medical algorithms with evidence level"
+    - "Include FDA/ANVISA approval status"
+    - "Document clinical validation requirements"
+    - "Preserve performance benchmarks (<5s SLA)"
+
+  integration_requirements:
+    - "FHIR R4 compatibility context"
+    - "HL7 message format requirements"
+    - "DICOM integration points"
+    - "Clinical terminology mappings"
+
+  zero_trust_healthcare:
+    - "Policy Engine com scoring médico"
+    - "Trust Algorithm específico para healthcare"
+    - "Compliance automática LGPD/CFM/CRP"
+    - "Continuous verification context"
+```
+
+#### **LLM Context Optimization (llms.txt Pattern)**
+```yaml
+LLM_Optimization_Healthcare:
+  context_preservation:
+    - "Stack Score: 99.5/100 (Enterprise proven, Zero Trust native, MCP integration, PQC ready)"
+    - "Performance Contracts: <50ms response, 2M+ concurrent, 99.99% availability"
+    - "Security Context: Zero Trust + Post-Quantum Cryptography"
+    - "Compliance Context: LGPD/HIPAA/CFM integrated from architecture level"
+
+  dependency_context:
+    - "Elixir/OTP 27 + Phoenix Framework 1.8 + Extism WebAssembly Runtime"
+    - "PostgreSQL 16 + TimescaleDB for healthcare data"
+    - "Model Context Protocol (MCP) for AI integration"
+    - "Zero Trust Architecture (NIST SP 800-207)"
+
+  healthcare_patterns:
+    - "Host-Plugin Pattern: Elixir hosts WASM plugins for medical content processing"
+    - "Healthcare AI Pipeline: S.1.1→S.1.2→S.2-1.2→S.3-2→S.4-1.1-3 workflow"
+    - "Compliance-First Design: LGPD/HIPAA/CFM integrated from architecture level"
+    - "Real-time Updates: Phoenix LiveView for healthcare dashboards"
+```
+
+#### **DSM Validation Framework**
+```bash
+# Healthcare DSM Quality Validation
+DSM_VALIDATION_SCRIPT=".dsm-validation.sh"
+QUALITY_METRICS:
+  - DSM_Tag_Coverage: "80%+ target (healthcare files)"
+  - Healthcare_Context: "70%+ coverage (PHI/PII handling)"
+  - Performance_Context: "60%+ coverage (SLA targets)"
+  - Dependency_Matrix: "90%+ complete matrices"
+  - Compliance_Context: "LGPD (3+), CFM (2+), Zero Trust (3+) mentions"
+
+VALIDATION_RESULTS:
+  - Total_Quality_Score: "86% (GOOD)"
+  - Ready_for_Production: "Healthcare production ready"
+  - Context_Preservation: "Well-implemented"
+```
+
+#### **Integration with Seven-Layer Method**
+```yaml
+DSM_Seven_Layer_Integration:
+  evidence_validation:
+    - "DSM tags validate real vs alleged functionality"
+    - "Dependency matrices prevent broken references"
+    - "Healthcare context ensures compliance accuracy"
+
+  stakeholder_protection:
+    - "Healthcare-specific context prevents medical misinformation"
+    - "Compliance tags ensure regulatory accuracy"
+    - "Performance context prevents safety-critical failures"
+
+  continuous_validation:
+    - "DSM validation script runs weekly"
+    - "Context preservation rules enforce standards"
+    - "Quality metrics track implementation health"
+```
+
+#### **Healthcare Stack Context Template**
+```yaml
+Healthcare_Project_DSM_Template:
+  required_tags:
+    - "<!-- DSM:DOMAIN:healthcare|subdomain COMPLEXITY:level DEPS:dependency_type -->"
+    - "<!-- DSM:HEALTHCARE:phi_pii_handling|clinical_decision_support -->"
+    - "<!-- DSM:PERFORMANCE:response_time:<50ms concurrency:2M+ -->"
+    - "<!-- DSM:COMPLIANCE:LGPD|CFM|ANVISA|Zero_Trust_NIST_SP_800_207 -->"
+
+  dependency_matrix_structure:
+    depends_on: "Direct technical dependencies"
+    provides_to: "Components that depend on this"
+    integrates_with: "Integration points and protocols"
+    performance_contracts: "SLA and healthcare-specific requirements"
+    compliance_requirements: "Regulatory and legal requirements"
+
+  validation_commands:
+    setup: "chmod +x .dsm-validation.sh"
+    validate: "./.dsm-validation.sh"
+    continuous: "Weekly validation + quarterly compliance review"
+```
+
+#### **Healthcare Context Preservation Examples**
+```elixir
+# DSM:HEALTHCARE:phi_handling LGPD:consentimento_obrigatorio
+def process_patient_data(patient_data) do
+  # CONTEXT: This function handles PHI - LGPD Art. 11 compliance required
+  # AUDIT: All patient data access logged automatically
+  # CONSENT: Verify explicit consent before processing
+  # PERFORMANCE: Must complete within <50ms SLA for emergency care
+end
+
+# DSM:HEALTHCARE:clinical_support EVIDENCE:level_II_rct ANVISA:approved
+def analyze_medical_claim(claim_text) do
+  # CONTEXT: Clinical algorithm based on Level II evidence (RCT studies)
+  # VALIDATION: ANVISA approved for Brazilian clinical use
+  # PERFORMANCE: Must complete analysis within 5s SLA
+  # COMPLIANCE: CFM professional validation required
+end
+```
+
+**Status**: Sistema completo Seven-Layer + Python + Commands + September 2025 Updates + **DSM Healthcare** integrado ✅
+**Cobertura**: Evidence-based validation, Stakeholder protection, Hooks, MCP, Performance, Automation, Multi-agent, Context Engineering, **Healthcare DSM Matrix**
+**Templates**: Funcionais + Seven-Layer enhanced + Commands system + September 2025 features + **DSM Healthcare Templates**
+**Documentação**: Evidence-based + Anthropic 2025 compliance + Phoenix Medical Platform lessons + Latest updates + **Healthcare Context Preservation**
+**Commands**: Sistema completo diagnostic → planning → execution → validation + context optimization + **DSM Validation Framework**
+**Methodology**: Seven-Layer Documentation Method + Continuous validation + Context Engineering + **Dependency Structure Matrix Healthcare**
+**Philosophy**: PROTECTIVE first, helpful second - Documentation prevents harm + Token efficiency optimization + **Healthcare compliance by design**
 
 </praticas>
