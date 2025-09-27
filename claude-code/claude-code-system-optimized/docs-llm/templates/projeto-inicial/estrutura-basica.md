@@ -4,48 +4,55 @@
 
 ---
 
-## 📁 **Estrutura de Pastas Recomendada**
+## 📁 **Estrutura Claude Code - Universal para Qualquer Stack**
 
-### **Projeto Web Full-Stack**
+### **Pasta .claude/ - Configuração Claude Code Otimizado**
 ```
-meu-projeto/
-├── .claude/                          # Configurações Claude Code
+qualquer-projeto/                     # Funciona com: React, WordPress, Laravel, Django, etc.
+├── .claude/                          # Sistema Claude Code Otimizado (Universal)
 │   ├── configuracoes.json            # Config principal PT-BR
 │   ├── ganchos/                      # Hooks de observabilidade
 │   │   ├── pre_execucao.py          # Validação entrada
 │   │   ├── pos_execucao.py          # Logging saída
 │   │   └── monitoramento.py         # Métricas tempo real
-│   └── EVOLUCAO.md                   # Log de expansões
-├── src/                              # Código fonte
-│   ├── frontend/                     # Interface usuário
-│   │   ├── componentes/             # Componentes reutilizáveis
-│   │   ├── paginas/                 # Páginas da aplicação
-│   │   ├── servicos/                # Serviços API
-│   │   └── utils/                   # Utilidades frontend
-│   ├── backend/                      # Servidor API
-│   │   ├── controladores/           # Controllers PT-BR
-│   │   ├── modelos/                 # Models/Entities
-│   │   ├── servicos/                # Business logic
-│   │   ├── repositorios/            # Data access
-│   │   └── middleware/              # Middleware customizado
-│   └── shared/                       # Código compartilhado
-│       ├── tipos/                   # TypeScript types
-│       ├── constantes/              # Constantes do sistema
-│       └── utils/                   # Utilidades compartilhadas
-├── testes/                           # Testes automatizados
-│   ├── unitarios/                   # Testes unitários
-│   ├── integracao/                  # Testes integração
-│   ├── e2e/                         # Testes end-to-end
-│   └── fixtures/                    # Dados de teste
-├── docs/                            # Documentação
-│   ├── api/                         # Documentação API
-│   ├── desenvolvimento/             # Guias dev
-│   └── usuario/                     # Manual usuário
-└── scripts/                         # Scripts automação
-    ├── desenvolvimento/             # Scripts dev
-    ├── deploy/                      # Scripts deployment
-    └── manutencao/                  # Scripts manutenção
+│   ├── EVOLUCAO.md                   # Log de expansões
+│   ├── docs-llm/                     # Sistema de Documentação LLM
+│   │   ├── core/                     # Fundamentos do sistema
+│   │   │   ├── identidade.md         # Identidade e personalidade
+│   │   │   ├── principios.md         # Princípios fundamentais
+│   │   │   └── workflow-basico.md    # Fluxo de trabalho básico
+│   │   ├── capabilities/             # Capacidades avançadas
+│   │   │   ├── multi-agent/          # Orquestração multi-agente
+│   │   │   │   └── orchestration.md  # Estratégias de orquestração
+│   │   │   ├── observability/        # Observabilidade e métricas
+│   │   │   └── september-2025/       # Recursos mais recentes
+│   │   │       ├── chrome-devtools-mcp.md    # Chrome DevTools MCP
+│   │   │       ├── context-engineering.md    # Engenharia de contexto
+│   │   │       └── enterprise-features.md    # Funcionalidades enterprise
+│   │   ├── domains/                  # Domínios específicos
+│   │   │   ├── enterprise/           # Soluções empresariais
+│   │   │   ├── healthcare/           # Soluções de saúde
+│   │   │   │   └── compliance.md     # Conformidade regulatória
+│   │   │   └── web-development/      # Desenvolvimento web
+│   │   ├── reference/                # Referências rápidas
+│   │   │   └── commands-quick-ref.md # Comandos essenciais
+│   │   └── templates/                # Templates e estruturas
+│   │       ├── mcp-servers/          # Servidores MCP
+│   │       │   └── chrome-devtools-setup.md # Setup Chrome DevTools
+│   │       ├── projeto-inicial/      # Templates de projeto
+│   │       │   └── estrutura-basica.md # Esta estrutura
+│   │       └── workflows/            # Fluxos de trabalho
+│   ├── prompt-central.md             # Prompt central do sistema
+│   └── README.md                     # Documentação principal
+└── [estrutura do seu projeto...]     # WordPress, React, Laravel, Django, etc.
 ```
+
+> **💡 Nota**: A estrutura `.claude/` é **universal** e funciona com qualquer stack tecnológico:
+> - **WordPress**: `wp-content/themes/`, `wp-content/plugins/`
+> - **React/Next.js**: `src/`, `components/`, `pages/`
+> - **Laravel**: `app/`, `resources/`, `routes/`
+> - **Django**: `apps/`, `templates/`, `static/`
+> - **E qualquer outro framework**
 
 ---
 
