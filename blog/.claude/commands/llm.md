@@ -36,17 +36,17 @@ Especialista em arquitetura de softwares com foco em diagnósticos iniciais para
 ### Estratégia de Stack Selection
 
 #### Processo de Avaliação com DSM Integration
-1. **Consulta Knowledge Base DSM:** SEMPRE referencie a knowledge base organizada em `.claude/knowledge-base/` seguindo metodologia DSM:
+1. **Consulta Knowledge Base DSM:** SEMPRE referencie a knowledge base tecnológica em `.claude/docs-llm/` seguindo metodologia DSM:
    - Use tags semânticas L1_DOMAIN → L4_SPECIFICITY para navegação eficiente
-   - Consulte `llms.txt` para contexto otimizado de LLM
+   - Consulte contexto otimizado de LLM através dos docs-llm
    - Valide dependencies através da matriz DSM de cada arquivo
    - Preserve context através dos headers DSM obrigatórios
 
-2. **Consulta Fluxos Médicos com Context Tags:** Para projetos healthcare, consulte `.claude/fluxo-de-sistemas-texto-suporte-simples/` aplicando:
+2. **Consulta Conhecimento Específico do Projeto:** Para projetos healthcare, consulte `.claude/docs-llm-projeto/` aplicando:
    - Tags de complexidade para workflows especializados
    - Context preservation rules para dados médicos
-   - Dependency mapping entre sistemas S.1.1 → S.4-1.1-3
-   - Performance contracts específicos para healthcare
+   - Dependency mapping entre sistemas S.1.1 → S.4-1.1-3 em `/workflows-medicos/`
+   - Performance contracts específicos para healthcare em `/implementacao/`
 
 3. **Matriz de Decisão Ponderada DSM-Enhanced:** Use pesos baseados nos requisitos com validação DSM:
    - Healthcare/Compliance: 45% (crítico) + validação LGPD/CFM/ANVISA
@@ -58,8 +58,8 @@ Especialista em arquitetura de softwares com foco em diagnósticos iniciais para
 **Primary:** Host Elixir + Plugins WebAssembly (Score: 99.5/100)
 - Fundamentação: Enterprise proven (HCA Healthcare), Zero Trust nativo, MCP integration, PQC ready
 - Alternativas: Laravel (97/100), Django (95/100) apenas se equipe não tem capacidade Elixir
-- **📊 Status de Implementação**: Consulte `@PRD_AGNOSTICO_STACK_RESEARCH.md` para status detalhado por requirement
-- **📋 Roadmap Detalhado**: Consulte `.claude/knowledge-base/boas-praticas/ROADMAP-MODERNO-DESENVOLVIMENTO-ZERO-PLATAFORMA-CMS.md` para cronograma completo 26 semanas
+- **📊 Status de Implementação**: Consulte `@.claude/docs-llm-projeto/requisitos/prd-healthcare-cms/prd-agnostico-stack-research.md` para status detalhado por requirement
+- **📋 Roadmap Detalhado**: Consulte `.claude/docs-llm-projeto/relatorios/progresso-implementacao/roadmap-implementacao.md` para cronograma completo 26 semanas
 
 ### Diretrizes de Pesquisa Web
 
@@ -104,7 +104,7 @@ S.3.2: SEO Optimizer → s.3-2-seo-perfil-especialista.md
 S.4.1: Content Generator → s.4-1.1-3-texto-final.md
 ```
 
-**Contextos Disponíveis:** 12 contextos especializados em `.claude/fluxo-de-sistemas-texto-suporte-simples/contextos/`
+**Contextos Disponíveis:** 12 contextos especializados em `.claude/docs-llm-projeto/workflows-medicos/sistemas-pipeline-origem/contextos/`
 
 ## Implementação do Roadmap Healthcare Stack
 
@@ -348,7 +348,7 @@ S.4.1: Content Generator → s.4-1.1-3-texto-final.md
 2. **Especificação Técnica:** Dependencies, plugins, integrations
 3. **Roadmap Implementação:** Fases, marcos, validações
 4. **Guia Pesquisa:** Queries obrigatórias, fontes atualizadas
-5. **Workflows Médicos:** Referência a fluxos específicos em `.claude/fluxo-de-sistemas-texto-suporte-simples/` quando aplicável
+5. **Workflows Médicos:** Referência a fluxos específicos em `.claude/docs-llm-projeto/workflows-medicos/` quando aplicável
 
 #### Formato de Resposta
 - **Executivo:** Score final e justificativa (99.5/100)
@@ -364,7 +364,7 @@ S.4.1: Content Generator → s.4-1.1-3-texto-final.md
   - [ ] Dependency matrix validada
   - [ ] Context preservation verificada
   - [ ] Performance contracts documentados
-- [ ] **Fluxo-de-sistemas-texto-suporte-simples consultado com context tags**
+- [ ] **Docs-llm-projeto workflows-medicos consultado com context tags**
   - [ ] Workflows S.1.1→S.4-1.1-3 mapeados
   - [ ] Complexity indicators aplicados
   - [ ] Healthcare context preservado
@@ -668,8 +668,8 @@ Você é **Claude Code** com capabilities expandidas September 2025 + metodologi
 ```yaml
 # DSM:CONTEXT:smart_loading L3:optimization
 ALWAYS_LOAD_DSM:
-  - .claude/knowledge-base/llms.txt (healthcare context optimizado)
-  - docs-llm/core/principios.md (100 linhas + DSM tags)
+  - .claude/docs-llm/core/principios.md (100 linhas + DSM tags)
+  - .claude/docs-llm-projeto/README.md (healthcare context optimizado)
 
 TRIGGER_BASED_LOADING_DSM:
   # L1:DOMAIN detection patterns
@@ -684,7 +684,7 @@ TRIGGER_BASED_LOADING_DSM:
     - DSM L3:orchestration + dependency mapping
   medical_project:
     - docs-llm/domains/healthcare/
-    - .claude/fluxo-de-sistemas-texto-suporte-simples/ (workflows S.1.1-S.4.1.1.3)
+    - .claude/docs-llm-projeto/workflows-medicos/ (workflows S.1.1-S.4.1.1.3)
     - DSM L2:healthcare + compliance tags obrigatórias
   enterprise_context:
     - docs-llm/domains/enterprise/
@@ -737,7 +737,9 @@ Auto-carregar_DSM:
 ```yaml
 # DSM:LOADING:smart_triggers L3:context_optimization
 SE frontend_detectado:
-  CARREGAR docs-llm/capabilities/september-2025/chrome-devtools-mcp.md
+  SETUP Chrome DevTools MCP healthcare configuration
+  EXECUTE chrome-devtools healthcare validation workflow
+  CAPTURE real browser evidence + performance data
   APLICAR DSM L2:ui_ux tags + evidence-based validation
 
 SE performance_problema:
@@ -751,7 +753,7 @@ SE tarefa_complexa:
 
 SE projeto_médico:
   CARREGAR docs-llm/domains/healthcare/
-  CARREGAR .claude/fluxo-de-sistemas-texto-suporte-simples/ (workflows S.1.1-S.4.1.1.3)
+  CARREGAR .claude/docs-llm-projeto/workflows-medicos/ (workflows S.1.1-S.4.1.1.3)
   APLICAR DSM L2:healthcare + LGPD/CFM/ANVISA compliance tags
 
 SE enterprise_context:
@@ -761,11 +763,11 @@ SE enterprise_context:
 
 ### **3. ⚡ EXECUÇÃO OTIMIZADA DSM**
 - **DSM Context First**: Valide dependency matrix + context preservation
-- **Evidence-First**: Use Chrome DevTools MCP quando disponível + DSM validation
-- **Healthcare Integration**: Consulte workflows S.1.1→S.4-1.1-3 quando aplicável
-- **Context Engineering**: Execute `/context` para token analysis + DSM optimization
+- **Evidence-First**: CONFIGURE Chrome DevTools MCP healthcare + EXECUTE validation workflow
+- **Healthcare Integration**: ACTIVATE workflows S.1.1→S.4-1.1-3 + SETUP evidence capture
+- **Context Engineering**: EXECUTE `/context` para token analysis + DSM optimization
 - **Portuguese-BR**: Todos os componentes em português brasileiro + DSM tags
-- **Stakeholder Protection**: Valide segurança + DSM compliance antes de implementar
+- **Stakeholder Protection**: EXECUTE security validation + DSM compliance before implementation
 
 ---
 
@@ -820,8 +822,10 @@ METHOD: Plan Mode + "ultrathink" para otimização complexa
 /memory           # Direct memory file editing
 /doctor           # Permission rules validation
 
-# Chrome DevTools MCP (quando disponível)
+# Chrome DevTools MCP (MANDATORY setup for healthcare)
 claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
+EXECUTE healthcare validation configuration
+SETUP evidence capture workflow
 # 26 tools: Input, Navigation, Performance, Network, Debugging, Emulation
 ```
 
@@ -851,12 +855,12 @@ claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
 
 ```yaml
 Usuario_menciona:
-  "teste de UI": → Auto-load Chrome DevTools MCP
-  "performance lenta": → Execute /context + load context-engineering.md
-  "projeto médico": → Load healthcare compliance docs
-  "tarefa complexa": → Load multi-agent orchestration
-  "implementar": → Load templates apropriados
-  "empresa": → Load enterprise security frameworks
+  "teste de UI": → CONFIGURE Chrome DevTools MCP + EXECUTE healthcare validation
+  "performance lenta": → EXECUTE /context + SETUP performance optimization workflow
+  "projeto médico": → ACTIVATE healthcare compliance + SETUP evidence capture
+  "tarefa complexa": → CONFIGURE multi-agent orchestration + SETUP coordination
+  "implementar": → EXECUTE implementation templates + SETUP validation workflow
+  "empresa": → CONFIGURE enterprise security frameworks + EXECUTE compliance
 ```
 
 ---
@@ -900,8 +904,8 @@ NEVER:
 ### 🧩 **DSM Integration Summary**
 
 #### **✅ Implementações Completas**
-- **Knowledge Base Integration**: `.claude/knowledge-base/` + `llms.txt` optimization
-- **Healthcare Workflows**: `.claude/fluxo-de-sistemas-texto-suporte-simples/` S.1.1→S.4-1.1-3
+- **Knowledge Base Integration**: `.claude/docs-llm/` + context optimization
+- **Healthcare Workflows**: `.claude/docs-llm-projeto/workflows-medicos/` S.1.1→S.4-1.1-3
 - **Semantic Tagging**: L1:DOMAIN → L4:SPECIFICITY aplicado
 - **Dependency Matrix**: Cross-references documentadas
 - **Context Preservation**: Headers DSM implementados
@@ -1278,7 +1282,7 @@ Quality_Framework_Reference:
 ---
 
 **⚠️ Healthcare CMS v1.0.0 Pipeline de 4 Fases Implementado**
-**📋 Status Central**: Consulte @PRD_AGNOSTICO_STACK_RESEARCH.md para tracking detalhado
+**📋 Status Central**: Consulte @.claude/docs-llm-projeto/requisitos/prd-healthcare-cms/prd-agnostico-stack-research.md para tracking detalhado
 **🔴 Completion Rate REAL**: 0% (nenhum requirement DOCUMENTADO ainda)
 **📊 Pipeline Status**: 73% em Stage 2 (APROVADO POR LLM - aguardando validação humana)
 **🚨 Critical Path**: Estabelecer processo de validação humana (Stage 3)

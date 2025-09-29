@@ -1,0 +1,151 @@
+{
+  "healthcare-chrome-validation": {
+    "description": "Chrome DevTools MCP configuration for Healthcare CMS validation",
+    "version": "1.0.0",
+    "healthcare_specific": true,
+    "compliance_requirements": ["LGPD", "CFM", "ANVISA"],
+    "validation_workflows": {
+      "wordpress_replacement_validation": {
+        "description": "Validate WordPress Core functionality replacement",
+        "target_features": [
+          "posts_management",
+          "custom_fields_acf_equivalent",
+          "media_library",
+          "user_roles_management",
+          "dashboard_navigation"
+        ],
+        "validation_steps": [
+          {
+            "step": "navigate_to_admin",
+            "action": "open_url",
+            "url": "http://localhost:4000/admin",
+            "validate": "admin_dashboard_loads"
+          },
+          {
+            "step": "test_post_creation",
+            "action": "create_healthcare_post",
+            "validate": "post_created_with_medical_fields"
+          },
+          {
+            "step": "test_custom_fields",
+            "action": "add_medical_custom_fields",
+            "validate": "acf_parity_achieved"
+          },
+          {
+            "step": "test_media_upload",
+            "action": "upload_medical_images",
+            "validate": "media_library_functional"
+          }
+        ]
+      },
+      "healthcare_workflows_validation": {
+        "description": "Validate medical workflow systems S.1.1→S.4-1.1-3",
+        "target_systems": [
+          "S.1.1_LGPD_Analyzer",
+          "S.1.2_Medical_Claims",
+          "S.2-1.2_Scientific_References",
+          "S.3-2_SEO_Professional",
+          "S.4-1.1-3_Content_Generator"
+        ],
+        "validation_steps": [
+          {
+            "step": "test_lgpd_detection",
+            "action": "input_medical_content_with_pii",
+            "validate": "lgpd_analyzer_detects_sensitive_data"
+          },
+          {
+            "step": "test_medical_claims_extraction",
+            "action": "input_medical_text",
+            "validate": "medical_claims_identified"
+          },
+          {
+            "step": "test_scientific_search",
+            "action": "trigger_pubmed_search",
+            "validate": "scientific_references_found"
+          }
+        ]
+      },
+      "zero_trust_validation": {
+        "description": "Validate Zero Trust security implementation",
+        "target_components": [
+          "policy_engine",
+          "trust_algorithm",
+          "audit_trail",
+          "compliance_monitoring"
+        ],
+        "validation_steps": [
+          {
+            "step": "test_access_control",
+            "action": "attempt_unauthorized_access",
+            "validate": "access_denied_properly"
+          },
+          {
+            "step": "test_audit_logging",
+            "action": "perform_medical_action",
+            "validate": "audit_trail_recorded"
+          }
+        ]
+      }
+    },
+    "evidence_capture": {
+      "screenshot_automation": true,
+      "performance_monitoring": true,
+      "compliance_validation": true,
+      "output_formats": ["png", "pdf", "json"],
+      "storage_path": ".claude/evidence/",
+      "naming_convention": "healthcare_cms_evidence_{timestamp}_{validation_type}"
+    },
+    "demonstration_scenarios": [
+      {
+        "name": "wordpress_replacement_demo",
+        "description": "Demonstrate WordPress Core functionality replacement",
+        "duration_target": "5_minutes",
+        "key_features": [
+          "Admin dashboard navigation",
+          "Post creation with medical fields",
+          "Custom fields (ACF equivalent)",
+          "Media library usage",
+          "User role management"
+        ]
+      },
+      {
+        "name": "healthcare_compliance_demo",
+        "description": "Demonstrate healthcare compliance features",
+        "duration_target": "8_minutes",
+        "key_features": [
+          "LGPD data protection",
+          "CFM professional validation",
+          "Medical disclaimer automation",
+          "Audit trail functionality",
+          "Zero Trust security"
+        ]
+      },
+      {
+        "name": "medical_workflows_demo",
+        "description": "Demonstrate S.1.1→S.4-1.1-3 pipeline readiness",
+        "duration_target": "10_minutes",
+        "key_features": [
+          "LGPD Analyzer detection",
+          "Medical claims extraction",
+          "Scientific reference integration",
+          "Professional SEO optimization",
+          "Content generation pipeline"
+        ]
+      }
+    ],
+    "performance_targets": {
+      "page_load_time": "<2s",
+      "admin_dashboard_response": "<500ms",
+      "database_query_time": "<100ms",
+      "custom_field_creation": "<1s",
+      "media_upload_processing": "<3s"
+    },
+    "healthcare_specific_validations": {
+      "pii_phi_detection": true,
+      "medical_disclaimer_presence": true,
+      "professional_credential_validation": true,
+      "compliance_rule_enforcement": true,
+      "audit_trail_completeness": true
+    }
+  }
+}

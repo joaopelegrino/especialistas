@@ -1,0 +1,119 @@
+# Dependency Structure Matrix Configuration - Healthcare Knowledge Base
+# Based on: Matriz de Dependência e Contextualização para LLMs
+
+project_context:
+  domain: healthcare_knowledge_management
+  subdomain: technical_documentation
+  complexity: 4
+  stack_score: 99.5
+  stack_justification: "Healthcare expertise + Technical accuracy + DSM methodology"
+
+knowledge_areas:
+  primary_domains:
+    - healthcare_systems
+    - security_architecture
+    - programming_languages
+    - protocols_standards
+    - boas_praticas
+
+technical_stack:
+  documentation_framework: markdown_dsm
+  validation_tools:
+    - dsm_validation_scripts
+    - context_preservation_rules
+    - llm_optimization_tools
+  compliance_standards:
+    - LGPD
+    - CFM
+    - ANVISA
+    - NIST_SP_800_207
+
+# Healthcare Knowledge Base DSM Structure
+tagging_structure:
+  L1_DOMAIN:
+    healthcare: "Medical domain specific knowledge"
+    security: "Security architecture and compliance"
+    infrastructure: "Technical infrastructure guides"
+    integration: "APIs, protocols, standards"
+    compliance: "Regulatory and legal requirements"
+    performance: "Optimization and benchmarks"
+
+  L2_SUBDOMAIN:
+    clinical_systems: "EHR, FHIR, medical workflows"
+    zero_trust: "NIST SP 800-207 implementations"
+    mcp_protocol: "Model Context Protocol for healthcare"
+    webassembly: "WASM plugins and security"
+    quantum_ready: "Post-quantum cryptography"
+    lgpd_compliance: "Brazilian data protection"
+
+  L3_TECHNICAL:
+    architecture: "System design patterns"
+    implementation: "Code examples and guides"
+    configuration: "Setup and deployment"
+    validation: "Testing and compliance checking"
+    monitoring: "Observability and metrics"
+    troubleshooting: "Problem resolution"
+
+  L4_SPECIFICITY:
+    reference: "Technical specifications"
+    guide: "Step-by-step instructions"
+    example: "Code samples and demos"
+    checklist: "Validation checklists"
+    benchmark: "Performance metrics"
+    case_study: "Real-world implementations"
+
+# Context Tags para Knowledge Base
+temporal_context:
+  current_2025: "Active, up-to-date knowledge"
+  validated_2025: "Recently validated information"
+  evolving: "Rapidly changing standards"
+  stable: "Established best practices"
+
+complexity_indicators:
+  foundational: "Basic concepts and principles"
+  intermediate: "Practical implementation guides"
+  advanced: "Expert-level configurations"
+  enterprise: "Large-scale deployment patterns"
+  research: "Cutting-edge developments"
+
+dependency_context:
+  standalone: "Self-contained knowledge"
+  cross_referenced: "Links to related topics"
+  prerequisite_heavy: "Requires significant background"
+  integration_focused: "Multi-system knowledge"
+  compliance_dependent: "Regulatory requirements"
+
+# Healthcare-specific Knowledge Context
+healthcare_knowledge_context:
+  clinical_evidence:
+    - "Tag medical knowledge with evidence level"
+    - "Include FDA/ANVISA approval context"
+    - "Document clinical validation status"
+    - "Preserve safety and efficacy data"
+
+  regulatory_compliance:
+    - "Always include compliance requirements"
+    - "Document regulatory changes and updates"
+    - "Preserve audit trail requirements"
+    - "Include jurisdiction-specific rules"
+
+  technical_integration:
+    - "FHIR R4 compatibility requirements"
+    - "HL7 integration standards"
+    - "DICOM handling specifications"
+    - "Medical terminology mappings"
+
+# Performance and Quality Metrics
+knowledge_quality_metrics:
+  accuracy: "Evidence-based validation required"
+  currency: "Monthly review for technical content"
+  completeness: "All dependencies documented"
+  accessibility: "LLM-optimized structure"
+  compliance: "Regulatory accuracy verified"
+
+documentation_standards:
+  tag_format: "DOMAIN:subdomain|COMPLEXITY:level|DEPS:dependencies|EVIDENCE:level"
+  context_preservation: mandatory
+  llm_optimization: enabled
+  dsm_analysis: required
+  validation_frequency: weekly
