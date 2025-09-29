@@ -1,0 +1,69 @@
+# Claude Code PRD Integration Configuration
+# PRD como Fonte Central de Status da Implementação Healthcare CMS
+
+prd_integration:
+  primary_source: "PRD_AGNOSTICO_STACK_RESEARCH.md"
+  purpose: "Checklist de controle da evolução da sessão"
+  location: "../PRD_AGNOSTICO_STACK_RESEARCH.md"
+
+status_tracking:
+  pipeline_stages: 4
+  completion_criteria: "DOCUMENTADO"
+  format_stage_4: "(IMPLEMENTADO - TESTADO E APROVADO POR LLM - TESTADO E APROVADO POR HUMANO - DOCUMENTADO)"
+
+  current_status_breakdown:
+    stage_4_complete: "0% (DOCUMENTADO)" # Nenhum requirement totalmente completo ainda
+    stage_3_ready: "15% (APROVADO POR HUMANO - AGUARDANDO DOCUMENTAÇÃO)"
+    stage_2_ready: "58% (APROVADO POR LLM - AGUARDANDO HUMANO)"
+    stage_1_only: "27% (IMPLEMENTADO - AGUARDANDO TESTES)"
+
+  lifecycle_config: ".claude/requirement-lifecycle-config.yml"
+
+quick_access_sections:
+  wordpress_core:
+    range: "WP-F001 a WP-F010"
+    pipeline_status: "Stage 2 - APROVADO POR LLM, aguardando validação humana"
+    completion_real: "0% (nenhum DOCUMENTADO)"
+
+  acf_custom_fields:
+    range: "ACF-F001 a ACF-F008"
+    pipeline_status: "Stage 2 - APROVADO POR LLM, aguardando validação humana"
+    completion_real: "0% (nenhum DOCUMENTADO)"
+
+  healthcare_extensions:
+    range: "HL-F001 a HL-F010"
+    pipeline_status: "Stage 1 - EM DESENVOLVIMENTO - ARQUITETURA PRONTA"
+    completion_real: "0% (nenhum DOCUMENTADO)"
+
+  security_compliance:
+    range: "SEC-F001 a SEC-F008"
+    pipeline_status: "Stage 2 - APROVADO POR LLM, aguardando validação humana"
+    completion_real: "0% (nenhum DOCUMENTADO)"
+
+  performance_scalability:
+    range: "PERF-F001 a PERF-F006"
+    pipeline_status: "Stage 2 - APROVADO POR LLM, aguardando validação humana"
+    completion_real: "0% (nenhum DOCUMENTADO)"
+
+navigation_shortcuts:
+  prd_status_check: "Consulte @PRD_AGNOSTICO_STACK_RESEARCH.md para status detalhado"
+  roadmap_reference: ".claude/knowledge-base/boas-praticas/ROADMAP-MODERNO-DESENVOLVIMENTO-ZERO-PLATAFORMA-CMS.md"
+  workflow_systems: ".claude/fluxo-de-sistemas-texto-suporte-simples/"
+
+validation_commands:
+  test_suite: "mix test"
+  coverage_report: "mix test --cover"
+  ci_pipeline: "GitHub Actions com validações healthcare"
+  development_server: "mix phx.server"
+
+integration_benefits:
+  single_source_truth: "PRD como centro de status tracking"
+  token_optimization: "Eliminação de duplicação desnecessária"
+  maintainability: "Updates apenas no PRD se propagam automaticamente"
+  efficient_navigation: "Comandos específicos para acessar informações detalhadas"
+
+dsm_compliance:
+  methodology: "Dependency Structure Matrix integrado"
+  context_preservation: "Headers DSM obrigatórios"
+  performance_contracts: "SLAs healthcare preservados"
+  compliance_requirements: "LGPD/CFM/ANVISA tags integradas"

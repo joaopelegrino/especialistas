@@ -1,0 +1,159 @@
+# Healthcare CMS - Requirement Lifecycle Configuration
+# Pipeline de 4 Fases para Validação Completa de Requirements
+
+requirement_lifecycle:
+  philosophy: "Um requisito só é considerado COMPLETO após ser DOCUMENTADO"
+  stages: 4
+  completion_criteria: "DOCUMENTADO"
+
+# Pipeline obrigatório para todos os requirements
+pipeline_stages:
+  stage_1:
+    name: "IMPLEMENTADO"
+    description: "Código implementado e funcional"
+    validation_criteria:
+      - "Funcionalidade operacional"
+      - "Código commitado no repositório"
+      - "Integração com arquitetura existente"
+    evidence_required:
+      - "Commit hash específico"
+      - "Código-fonte em lib/healthcare_cms/"
+      - "Configuração em mix.exs se necessário"
+
+  stage_2:
+    name: "TESTADO E APROVADO POR LLM"
+    description: "Validação automatizada e aprovação por LLM"
+    validation_criteria:
+      - "Testes unitários passando (90%+ coverage)"
+      - "Testes de integração validados"
+      - "Compliance healthcare verificada"
+      - "Performance SLA atendida"
+    evidence_required:
+      - "mix test output completo"
+      - "Coverage report ≥90%"
+      - "Performance benchmarks atendidos"
+      - "Aprovação formal do LLM especialista"
+
+  stage_3:
+    name: "TESTADO E APROVADO POR HUMANO"
+    description: "Validação manual por desenvolvedor humano"
+    validation_criteria:
+      - "Code review humano completo"
+      - "Validação funcional manual"
+      - "Teste de usabilidade (se aplicável)"
+      - "Validação de compliance manual"
+    evidence_required:
+      - "Pull Request aprovado por humano"
+      - "Checklist de validação preenchido"
+      - "Screenshots/videos de funcionalidade"
+      - "Sign-off formal do desenvolvedor"
+
+  stage_4:
+    name: "DOCUMENTADO"
+    description: "Documentação técnica e funcional completa"
+    validation_criteria:
+      - "Documentação técnica completa"
+      - "Guia de uso/API documentation"
+      - "Troubleshooting guide"
+      - "Integration examples"
+    evidence_required:
+      - "README.md atualizado"
+      - "API docs geradas"
+      - "Healthcare compliance documentation"
+      - "Deployment notes"
+
+# Status format padronizado
+status_formats:
+  stage_1: "(IMPLEMENTADO)"
+  stage_2: "(IMPLEMENTADO - TESTADO E APROVADO POR LLM)"
+  stage_3: "(IMPLEMENTADO - TESTADO E APROVADO POR LLM - TESTADO E APROVADO POR HUMANO)"
+  stage_4: "(IMPLEMENTADO - TESTADO E APROVADO POR LLM - TESTADO E APROVADO POR HUMANO - DOCUMENTADO)"
+
+  # Aliases para facilidade
+  not_started: "(PENDENTE)"
+  in_progress: "(EM DESENVOLVIMENTO)"
+  blocked: "(BLOQUEADO - [MOTIVO])"
+  deprecated: "(DESCONTINUADO)"
+
+# Quality gates obrigatórios por fase
+quality_gates:
+  implementation:
+    required_files:
+      - "lib/healthcare_cms/[module].ex"
+      - "test/healthcare_cms/[module]_test.exs"
+    validation_commands:
+      - "mix compile --warnings-as-errors"
+      - "mix format --check-formatted"
+      - "mix credo --strict"
+
+  llm_validation:
+    coverage_threshold: 90
+    performance_sla:
+      response_time: "<200ms"
+      healthcare_pipeline: "<5min"
+    validation_commands:
+      - "mix test --cover"
+      - "mix test --include performance"
+    approval_required: true
+
+  human_validation:
+    pr_requirements:
+      - "Code review por desenvolvedor sênior"
+      - "Manual testing checklist completo"
+      - "Healthcare compliance validation"
+    documentation_requirements:
+      - "Function documentation updated"
+      - "Integration examples provided"
+      - "Error handling documented"
+
+  documentation:
+    required_docs:
+      - "README.md section atualizada"
+      - "API docs via ExDoc"
+      - "Healthcare compliance notes"
+      - "Troubleshooting guide"
+    validation_commands:
+      - "mix docs"
+      - "mix test test/doc_test.exs"
+
+# Tracking e reporting
+progress_tracking:
+  metrics:
+    completion_rate: "Requirements DOCUMENTADOS / Total requirements"
+    stage_distribution: "Distribuição por stage do pipeline"
+    bottleneck_identification: "Stages com maior tempo de permanência"
+    quality_score: "Score baseado em coverage + compliance + docs"
+
+  reporting_commands:
+    status_overview: "Consulte @PRD_AGNOSTICO_STACK_RESEARCH.md"
+    stage_breakdown: "Consulte @.claude/requirement-progress-report.md"
+    quality_metrics: "mix test --cover && mix docs"
+
+# Healthcare-specific additions
+healthcare_requirements:
+  compliance_validation:
+    lgpd_check: "Validate data privacy compliance"
+    cfm_check: "Validate medical professional requirements"
+    anvisa_check: "Validate medical device compliance"
+
+  evidence_preservation:
+    audit_trail: "All stage transitions logged immutably"
+    regulatory_evidence: "Evidence preserved for compliance audits"
+    version_control: "All changes tracked with healthcare context"
+
+# Automation support
+automation:
+  stage_transitions:
+    auto_stage_1_to_2: false  # Require explicit LLM validation
+    auto_stage_2_to_3: false  # Require explicit human validation
+    auto_stage_3_to_4: false  # Require explicit documentation
+
+  notifications:
+    pr_ready_for_review: true
+    documentation_required: true
+    compliance_check_needed: true
+
+  validation_hooks:
+    pre_commit: "Validate stage requirements before commit"
+    pre_pr: "Validate human validation requirements"
+    pre_merge: "Validate documentation completion"
