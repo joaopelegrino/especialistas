@@ -165,9 +165,29 @@ Este diretório é mantido como **backup histórico** para:
 
 ---
 
+---
+
+## Arquivos de Planejamento e Reports Intermediários (Backupados 2025-09-30)
+
+### SESSION-003-FINAL-REPORT.md (13.5 KB)
+**Motivo do Backup**: Report intermediário FASE 1 (duplica SESSION-003-REPORT.md oficial)
+**Status**: ⚠️ REDUNDANTE (mantido como referência histórica)
+
+### REORGANIZATION-PLAN.md (26.5 KB)
+**Motivo do Backup**: Planejamento original de reorganização (100% executado, FASE 1-4 completas)
+**Status**: ✅ COMPLETO (substituído por CONSOLIDATION-FINAL-REPORT.md na raiz)
+
+### CONFIGURATION-UPGRADE-REPORT.md (19.6 KB)
+**Motivo do Backup**: Report de upgrade config.yml para v2.0.0 (implementado Session 005)
+**Status**: ✅ COMPLETO (overlap com SESSION-005-REPORT.md oficial)
+
+**Total Backupados**: 12 arquivos (8 root files + 3 reports intermediários + README + CLEANUP-ANALYSIS)
+
+---
+
 **Última Atualização**: 2025-09-30
 **Total**: 14,695 linhas (100% migrado para 20,400+ linhas na nova estrutura)
 **Status de Migração**: ✅ COMPLETO (100% coverage validado)
-**Motivo de Preservação**: Backup histórico, auditoria, compliance
+**Motivo de Preservação**: Backup histórico, auditoria, compliance LGPD
 **Autor**: Healthcare WASM-Elixir Stack Team + Claude
 **Licença**: MIT
