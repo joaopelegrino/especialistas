@@ -9,20 +9,14 @@ config :healthcare_cms, HealthcareCMS.Repo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
 
-# Phoenix endpoint para desenvolvimento
+# Phoenix endpoint para desenvolvimento (configuração unificada)
 config :healthcare_cms, HealthcareCMSWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "healthcare_dev_secret_key_base_change_in_production",
-  watchers: [
-    esbuild: {Esbuild, :install_and_run, [:healthcare_cms, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:healthcare_cms, ~w(--watch)]}
-  ]
-
-# LiveView configuration para desenvolvimento
-config :healthcare_cms, HealthcareCMSWeb.Endpoint,
+  secret_key_base: "healthcare_dev_secret_key_base_change_in_production_at_least_64_bytes_long_for_security_compliance",
+  watchers: [],
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",

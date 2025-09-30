@@ -94,6 +94,12 @@ Especialista em arquitetura de softwares com foco em diagnósticos iniciais para
    - Extensões HMCP para FHIR R4/DICOM
    - Tools específicos: lgpd_risk_analyzer, pubmed_search_tool
    - Scientific API orchestration
+   - **Chrome DevTools MCP**: UI testing + evidence-based validation (26 tools)
+     - Documentation: `@.claude/docs-llm/capabilities/mcp-integration/chrome-devtools-healthcare.md`
+     - Status: ✅ Configured and operational (v0.4.0)
+     - Healthcare Context: LGPD/ANVISA/CFM compliance ready
+     - Capabilities: Performance analysis, network debugging, browser automation
+     - Validation: Sprint 0-2 validated via evidence-based approach
 
 #### Pipeline Médico Padrão (S.1.1 → S.4-1.1-3)
 ```

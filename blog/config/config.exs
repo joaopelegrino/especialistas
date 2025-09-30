@@ -11,7 +11,7 @@ config :healthcare_cms,
 # Phoenix Framework configuration
 config :healthcare_cms, HealthcareCMSWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Bandit.PhoenixAdapter,
+  adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [html: HealthcareCMSWeb.ErrorHTML, json: HealthcareCMSWeb.ErrorJSON],
     layout: false

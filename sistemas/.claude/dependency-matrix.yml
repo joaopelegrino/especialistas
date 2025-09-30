@@ -1,0 +1,688 @@
+# Dependency Structure Matrix (DSM)
+# Healthcare WASM-Elixir Stack
+# Version: 1.0.0
+# Last Updated: 2025-09-30
+# Methodology: MIT DSM Framework (Eppinger & Browning, 2012)
+
+---
+
+## METADATA
+
+project:
+  name: "Healthcare WASM-Elixir Stack"
+  domain: "Healthcare Content Management System"
+  complexity: 5
+  stack_score: 99.5
+
+methodology:
+  framework: "MIT DSM Framework"
+  format: "Triangular Matrix"
+  visualization: "Lower triangular (dependencies below diagonal)"
+
+---
+
+## COMPONENT DEFINITIONS
+
+components:
+  C01_ELIXIR_HOST:
+    name: "Elixir Host Platform"
+    description: "Elixir/OTP 27 + Phoenix 1.8 runtime environment"
+    version: "1.17.3"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "01-elixir-wasm-host-platform.md"
+      - "lib/healthcare_cms/plugin_manager.ex"
+
+  C02_WASM_PLUGINS:
+    name: "WebAssembly Plugins"
+    description: "Extism 1.5.4 sandboxed plugin execution"
+    version: "1.5.4"
+    layer: "L1_DOMAIN:business_logic"
+    files:
+      - "02-webassembly-plugins-healthcare.md"
+      - "plugins/*.wasm"
+
+  C03_ZERO_TRUST:
+    name: "Zero Trust Security"
+    description: "NIST SP 800-207 security architecture"
+    version: "1.0.0"
+    layer: "L1_DOMAIN:security"
+    files:
+      - "03-zero-trust-security-healthcare.md"
+      - "lib/healthcare_cms/zero_trust/"
+
+  C04_MCP_PROTOCOL:
+    name: "Model Context Protocol"
+    description: "MCP healthcare integration tools"
+    version: "1.0.0"
+    layer: "L1_DOMAIN:integration"
+    files:
+      - "04-mcp-healthcare-protocol.md"
+      - "lib/healthcare_cms/mcp/"
+
+  C05_DATABASE:
+    name: "Database Stack"
+    description: "PostgreSQL 16 + TimescaleDB 2.17"
+    version: "16.6"
+    layer: "L1_DOMAIN:data_layer"
+    files:
+      - "05-database-stack-postgresql-timescaledb.md"
+      - "priv/repo/migrations/"
+
+  C06_INFRASTRUCTURE:
+    name: "Infrastructure & DevOps"
+    description: "Kubernetes 1.31 + Istio 1.24"
+    version: "1.31"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "06-infrastructure-devops.md"
+      - "k8s/"
+
+  C07_PHOENIX_LIVEVIEW:
+    name: "Phoenix LiveView"
+    description: "Real-time UI framework"
+    version: "1.0.1"
+    layer: "L1_DOMAIN:ui_ux"
+    files:
+      - "lib/healthcare_cms_web/live/"
+
+  C08_PQC_CRYPTO:
+    name: "Post-Quantum Cryptography"
+    description: "CRYSTALS-Kyber/Dilithium (NIST FIPS 203/204)"
+    version: "FIPS.203"
+    layer: "L1_DOMAIN:security"
+    files:
+      - "lib/healthcare_cms/crypto/pqc.ex"
+
+  C09_FHIR_VALIDATOR:
+    name: "FHIR R4 Validator"
+    description: "Healthcare interoperability validation"
+    version: "4.0.1"
+    layer: "L1_DOMAIN:integration"
+    files:
+      - "lib/healthcare_cms/fhir/"
+
+  C10_LGPD_COMPLIANCE:
+    name: "LGPD Compliance Module"
+    description: "Brazilian data protection compliance"
+    version: "1.0.0"
+    layer: "L2_SUBDOMAIN:compliance"
+    files:
+      - "lib/healthcare_cms/compliance/lgpd.ex"
+
+  C11_TIMESCALEDB:
+    name: "TimescaleDB Extension"
+    description: "Time-series data for audit logs"
+    version: "2.17.2"
+    layer: "L1_DOMAIN:data_layer"
+    files:
+      - "priv/repo/migrations/*_timescale.exs"
+
+  C12_ISTIO_MESH:
+    name: "Istio Service Mesh"
+    description: "Service-to-service security and observability"
+    version: "1.24"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "k8s/istio/"
+
+  C13_PROMETHEUS:
+    name: "Prometheus Monitoring"
+    description: "Metrics collection and alerting"
+    version: "2.55"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "k8s/monitoring/prometheus.yml"
+
+  C14_GRAFANA:
+    name: "Grafana Dashboards"
+    description: "Visualization and analytics"
+    version: "11.3"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "k8s/monitoring/grafana/"
+
+  C15_OPENTELEMETRY:
+    name: "OpenTelemetry"
+    description: "Distributed tracing"
+    version: "1.32"
+    layer: "L1_DOMAIN:infrastructure"
+    files:
+      - "lib/healthcare_cms/telemetry.ex"
+
+---
+
+## DEPENDENCY MATRIX
+
+# Legend:
+# R = REQUIRES (hard dependency, cannot function without)
+# E = EXTENDS (extension/plugin relationship)
+# C = CONFIGURES (configuration dependency)
+# M = MONITORS (observability relationship)
+# V = VALIDATES (validation dependency)
+# I = INTEGRATES (integration point)
+# - = Self
+# . = No dependency
+
+matrix:
+  #       C01 C02 C03 C04 C05 C06 C07 C08 C09 C10 C11 C12 C13 C14 C15
+  C01: [  -,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  . ]
+  C02: [  R,  -,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  .,  . ]
+  C03: [  R,  V,  -,  .,  .,  .,  .,  R,  .,  V,  .,  .,  .,  .,  . ]
+  C04: [  R,  .,  V,  -,  .,  .,  .,  .,  I,  .,  .,  .,  .,  .,  . ]
+  C05: [  R,  .,  V,  .,  -,  .,  .,  R,  .,  .,  .,  .,  .,  .,  . ]
+  C06: [  C,  C,  C,  C,  C,  -,  .,  .,  .,  .,  .,  R,  R,  R,  R ]
+  C07: [  R,  .,  V,  .,  I,  .,  -,  .,  .,  .,  .,  .,  .,  .,  . ]
+  C08: [  R,  .,  .,  .,  I,  .,  .,  -,  .,  .,  .,  .,  .,  .,  . ]
+  C09: [  R,  I,  .,  I,  I,  .,  .,  .,  -,  V,  .,  .,  .,  .,  . ]
+  C10: [  R,  V,  V,  .,  I,  .,  .,  .,  .,  -,  I,  .,  .,  .,  . ]
+  C11: [  .,  .,  .,  .,  E,  .,  .,  .,  .,  I,  -,  .,  .,  .,  . ]
+  C12: [  .,  .,  V,  .,  .,  R,  .,  I,  .,  .,  .,  -,  I,  .,  I ]
+  C13: [  M,  M,  M,  .,  M,  R,  M,  .,  .,  .,  .,  I,  -,  .,  I ]
+  C14: [  .,  .,  .,  .,  .,  R,  .,  .,  .,  .,  .,  .,  I,  -,  . ]
+  C15: [  M,  M,  M,  M,  M,  R,  M,  .,  .,  .,  .,  I,  I,  .,  - ]
+
+---
+
+## DEPENDENCY DETAILS
+
+dependencies:
+
+  # ========================================
+  # C01: ELIXIR HOST PLATFORM
+  # ========================================
+  C01_ELIXIR_HOST:
+    provides:
+      - "BEAM VM runtime environment"
+      - "Phoenix web framework"
+      - "OTP supervision trees"
+      - "Ecto database abstraction"
+      - "Plug middleware pipeline"
+      - "GenServer process management"
+
+    consumed_by:
+      - "C02_WASM_PLUGINS (REQUIRES): Plugin lifecycle management"
+      - "C03_ZERO_TRUST (REQUIRES): Policy engine runtime"
+      - "C04_MCP_PROTOCOL (REQUIRES): MCP server runtime"
+      - "C05_DATABASE (REQUIRES): Ecto repository"
+      - "C07_PHOENIX_LIVEVIEW (REQUIRES): LiveView server"
+      - "C08_PQC_CRYPTO (REQUIRES): NIF integration"
+      - "C09_FHIR_VALIDATOR (REQUIRES): Validation service"
+      - "C10_LGPD_COMPLIANCE (REQUIRES): Compliance runtime"
+      - "C13_PROMETHEUS (MONITORS): Telemetry metrics"
+      - "C15_OPENTELEMETRY (MONITORS): Distributed tracing"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "architecture"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C02: WASM PLUGINS
+  # ========================================
+  C02_WASM_PLUGINS:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Extism runtime provided by host"
+
+    provides:
+      - "Medical content processing"
+      - "LGPD risk analysis (S.1.1)"
+      - "Medical claims extraction (S.1.2)"
+      - "Scientific search (S.2-1.2)"
+      - "SEO optimization (S.3-2)"
+      - "Content generation (S.4-1.1-3)"
+
+    validated_by:
+      - "C03_ZERO_TRUST: Sandbox security enforcement"
+      - "C10_LGPD_COMPLIANCE: PHI/PII redaction before invocation"
+
+    consumed_by:
+      - "C09_FHIR_VALIDATOR (INTEGRATES): FHIR resource validation plugin"
+      - "C13_PROMETHEUS (MONITORS): Plugin execution metrics"
+      - "C15_OPENTELEMETRY (MONITORS): Plugin tracing"
+
+    dsm_tags:
+      L1_DOMAIN: "business_logic"
+      L2_SUBDOMAIN: "healthcare"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "example"
+
+  # ========================================
+  # C03: ZERO TRUST SECURITY
+  # ========================================
+  C03_ZERO_TRUST:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Policy engine GenServer"
+      - "C08_PQC_CRYPTO (REQUIRES): Hybrid encryption for data in transit"
+
+    validates:
+      - "C02_WASM_PLUGINS: Plugin security boundaries"
+      - "C04_MCP_PROTOCOL: MCP tool invocation authorization"
+      - "C05_DATABASE: Database access control"
+      - "C07_PHOENIX_LIVEVIEW: LiveView session authentication"
+      - "C10_LGPD_COMPLIANCE: Consent validation before data access"
+
+    provides:
+      - "Policy Engine (PE): Trust score calculation"
+      - "Policy Enforcement Points (PEP): API gateway, DB interceptor"
+      - "Policy Decision Points (PDP): Real-time authorization"
+      - "Continuous verification: Every request evaluated"
+
+    monitored_by:
+      - "C13_PROMETHEUS: Trust score metrics, auth failures"
+      - "C15_OPENTELEMETRY: Authorization decision traces"
+
+    dsm_tags:
+      L1_DOMAIN: "security"
+      L2_SUBDOMAIN: "compliance"
+      L3_TECHNICAL: "architecture"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C04: MCP PROTOCOL
+  # ========================================
+  C04_MCP_PROTOCOL:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): MCP server runtime"
+      - "C03_ZERO_TRUST (VALIDATES): Tool invocation authorization"
+
+    integrates_with:
+      - "C09_FHIR_VALIDATOR: validate_fhir_resource tool"
+      - "PubMed E-utilities: search_pubmed tool"
+      - "CFM Registry: check_cfm_registration tool"
+
+    provides:
+      - "validate_medical_claim tool"
+      - "search_pubmed tool"
+      - "analyze_lgpd_risk tool"
+      - "validate_fhir_resource tool"
+      - "check_cfm_registration tool"
+
+    monitored_by:
+      - "C15_OPENTELEMETRY: MCP tool invocation traces"
+
+    dsm_tags:
+      L1_DOMAIN: "integration"
+      L2_SUBDOMAIN: "ai_pipeline"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C05: DATABASE STACK
+  # ========================================
+  C05_DATABASE:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Ecto repository"
+      - "C08_PQC_CRYPTO (INTEGRATES): Encrypted columns (PHI/PII)"
+
+    validated_by:
+      - "C03_ZERO_TRUST: Row-level security (RLS) policies"
+
+    extended_by:
+      - "C11_TIMESCALEDB: Time-series extension for audit logs"
+
+    integrates_with:
+      - "C07_PHOENIX_LIVEVIEW: Real-time data subscriptions"
+      - "C09_FHIR_VALIDATOR: FHIR resource storage"
+      - "C10_LGPD_COMPLIANCE: Audit trail, consent records"
+
+    provides:
+      - "Patient data storage (PHI/PII encrypted)"
+      - "Audit trail (TimescaleDB hypertables)"
+      - "FHIR resource repository"
+      - "User authentication (Argon2id password hashing)"
+      - "Consent management records"
+
+    monitored_by:
+      - "C13_PROMETHEUS: Query latency, connection pool metrics"
+
+    dsm_tags:
+      L1_DOMAIN: "data_layer"
+      L2_SUBDOMAIN: "healthcare"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C06: INFRASTRUCTURE & DEVOPS
+  # ========================================
+  C06_INFRASTRUCTURE:
+    configures:
+      - "C01_ELIXIR_HOST: Kubernetes deployment, replica count"
+      - "C02_WASM_PLUGINS: Plugin deployment as ConfigMaps"
+      - "C03_ZERO_TRUST: mTLS via Istio"
+      - "C04_MCP_PROTOCOL: MCP server service definition"
+      - "C05_DATABASE: PostgreSQL StatefulSet, PVC"
+
+    depends_on:
+      - "C12_ISTIO_MESH (REQUIRES): Service mesh for mTLS"
+      - "C13_PROMETHEUS (REQUIRES): Metrics collection"
+      - "C14_GRAFANA (REQUIRES): Visualization"
+      - "C15_OPENTELEMETRY (REQUIRES): Distributed tracing"
+
+    provides:
+      - "Kubernetes cluster (1.31)"
+      - "Helm charts for deployment"
+      - "CI/CD pipelines (GitLab CI)"
+      - "Docker image builds"
+      - "Secrets management (Sealed Secrets)"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "configuration"
+      L4_SPECIFICITY: "guide"
+
+  # ========================================
+  # C07: PHOENIX LIVEVIEW
+  # ========================================
+  C07_PHOENIX_LIVEVIEW:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Phoenix runtime"
+
+    validated_by:
+      - "C03_ZERO_TRUST: LiveView session authentication"
+
+    integrates_with:
+      - "C05_DATABASE: Real-time data subscriptions (Phoenix.PubSub)"
+
+    provides:
+      - "Real-time healthcare dashboards"
+      - "Patient vitals monitoring"
+      - "Lab result notifications"
+      - "Multi-user EHR editing"
+
+    monitored_by:
+      - "C13_PROMETHEUS: WebSocket connection metrics, LV mount latency"
+      - "C15_OPENTELEMETRY: LiveView lifecycle traces"
+
+    dsm_tags:
+      L1_DOMAIN: "ui_ux"
+      L2_SUBDOMAIN: "healthcare"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "example"
+
+  # ========================================
+  # C08: POST-QUANTUM CRYPTOGRAPHY
+  # ========================================
+  C08_PQC_CRYPTO:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): NIF integration for CRYSTALS"
+
+    integrates_with:
+      - "C05_DATABASE: Encrypted columns (AES-256-GCM + Kyber KEM)"
+      - "C12_ISTIO_MESH: TLS 1.3 with hybrid PQC"
+
+    provides:
+      - "CRYSTALS-Kyber (NIST FIPS 203): Key encapsulation"
+      - "CRYSTALS-Dilithium (NIST FIPS 204): Digital signatures"
+      - "SPHINCS+ (NIST FIPS 205): Stateless hash-based signatures"
+      - "Hybrid encryption: Classical + PQC"
+
+    dsm_tags:
+      L1_DOMAIN: "security"
+      L2_SUBDOMAIN: "compliance"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C09: FHIR R4 VALIDATOR
+  # ========================================
+  C09_FHIR_VALIDATOR:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Validation service runtime"
+
+    integrates_with:
+      - "C02_WASM_PLUGINS: FHIR validation as WASM plugin"
+      - "C04_MCP_PROTOCOL: validate_fhir_resource MCP tool"
+      - "C05_DATABASE: FHIR resource storage"
+
+    validated_by:
+      - "C10_LGPD_COMPLIANCE: PHI/PII in FHIR resources"
+
+    provides:
+      - "FHIR R4 structure validation"
+      - "ValueSet binding validation"
+      - "Cardinality constraint checking"
+      - "Reference integrity validation"
+
+    dsm_tags:
+      L1_DOMAIN: "integration"
+      L2_SUBDOMAIN: "healthcare"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C10: LGPD COMPLIANCE MODULE
+  # ========================================
+  C10_LGPD_COMPLIANCE:
+    depends_on:
+      - "C01_ELIXIR_HOST (REQUIRES): Compliance module runtime"
+
+    validates:
+      - "C02_WASM_PLUGINS: PHI/PII redaction before plugin invocation"
+      - "C03_ZERO_TRUST: Consent validation in policy engine"
+      - "C09_FHIR_VALIDATOR: Sensitive data in FHIR resources"
+
+    integrates_with:
+      - "C05_DATABASE: Consent records, data subject rights"
+      - "C11_TIMESCALEDB: Immutable audit trail (LGPD Art. 37)"
+
+    provides:
+      - "Real-time PII/PHI detection (CPF, RG, medical records)"
+      - "Risk scoring (0-100 based on data sensitivity)"
+      - "Consent management (LGPD Art. 8)"
+      - "Data subject rights (access, rectification, erasure)"
+      - "Automated data retention policies (5 years)"
+
+    dsm_tags:
+      L1_DOMAIN: "security"
+      L2_SUBDOMAIN: "compliance"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C11: TIMESCALEDB EXTENSION
+  # ========================================
+  C11_TIMESCALEDB:
+    extends:
+      - "C05_DATABASE: Time-series extension for PostgreSQL"
+
+    integrates_with:
+      - "C10_LGPD_COMPLIANCE: Audit trail storage (hypertables)"
+
+    provides:
+      - "Hypertables for audit logs"
+      - "Automatic compression (7 days)"
+      - "Retention policies (5 years for LGPD/HIPAA)"
+      - "Continuous aggregates for analytics"
+
+    dsm_tags:
+      L1_DOMAIN: "data_layer"
+      L2_SUBDOMAIN: "compliance"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C12: ISTIO SERVICE MESH
+  # ========================================
+  C12_ISTIO_MESH:
+    depends_on:
+      - "C06_INFRASTRUCTURE (REQUIRES): Kubernetes cluster"
+
+    validates:
+      - "C03_ZERO_TRUST: mTLS for service-to-service communication"
+
+    integrates_with:
+      - "C08_PQC_CRYPTO: TLS 1.3 with hybrid PQC ciphers"
+      - "C13_PROMETHEUS: Istio metrics scraping"
+      - "C15_OPENTELEMETRY: Envoy tracing integration"
+
+    provides:
+      - "Service mesh (mTLS, traffic management)"
+      - "Circuit breaking, retries, timeouts"
+      - "A/B testing, canary deployments"
+      - "Network policy enforcement"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "configuration"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C13: PROMETHEUS MONITORING
+  # ========================================
+  C13_PROMETHEUS:
+    depends_on:
+      - "C06_INFRASTRUCTURE (REQUIRES): Kubernetes deployment"
+
+    monitors:
+      - "C01_ELIXIR_HOST: BEAM VM metrics (process count, memory)"
+      - "C02_WASM_PLUGINS: Plugin execution time, memory usage"
+      - "C03_ZERO_TRUST: Trust score distribution, auth failures"
+      - "C05_DATABASE: Query latency, connection pool"
+      - "C07_PHOENIX_LIVEVIEW: WebSocket connections, LV mount latency"
+
+    integrates_with:
+      - "C12_ISTIO_MESH: Istio metrics scraping"
+      - "C14_GRAFANA: Data source for visualization"
+      - "C15_OPENTELEMETRY: Metrics exporter"
+
+    provides:
+      - "Metrics collection and storage (15-day retention)"
+      - "Alerting rules (PagerDuty integration)"
+      - "PromQL queries for dashboards"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "configuration"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C14: GRAFANA DASHBOARDS
+  # ========================================
+  C14_GRAFANA:
+    depends_on:
+      - "C06_INFRASTRUCTURE (REQUIRES): Kubernetes deployment"
+
+    integrates_with:
+      - "C13_PROMETHEUS: Primary data source"
+
+    provides:
+      - "Healthcare CMS Overview dashboard"
+      - "Database Performance dashboard"
+      - "Security Audit dashboard (trust scores, auth failures)"
+      - "WASM Plugin Performance dashboard"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "configuration"
+      L4_SPECIFICITY: "reference"
+
+  # ========================================
+  # C15: OPENTELEMETRY
+  # ========================================
+  C15_OPENTELEMETRY:
+    depends_on:
+      - "C06_INFRASTRUCTURE (REQUIRES): Kubernetes deployment"
+
+    traces:
+      - "C01_ELIXIR_HOST: Phoenix request lifecycle"
+      - "C02_WASM_PLUGINS: Plugin invocation spans"
+      - "C03_ZERO_TRUST: Policy evaluation spans"
+      - "C04_MCP_PROTOCOL: MCP tool invocation spans"
+      - "C05_DATABASE: Database query spans"
+      - "C07_PHOENIX_LIVEVIEW: LiveView mount/update lifecycle"
+
+    integrates_with:
+      - "C12_ISTIO_MESH: Envoy tracing headers propagation"
+      - "C13_PROMETHEUS: Metrics exporter"
+
+    provides:
+      - "Distributed tracing (Jaeger backend)"
+      - "Request correlation (trace IDs)"
+      - "Performance bottleneck identification"
+      - "Error tracking and debugging"
+
+    dsm_tags:
+      L1_DOMAIN: "infrastructure"
+      L2_SUBDOMAIN: "performance"
+      L3_TECHNICAL: "implementation"
+      L4_SPECIFICITY: "reference"
+
+---
+
+## CRITICAL DEPENDENCY PATHS
+
+# Path 1: User Request → Response
+C07_PHOENIX_LIVEVIEW → C03_ZERO_TRUST → C01_ELIXIR_HOST → C05_DATABASE
+- LiveView validates user session (Zero Trust)
+- Elixir host processes request
+- Database retrieves patient data (encrypted)
+- Response rendered via LiveView
+
+# Path 2: WASM Plugin Execution
+C01_ELIXIR_HOST → C02_WASM_PLUGINS → C10_LGPD_COMPLIANCE → C03_ZERO_TRUST
+- Elixir host receives content processing request
+- LGPD module redacts PHI/PII
+- Zero Trust validates plugin permissions
+- WASM plugin executes in sandbox
+
+# Path 3: MCP Tool Invocation
+C04_MCP_PROTOCOL → C03_ZERO_TRUST → C09_FHIR_VALIDATOR → C05_DATABASE
+- MCP tool invoked (validate_fhir_resource)
+- Zero Trust authorizes tool usage
+- FHIR validator checks resource structure
+- Database stores validated resource
+
+# Path 4: Audit Trail
+C03_ZERO_TRUST → C10_LGPD_COMPLIANCE → C11_TIMESCALEDB → C05_DATABASE
+- Zero Trust logs access decision
+- LGPD module captures PHI/PII access
+- TimescaleDB hypertable stores audit log
+- Compression applied after 7 days
+
+# Path 5: Observability
+C01_ELIXIR_HOST → C15_OPENTELEMETRY → C13_PROMETHEUS → C14_GRAFANA
+- Elixir host emits telemetry events
+- OpenTelemetry collects traces
+- Prometheus scrapes metrics
+- Grafana visualizes dashboards
+
+---
+
+## CIRCULAR DEPENDENCIES (NONE DETECTED)
+
+# DSM validation confirms NO circular dependencies exist
+# All dependencies flow downward in the triangular matrix
+# This ensures clean separation of concerns and testability
+
+---
+
+## EXTERNAL DEPENDENCIES
+
+external:
+  pubmed_eutils:
+    description: "NLM PubMed E-utilities API"
+    url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+    validation_level: "L0_CANONICAL"
+    rate_limit: "10 requests/second with API key"
+
+  cfm_registry:
+    description: "Brazilian Medical Council Registry"
+    url: "https://portal.cfm.org.br/"
+    validation_level: "L0_CANONICAL"
+    purpose: "Medical professional credential verification"
+
+  anvisa_api:
+    description: "Brazilian Health Surveillance Agency API"
+    url: "https://consultas.anvisa.gov.br/"
+    validation_level: "L0_CANONICAL"
+    purpose: "Medical software registration validation"
+
+---
+
+**END OF DEPENDENCY STRUCTURE MATRIX**

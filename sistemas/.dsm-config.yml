@@ -1,0 +1,122 @@
+# Dependency Structure Matrix Configuration
+# Healthcare Blog - Diários dos Especialistas
+# Based on: Matriz de Dependência e Contextualização para LLMs
+
+project_context:
+  domain: healthcare
+  subdomain: content_management_system
+  complexity: 5
+  stack_score: 99.5
+  stack_justification: "Enterprise proven (HCA Healthcare), Zero Trust nativo, MCP integration, PQC ready"
+
+technical_stack:
+  primary_language: elixir
+  frameworks:
+    - phoenix_liveview
+    - extism_wasm
+    - mcp_protocol
+  databases:
+    - postgresql_16
+    - timescaledb
+    - elasticsearch
+  infrastructure:
+    - kubernetes
+    - istio_service_mesh
+    - zero_trust_architecture
+
+# Semantic Tagging System (4-Tier Hierarchy)
+tagging_structure:
+  L1_DOMAIN:
+    infrastructure: "DevOps, containers, networking"
+    business_logic: "Core application logic"
+    data_layer: "Database, storage, persistence"
+    integration: "APIs, external services"
+    security: "Authentication, authorization, Zero Trust"
+    ui_ux: "Frontend, user interface, LiveView"
+
+  L2_SUBDOMAIN:
+    healthcare: "Medical domain specific"
+    compliance: "LGPD, HIPAA, CFM regulations"
+    scientific: "PubMed, research, evidence-based"
+    performance: "Scalability, optimization"
+    ai_pipeline: "WASM plugins, content generation"
+
+  L3_TECHNICAL:
+    architecture: "Design patterns, structure"
+    implementation: "Concrete code solutions"
+    configuration: "Setup, deployment configs"
+    testing: "Test strategies, frameworks"
+    optimization: "Performance improvements"
+    documentation: "Technical guides, references"
+
+  L4_SPECIFICITY:
+    example: "Code examples, tutorials"
+    reference: "API documentation"
+    guide: "Step-by-step instructions"
+    troubleshooting: "Problem resolution"
+    benchmark: "Performance metrics"
+    compliance_check: "LGPD/CFM validation"
+
+# Context Tags para LLMs
+temporal_context:
+  current_2025: "Active, maintained code"
+  stable_production: "Production-ready components"
+  experimental_preview: "Preview features"
+  migration_target: "Migration destination"
+
+complexity_indicators:
+  trivial: "< 1 hour implementation"
+  simple: "1-4 hours implementation"
+  moderate: "1-2 days implementation"
+  complex: "1 week+ implementation"
+  expert_only: "Requires specialist knowledge"
+
+dependency_context:
+  standalone: "No external dependencies"
+  framework_dependent: "Requires specific framework"
+  service_dependent: "Requires external services"
+  database_dependent: "Requires database access"
+  network_dependent: "Requires network connectivity"
+  compliance_dependent: "Requires regulatory compliance"
+
+# Healthcare-specific Context
+healthcare_context:
+  phi_pii_handling:
+    - "Always tag functions handling patient data"
+    - "Include data minimization context"
+    - "Document consent requirements"
+    - "Preserve audit trail requirements"
+
+  clinical_decision_support:
+    - "Tag medical algorithms with evidence level"
+    - "Include FDA/ANVISA approval status"
+    - "Document clinical validation requirements"
+    - "Preserve performance benchmarks"
+
+  integration_requirements:
+    - "FHIR R4 compatibility context"
+    - "HL7 message format requirements"
+    - "DICOM integration points"
+    - "Clinical terminology mappings"
+
+# Documentation Standards
+documentation_standards:
+  tag_format: "DOMAIN:subdomain|COMPLEXITY:level|DEPS:dependencies"
+  context_preservation: mandatory
+  llm_optimization: enabled
+  dsm_analysis: required
+
+# Performance Requirements
+performance_targets:
+  response_time: "< 50ms"
+  concurrency: "2M+ connections"
+  availability: "99.99%"
+  wasm_plugin_exec: "< 5s"
+
+# Compliance Requirements
+compliance_requirements:
+  - LGPD
+  - CFM
+  - ANVISA
+  - HIPAA
+  - Zero_Trust_NIST_SP_800_207

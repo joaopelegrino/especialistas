@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="csrf-token" content={get_csrf_token()} />
+  <title>Criar Conta - Healthcare CMS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+    .container {
+      max-w-md;
+      width: 100%;
+      margin: 0 1rem;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 { text-align: center; color: #667eea; margin-bottom: 0.5rem; font-size: 2rem; }
+    p { text-align: center; color: #666; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; font-size: 0.875rem; }
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    input:focus, select:focus { outline: none; border-color: #667eea; }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover { background: #5568d3; }
+    .checkbox-group { display: flex; align-items: center; margin: 1rem 0; }
+    .checkbox-group input { width: auto; margin-right: 0.5rem; }
+    .checkbox-group label { margin: 0; font-weight: normal; font-size: 0.875rem; }
+    .links { text-align: center; margin-top: 1.5rem; font-size: 0.875rem; }
+    .links a { color: #667eea; text-decoration: none; font-weight: 500; }
+    .links a:hover { text-decoration: underline; }
+    .footer { margin-top: 2rem; text-align: center; font-size: 0.75rem; color: #999; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Criar Conta</h1>
+    <p>Healthcare CMS - Plataforma Médica</p>
+
+    <form action="/register" method="post">
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+      <div class="form-group">
+        <label for="name">Nome Completo</label>
+        <input type="text" id="name" name="user[name]" required placeholder="Dr. João Silva" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Profissional</label>
+        <input type="email" id="email" name="user[email]" required placeholder="medico@exemplo.com.br" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha (mínimo 8 caracteres)</label>
+        <input type="password" id="password" name="user[password]" required placeholder="••••••••" />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Tipo de Conta</label>
+        <select id="role" name="user[role]">
+          <option value="subscriber">Assinante (Leitor)</option>
+          <option value="contributor">Colaborador (Submete para revisão)</option>
+          <option value="author">Autor (Publica próprio conteúdo)</option>
+          <option value="editor">Editor (Gerencia conteúdo)</option>
+        </select>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="terms" name="user[terms_accepted]" required />
+        <label for="terms">Aceito os termos de uso e política de privacidade (LGPD)</label>
+      </div>
+
+      <button type="submit">Criar Conta</button>
+    </form>
+
+    <div class="links">
+      <p>Já possui conta? <a href="/login">Fazer login</a></p>
+    </div>
+
+    <div class="footer">
+      <p>🔒 Zero Trust Security | 📋 LGPD Compliant</p>
+      <p>Sprint 0-2: Authentication Flow</p>
+    </div>
+  </div>
+</body>
+</html>

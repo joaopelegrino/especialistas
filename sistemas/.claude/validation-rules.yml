@@ -1,0 +1,406 @@
+# Source Validation Rules
+# Healthcare WASM-Elixir Stack Knowledge Base
+# Critérios de Credibilidade e Validação de Fontes
+
+version: "1.0.0"
+last_updated: "2025-09-30"
+
+# ============================================================================
+# VALIDATION FRAMEWORK
+# ============================================================================
+validation_framework:
+  description: "Sistema de validação de fontes baseado em níveis de confiabilidade"
+  methodology: "Multi-tier credibility assessment"
+
+  levels:
+    L0_CANONICAL:
+      score: 100
+      description: "Official documentation, RFCs, NIST standards, government regulations"
+      requirements:
+        - "Published by official organization or standards body"
+        - "Version controlled and maintained"
+        - "Peer-reviewed or consensus-driven"
+      examples:
+        - "elixir-lang.org"
+        - "NIST FIPS publications"
+        - "W3C specifications"
+        - "IETF RFCs"
+
+    L1_ACADEMIC:
+      score: 90
+      description: "Peer-reviewed research papers, academic publications"
+      requirements:
+        - "Published in recognized journals or conferences"
+        - "Peer-reviewed by domain experts"
+        - "Cited by other research"
+        - "Authors with institutional affiliation"
+      examples:
+        - "ACM Digital Library"
+        - "IEEE Xplore"
+        - "arXiv (pre-prints)"
+        - "Google Scholar indexed"
+
+    L2_VALIDATED:
+      score: 75
+      description: "Industry whitepapers, technical blogs with attribution"
+      requirements:
+        - "Author with verifiable expertise"
+        - "Technical accuracy can be cross-verified"
+        - "References to canonical sources"
+        - "Regular updates and maintenance"
+      examples:
+        - "Elixir Forum posts by core team"
+        - "Official tech company blogs"
+        - "Well-maintained GitHub repositories"
+
+    L3_COMMUNITY:
+      score: 50
+      description: "Community content requiring additional verification"
+      requirements:
+        - "Cross-validate with canonical sources"
+        - "Check author reputation"
+        - "Verify recency of information"
+        - "Confirm technical accuracy"
+      examples:
+        - "Stack Overflow answers"
+        - "GitHub issues/discussions"
+        - "Reddit r/elixir posts"
+
+# ============================================================================
+# DOMAIN-SPECIFIC VALIDATION
+# ============================================================================
+domain_validation:
+
+  elixir_erlang:
+    canonical_sources:
+      - "elixir-lang.org"
+      - "erlang.org"
+      - "hexdocs.pm"
+      - "phoenixframework.org"
+
+    trusted_authors:
+      - "José Valim" # Elixir creator
+      - "Chris McCord" # Phoenix creator
+      - "Joe Armstrong" # Erlang creator
+      - "Robert Virding" # Erlang co-creator
+
+    validation_checks:
+      - "Verify Elixir/OTP version compatibility"
+      - "Check if feature exists in official docs"
+      - "Validate code examples compile"
+      - "Confirm behavior matches BEAM VM specs"
+
+  webassembly:
+    canonical_sources:
+      - "webassembly.org"
+      - "webassembly.github.io"
+      - "extism.org"
+      - "wasmtime.dev"
+      - "bytecodealliance.org"
+
+    validation_checks:
+      - "Verify against WASM spec version"
+      - "Check component model compatibility"
+      - "Validate performance claims with benchmarks"
+      - "Confirm security sandbox behavior"
+
+  security:
+    canonical_sources:
+      - "csrc.nist.gov"
+      - "nvlpubs.nist.gov"
+      - "cve.mitre.org"
+      - "owasp.org"
+
+    critical_requirements:
+      - "MUST cite NIST publications for PQC"
+      - "MUST reference CVE numbers for vulnerabilities"
+      - "MUST include threat model description"
+      - "MUST specify cryptographic parameters"
+
+    red_flags:
+      - "Claims of 'unbreakable' security"
+      - "Proprietary crypto algorithms"
+      - "Security by obscurity"
+      - "No formal security analysis"
+
+  healthcare:
+    canonical_sources:
+      - "hl7.org"
+      - "fhir.org"
+      - "dicomstandard.org"
+      - "hhs.gov/hipaa"
+      - "planalto.gov.br" # Brazilian regulations
+
+    compliance_validation:
+      - "LGPD: Verify article citations"
+      - "HIPAA: Check CFR references"
+      - "FHIR: Validate resource structure against R4"
+      - "CFM: Confirm resolution numbers"
+
+    critical_requirements:
+      - "MUST cite specific regulation articles"
+      - "MUST include compliance scope"
+      - "MUST reference audit requirements"
+      - "MUST specify data retention policies"
+
+  database:
+    canonical_sources:
+      - "postgresql.org"
+      - "docs.timescale.com"
+      - "github.com/pgvector"
+
+    validation_checks:
+      - "Verify PostgreSQL version compatibility"
+      - "Validate SQL syntax"
+      - "Check index performance claims"
+      - "Confirm extension availability"
+
+# ============================================================================
+# URL VALIDATION RULES
+# ============================================================================
+url_validation:
+
+  approved_domains:
+    official_docs:
+      - "elixir-lang.org"
+      - "erlang.org"
+      - "hexdocs.pm"
+      - "phoenixframework.org"
+      - "webassembly.org"
+      - "extism.org"
+      - "postgresql.org"
+      - "kubernetes.io"
+
+    standards_bodies:
+      - "csrc.nist.gov"
+      - "nvlpubs.nist.gov"
+      - "www.rfc-editor.org"
+      - "w3.org"
+      - "ietf.org"
+
+    academic:
+      - "dl.acm.org"
+      - "ieeexplore.ieee.org"
+      - "arxiv.org"
+      - "scholar.google.com"
+
+    healthcare:
+      - "hl7.org"
+      - "fhir.org"
+      - "dicomstandard.org"
+      - "hhs.gov"
+      - "planalto.gov.br"
+      - "sistemas.cfm.org.br"
+
+  conditional_approval:
+    github:
+      rules:
+        - "MUST be official organization repository"
+        - "MUST have > 100 stars for community projects"
+        - "MUST have active maintenance (commits in last 6 months)"
+      approved_orgs:
+        - "elixir-lang"
+        - "phoenixframework"
+        - "extism"
+        - "bytecodealliance"
+        - "WebAssembly"
+        - "postgres"
+        - "kubernetes"
+
+    medium_dev_to:
+      rules:
+        - "Author MUST be verifiable core maintainer"
+        - "Content MUST be cross-validated with canonical sources"
+        - "Article MUST include references to official docs"
+      approved_authors:
+        - "José Valim @josevalim"
+        - "Chris McCord @chrismccord"
+
+  blocked_domains:
+    - "*.blogspot.com" # Generic blogs without curation
+    - "wordpress.com/*" # Personal blogs
+    - "wix.com/*"
+    - "quora.com" # User-generated Q&A without validation
+
+# ============================================================================
+# CONTENT VALIDATION CHECKS
+# ============================================================================
+content_validation:
+
+  required_metadata:
+    - "title"
+    - "url"
+    - "author_or_organization"
+    - "publication_date OR last_verified"
+    - "validation_level"
+
+  quality_indicators:
+    high_quality:
+      - "Includes code examples"
+      - "References official documentation"
+      - "Specifies version numbers"
+      - "Includes performance benchmarks"
+      - "Provides error handling examples"
+      - "Contains security considerations"
+
+    red_flags:
+      - "No author attribution"
+      - "No date information"
+      - "Generic claims without evidence"
+      - "Outdated version references"
+      - "Broken external links"
+      - "No references to authoritative sources"
+
+  technical_accuracy:
+    code_examples:
+      - "MUST be syntactically correct"
+      - "MUST specify language/framework version"
+      - "SHOULD include error handling"
+      - "SHOULD be runnable as-is"
+
+    benchmarks:
+      - "MUST include methodology description"
+      - "MUST specify hardware/software environment"
+      - "MUST provide reproducible test code"
+      - "SHOULD include statistical analysis"
+
+    security_claims:
+      - "MUST cite threat model"
+      - "MUST reference security standards"
+      - "MUST include attack scenarios"
+      - "MUST specify security parameters"
+
+# ============================================================================
+# VERIFICATION WORKFLOW
+# ============================================================================
+verification_workflow:
+
+  step_1_initial_check:
+    actions:
+      - "Extract domain from URL"
+      - "Check against approved/blocked lists"
+      - "Verify URL is accessible (HTTP 200)"
+      - "Check SSL certificate validity"
+
+  step_2_metadata_extraction:
+    actions:
+      - "Extract title, author, date"
+      - "Identify content type (blog, paper, docs)"
+      - "Check for version information"
+      - "Verify publication date recency"
+
+  step_3_content_analysis:
+    actions:
+      - "Check for code examples"
+      - "Verify external references"
+      - "Assess technical depth"
+      - "Look for red flag indicators"
+
+  step_4_cross_validation:
+    actions:
+      - "Compare claims with canonical sources"
+      - "Verify version compatibility"
+      - "Check author credentials"
+      - "Validate technical accuracy"
+
+  step_5_assignment:
+    actions:
+      - "Assign validation level (L0-L3)"
+      - "Calculate credibility score"
+      - "Add to sources registry"
+      - "Schedule re-verification date"
+
+# ============================================================================
+# RE-VERIFICATION SCHEDULE
+# ============================================================================
+revalidation:
+
+  frequency:
+    L0_CANONICAL: "Quarterly" # Official docs change infrequently
+    L1_ACADEMIC: "Yearly" # Research papers are static
+    L2_VALIDATED: "Monthly" # Blogs and whitepapers update
+    L3_COMMUNITY: "Weekly" # Community content changes fast
+
+  triggers:
+    - "Major version release of referenced technology"
+    - "Security vulnerability disclosure"
+    - "Regulatory compliance update"
+    - "Broken link detected"
+    - "Content becomes 404"
+
+  actions_on_revalidation:
+    - "Check URL still accessible"
+    - "Verify content hasn't changed significantly"
+    - "Update last_verified timestamp"
+    - "Downgrade validation level if quality decreased"
+    - "Remove from registry if no longer valid"
+
+# ============================================================================
+# SCORING SYSTEM
+# ============================================================================
+scoring:
+
+  base_score:
+    L0_CANONICAL: 100
+    L1_ACADEMIC: 90
+    L2_VALIDATED: 75
+    L3_COMMUNITY: 50
+
+  modifiers:
+    positive:
+      has_code_examples: +5
+      includes_benchmarks: +5
+      cites_official_sources: +5
+      recently_updated: +3
+      active_maintenance: +3
+      author_verified: +3
+
+    negative:
+      outdated_content: -10
+      broken_links: -15
+      no_author: -10
+      no_date: -10
+      generic_claims: -5
+      poor_technical_depth: -10
+
+  thresholds:
+    excellent: ">= 90"
+    good: "75-89"
+    acceptable: "60-74"
+    questionable: "50-59"
+    unreliable: "< 50"
+
+# ============================================================================
+# SPECIAL CASES
+# ============================================================================
+special_cases:
+
+  pre_prints:
+    description: "ArXiv and other pre-print servers"
+    validation_level: "L1_ACADEMIC"
+    requirements:
+      - "Check if later published in peer-reviewed venue"
+      - "Verify author institutional affiliation"
+      - "Cross-validate with other research"
+
+  deprecated_versions:
+    description: "Documentation for older but still relevant versions"
+    handling:
+      - "Mark as 'DEPRECATED' but keep if historically important"
+      - "Add note about current recommended version"
+      - "Link to migration guides if available"
+
+  translated_content:
+    description: "Translations of official documentation"
+    validation:
+      - "Verify translation is officially sanctioned"
+      - "Check translation is up-to-date with original"
+      - "Prefer original language version for canonical references"
+
+  paywalled_content:
+    description: "Academic papers behind paywalls"
+    handling:
+      - "Include DOI for permanent reference"
+      - "Check for open-access versions"
+      - "Verify through institutional access"
+      - "Use author pre-prints when available"

@@ -61,4 +61,42 @@ defmodule HealthcareCMS.Accounts do
     |> User.changeset(%{status: :deleted, deleted_at: DateTime.utc_now()})
     |> Repo.update()
   end
+
+  @doc """
+  Cria changeset para validação de formulário
+  """
+  def change_user(%User{} = user, attrs \\ %{}) do
+    User.changeset(user, attrs)
+  end
+
+  @doc """
+  Autentica usuário por email e senha
+
+  Retorna {:ok, user} se credenciais válidas
+  Retorna {:error, :invalid_credentials} se email/senha incorretos
+  Retorna {:error, :user_inactive} se usuário inativo
+  """
+  def authenticate_user(email, password) do
+    user = get_user_by_email(email)
+
+    cond do
+      user && User.valid_password?(user, password) && user.status == :active ->
+        {:ok, user}
+
+      user && user.status != :active ->
+        {:error, :user_inactive}
+
+      true ->
+        # Prevent timing attacks
+        Argon2.no_user_verify()
+        {:error, :invalid_credentials}
+    end
+  end
+
+  @doc """
+  Registra último login do usuário
+  """
+  def update_last_login(%User{} = user) do
+    update_user(user, %{last_login_at: DateTime.utc_now()})
+  end
 end

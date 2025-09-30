@@ -32,7 +32,7 @@ defmodule HealthcareCMS.Application do
       # {Oban, Application.fetch_env!(:healthcare_cms, Oban)},
 
       # Zero Trust Policy Engine (OTP Supervisor)
-      HealthcareCMS.Security.PolicyEngine
+      HealthcareCMS.Security.PolicyEngine,
 
       # Medical Workflow Engine (temporariamente desabilitado)
       # HealthcareCMS.Medical.WorkflowEngine,
@@ -46,8 +46,8 @@ defmodule HealthcareCMS.Application do
       # Healthcare Compliance Monitor (temporariamente desabilitado)
       # HealthcareCMS.Compliance.Monitor,
 
-      # Phoenix Endpoint (temporariamente desabilitado)
-      # HealthcareCMSWeb.Endpoint
+      # Phoenix Endpoint - Sprint 0-1: HABILITADO (29/09/2025)
+      HealthcareCMSWeb.Endpoint
     ]
 
     # Configurar telemetry handlers (temporariamente desabilitado)

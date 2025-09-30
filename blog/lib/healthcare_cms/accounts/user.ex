@@ -72,15 +72,41 @@ defmodule HealthcareCMS.Accounts.User do
 
   @doc false
   def changeset(user, attrs) do
+    # Support both "name" (from form) and "first_name"/"last_name" separately
+    attrs = normalize_name_attrs(attrs)
+
     user
-    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> cast(attrs, @required_fields ++ @optional_fields ++ [:password])
     |> validate_required(@required_fields)
     |> validate_email()
+    |> maybe_validate_password()
     |> validate_professional_registry()
     |> generate_username()
     |> generate_display_name()
     |> unique_constraint(:email)
     |> unique_constraint(:username)
+  end
+
+  defp normalize_name_attrs(%{"name" => name} = attrs) when is_binary(name) do
+    parts = String.split(name, " ", parts: 2)
+
+    attrs
+    |> Map.put("first_name", List.first(parts) || "")
+    |> Map.put("last_name", List.last(parts) || "")
+  end
+
+  defp normalize_name_attrs(attrs), do: attrs
+
+  defp maybe_validate_password(changeset) do
+    if get_change(changeset, :password) do
+      changeset
+      |> validate_required([:password])
+      |> validate_length(:password, min: 8)
+      |> validate_password_complexity()
+      |> hash_password()
+    else
+      changeset
+    end
   end
 
   @doc """
@@ -201,6 +227,16 @@ defmodule HealthcareCMS.Accounts.User do
   """
   def verified_professional?(%__MODULE__{registry_verified: true}), do: true
   def verified_professional?(_), do: false
+
+  @doc """
+  Verifica se senha é válida para o usuário
+  """
+  def valid_password?(%__MODULE__{password_hash: password_hash}, password)
+      when is_binary(password_hash) and byte_size(password) > 0 do
+    Argon2.verify_pass(password, password_hash)
+  end
+
+  def valid_password?(_, _), do: false
 
   @doc """
   Retorna nome completo do usuário
