@@ -1,0 +1,17 @@
+# Exemplo de texto com parágrafo sintético
+
+(Parágrafo sintético) Realize essa <tarefa> baseado no <ultimo_resultado> e seguindo as <boas_praticas>. 
+
+
+(Expansões)
+<tarefa>
+
+</tarefa>
+
+<ultimo_resultado>
+
+</ultimo_resultado>
+
+<boas_praticas>
+
+</boas_praticas>

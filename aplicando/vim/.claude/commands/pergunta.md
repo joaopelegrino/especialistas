@@ -1,25 +1,32 @@
 Usando o <conhecimento> e <fontes_confiaveis> responda a minha <pergunta>
 <conhecimento>
-📁 /home/notebook/workspace/especialistas/vim
+📁 /home/notebook/workspace/especialistas/aplicando/vim
 
 🌳 Estrutura do diretório:
-.
-├── .claude
-│   ├── commands
-│   └── settings.local.json
-├── 00-inicio.md
-├── 01-markdown-organization.md
-├── 02-completion-systems.md
-├── 03-vim-manual-highlights.md
-├── 04-help-and-man-pages.md
-├── 05-1-grep-os.md
-├── 05-grep.md
-├── 06-vim-vanilla-lint-systems.md
-├── 07-vim-productivity-vanilla.md
-├── CLAUDE.md
-├── 08-navegacao-help-tags.md
-├── 09-comandos-read-external.md
-└── README.md
+|   |-- 01-decomposicao-comandos-read-external.md
+|   |-- 02-decomposicao-sistemas-completion.md
+|   |-- 03-decomposicao-find-vimgrep.md
+|   `-- README.md
+|-- 00-inicio.md
+|-- 01-markdown-organization.md
+|-- 02-completion-systems.md
+|-- 03-vim-manual-highlights.md
+|-- 04-help-and-man-pages.md
+|-- 05-1-grep-os.md
+|-- 05-grep.md
+|-- 06-vim-vanilla-lint-systems.md
+|-- 07-vim-productivity-vanilla.md
+|-- 08-navegacao-help-tags.md
+|-- 09-comandos-read-external.md
+|-- 10-comando-command.md
+|-- 10-regex-do-basico-ao-avansado.md
+|-- 11-workflow-edicao-tags-markdown.md
+|-- concatenar_projeto_bm.sh
+|-- help_temp.txt
+|-- README.md
+`-- VIM_ARQUIVOS_IMPORTANTES.md
+
+4 directories, 23 files
 
 
 </conhecimento>

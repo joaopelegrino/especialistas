@@ -25,34 +25,55 @@ Plugin poderoso para manipulação de pares (parênteses, aspas, tags XML/HTML).
 
 #### Comandos Nativos Básicos
 
+**IMPORTANTE - Sintaxe Correta:**
+- Digite o comando COMPLETO em sequência contínua, SEM pressionar Enter no meio
+- Exemplo: `ysiw<tarefa>` deve ser digitado como: y-s-i-w-<-t-a-r-e-f-a->(Enter)
+- Se pressionar Enter antes de fechar `>`, insere `^M` literal ao invés da tag
+
 **Adicionar Tags em Palavras/Frases:**
 ```vim
 ysiw<tag>           " Adiciona <tag> em palavra sob cursor
+                    " Digite: y s i w < t a g > (Enter)
+
 ys3aw<tarefa>       " Adiciona <tarefa> em 3 palavras
+                    " Digite: y s 3 a w < t a r e f a > (Enter)
+
 yss<praticas>       " Adiciona <praticas> em linha inteira
+                    " Digite: y s s < p r a t i c a s > (Enter)
+
 vS<conceito>        " Em visual mode, envolve seleção com <conceito>
+                    " Digite: v (selecione) S < c o n c e i t o > (Enter)
 ```
 
 **Mudar Tags Existentes:**
 ```vim
 cst<novo>           " Change Surrounding Tag para <novo>
+                    " Digite: c s t < n o v o > (Enter)
+                    " Cursor pode estar em qualquer lugar dentro da tag
+
 cst                 " Remove tag, mantém conteúdo
-cs<antigo><novo>    " Muda delimitador específico
+                    " Digite: c s t (sem tag, apenas Enter)
+
+cs<antigo><novo>    " Muda delimitador específico (não comum para tags)
 ```
 
 **Deletar Tags:**
 ```vim
 dst                 " Delete Surrounding Tag (mantém conteúdo)
-ds<                 " Remove tags <> ao redor
+                    " Digite: d s t
+                    " Remove par de tags mais interno
+
+ds<                 " Remove apenas delimitadores <> (não tags completas)
 ```
 
 **Recurso Avançado - Preservação de Atributos:**
 ```vim
 " De: <tarefa status="pending">item</tarefa>
 cst<conceito>       " Para: <conceito status="pending">item</conceito>
+                    " Digite: c s t < c o n c e i t o > (Enter)
 ```
 
-Quando você digita `cst<nova>` sem fechar o `>`, o vim-surround preserva automaticamente os atributos da tag original.
+**NOTA CRÍTICA:** vim-surround preserva atributos automaticamente quando você muda tags. Não há opção especial - funciona sempre.
 
 ### 2. Emmet-vim (Instalado - vimrc:41)
 
@@ -86,12 +107,16 @@ dit                 " Delete Inner Tag
 ```vim
 # Cursor em "importante"
 ysiw<critical>      " Resultado: <critical>importante</critical>
+                    " DIGITE: y s i w < c r i t i c a l > Enter
+                    " NÃO pressione Enter antes de fechar >
 
 # Para múltiplas palavras
 ys3w<conceito>      " Envolve 3 palavras com <conceito>
+                    " DIGITE: y s 3 w < c o n c e i t o > Enter
 
 # Para linha inteira
 yss<tarefa>         " Envolve linha com <tarefa>
+                    " DIGITE: y s s < t a r e f a > Enter
 ```
 
 #### Método Visual (Intuitivo)
@@ -100,9 +125,12 @@ yss<tarefa>         " Envolve linha com <tarefa>
 viw                 " Seleciona palavra
 V                   " Seleciona linha
 S<tag>              " Envolve seleção com <tag>
+                    " DIGITE: S < t a g > Enter (após seleção visual)
 ```
 
 **Recomendação:** Método visual é mais intuitivo para iniciantes, pois você VÊ o que está selecionando antes de aplicar a tag. Método operator é mais rápido quando você domina os text objects.
+
+**ARMADILHA COMUM:** Se você digitar `ysiw<tag` e pressionar Enter antes do `>`, o vim insere literalmente o caractere ^M (carriage return) ao invés da tag. A sequência COMPLETA deve ser digitada antes de pressionar Enter final.
 
 ### Cenário 2: Editar Tags Existentes
 
@@ -110,13 +138,18 @@ S<tag>              " Envolve seleção com <tag>
 ```vim
 # Cursor em qualquer lugar dentro de <old>texto</old>
 cst<new>            " Muda para <new>texto</new>
+                    " DIGITE: c s t < n e w > Enter
 
-# Preservar atributos (não feche com >)
+# Preservar atributos (automático)
 # De: <tarefa status="pending">item</tarefa>
 cst<conceito>       " Para: <conceito status="pending">item</conceito>
+                    " DIGITE: c s t < c o n c e i t o > Enter
+                    " Atributos são SEMPRE preservados automaticamente
 ```
 
 **Insight:** O comando `cst` (change surrounding tag) funciona de qualquer posição dentro da tag - não precisa estar exatamente no início ou fim.
+
+**CORREÇÃO:** Ao contrário do que foi afirmado anteriormente, NÃO há sintaxe especial para preservar atributos. O vim-surround SEMPRE preserva atributos quando você muda tags - é o comportamento padrão.
 
 ### Cenário 3: Remover Tags Mantendo Conteúdo
 
