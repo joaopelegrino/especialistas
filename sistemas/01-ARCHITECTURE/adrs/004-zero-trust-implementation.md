@@ -1,551 +1,307 @@
-# ADR 004: Zero Trust Architecture Implementation
+# ADR 004: Zero Trust Architecture with Post-Quantum Cryptography
 
-**Status**: Accepted
-**Date**: 2025-09-30
-**Tags**: [L1_DOMAIN:security | L2_SUBDOMAIN:compliance | LEVEL:expert]
-
----
-
-## Decision
-
-**Implement NIST SP 800-207 Zero Trust Architecture with healthcare-specific trust scoring and policy engine.**
-
----
+**Status**: ACCEPTED | **Date**: 2025-09-26 | **Updated**: 2025-09-30
 
 ## Context
 
-Healthcare security requirements:
-- **PHI/PII Protection**: LGPD Art. 46, HIPAA 164.312(a)(1)
-- **Insider threats**: 58% of healthcare breaches internal (Verizon DBIR 2023)
-- **Regulatory**: CFM requires continuous authentication for medical systems
-- **Threat model**: "Assume breach" - network perimeter no longer sufficient
+Healthcare system requires **Zero Trust security** for:
+1. **HIPAA 164.312(e)(1)**: Transmission security (encryption)
+2. **LGPD Art. 46**: Data processing security (PHI/PII protection)
+3. **CFM 2.314/2022 Art. 5**: End-to-end encryption (telemedicine)
+4. **50+ Year Records**: Post-quantum cryptography (quantum threat mitigation)
 
-Traditional perimeter security insufficient for:
-- Remote medical professionals (telemedicine)
-- Third-party integrations (labs, pharmacies)
-- Cloud-native architecture (microservices)
-- BYOD (Bring Your Own Device)
+### Threat Model
 
----
+1. **External Attackers**: Ransomware, data exfiltration
+2. **Insider Threats**: Malicious employees accessing PHI
+3. **Quantum Computers**: Harvest-now-decrypt-later attacks (medical records 50+ years)
 
-## Alternatives Considered
+## Decision
 
-### 1. Traditional Perimeter Security (Firewall + VPN)
+**Implement Zero Trust Architecture (NIST SP 800-207) with Post-Quantum Cryptography**
 
-**Model**: Trust inside network, block outside
+**Components**:
+1. **Service Mesh**: Istio 1.24 (mTLS, microsegmentation)
+2. **Policy Engine**: Open Policy Agent (OPA)
+3. **Post-Quantum Cryptography**:
+   - KEM: CRYSTALS-Kyber-768 (NIST FIPS 203)
+   - Signatures: CRYSTALS-Dilithium3 (NIST FIPS 204)
+   - Long-Term: SPHINCS+ (NIST FIPS 205)
+4. **Identity**: Keycloak + OAuth2 + OIDC
 
-**Pros**:
-- ✅ Simple to understand
-- ✅ Mature tooling
-- ✅ Lower operational complexity
+**Rationale**:
+1. **NIST-Approved**: SP 800-207 compliance (federal/healthcare standard)
+2. **Quantum-Resistant**: Kyber + Dilithium protect 50+ year records
+3. **Microsegmentation**: Istio enforces network policies (no east-west traffic by default)
+4. **Continuous Verification**: Every request authenticated + authorized
 
+## Alternatives
+
+### Traditional Perimeter Security (Firewall + VPN)
 **Cons**:
-- ❌ **Lateral movement**: Attacker inside network accesses all resources
-- ❌ **VPN bottleneck**: All traffic through single point
-- ❌ **No user context**: Network location ≠ identity
-- ❌ **BYOD risk**: Personal devices inside trusted network
+- ❌ **Single Point of Failure**: Firewall breach = full network access
+- ❌ **No microsegmentation**: Lateral movement after breach
+- ❌ **VPN complexity**: Client software, key management
+- ❌ **Not NIST SP 800-207 compliant**
 
-**Healthcare Breach Example**:
-```
-Anthem (2015): 80M records stolen
-Attack: Phishing → VPN credentials → lateral movement
-Zero Trust would have prevented: ✅ (no lateral movement)
-```
-
-**Verdict**: Insufficient for healthcare PHI/PII protection.
-
-**Reference**: [Verizon DBIR 2023](https://www.verizon.com/business/resources/reports/dbir/) (L2_VALIDATED)
+**Decision**: Perimeter security rejected (does not meet Zero Trust principles).
 
 ---
 
-### 2. Network Segmentation (VLAN)
-
-**Model**: Segment network into zones (DMZ, internal, restricted)
-
-**Pros**:
-- ✅ Better than flat network
-- ✅ Limits lateral movement
-- ✅ Compliance checkboxes (HIPAA 164.312(e)(1))
-
+### Classical Cryptography Only (RSA + ECDSA)
 **Cons**:
-- ❌ **Still network-based**: Trusts devices within segment
-- ❌ **Complex firewall rules**: 100s of rules, error-prone
-- ❌ **No user context**: Cannot distinguish doctor from nurse
-- ❌ **Scalability**: Difficult with microservices (1000s of services)
+- ❌ **Quantum Vulnerable**: Shor's algorithm breaks RSA-2048 in hours (future quantum computers)
+- ❌ **50+ Year Records**: Medical records vulnerable after ~2040
+- ❌ **NIST Recommendation**: Migrate to PQC by 2030
 
-**Benchmark**:
-```
-Firewall rules: 500+ rules for 100 services
-Rule audit: Manual, error-prone
-Incident response: 48 hours to identify breach path
-Zero Trust: Policy-driven, 5 minutes to trace
-```
-
-**Verdict**: Better than perimeter, but insufficient for modern healthcare.
+**Decision**: Classical-only rejected due to quantum threat timeline.
 
 ---
 
-### 3. IAM-Only (Identity & Access Management)
+## Zero Trust Principles (NIST SP 800-207)
 
-**Model**: Authenticate users, authorize resources (no network controls)
+### 1. Verify Explicitly
+**Principle**: Never trust, always verify (even inside network)
 
-**Pros**:
-- ✅ User-centric security
-- ✅ Works across networks
-- ✅ Mature standards (OAuth2, SAML, OIDC)
-
-**Cons**:
-- ❌ **No device posture**: Stolen credentials on compromised device
-- ❌ **No continuous verification**: Auth once, trust forever (session duration)
-- ❌ **No network context**: Ignores location, network threat intel
-- ❌ **Token theft**: Long-lived tokens vulnerable
-
-**Healthcare Risk**:
+**Implementation** (Istio + OPA):
+```yaml
+# Istio AuthorizationPolicy (deny by default)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: fhir-api-access
+  namespace: healthcare
+spec:
+  selector:
+    matchLabels:
+      app: fhir-api
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/healthcare/sa/elixir-host"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/fhir/Patient/*", "/fhir/Observation/*"]
+    when:
+    - key: request.auth.claims[role]
+      values: ["doctor", "nurse"]
 ```
-Doctor credentials stolen → Attacker accesses all patient records
-IAM-only: Cannot detect compromised device
-Zero Trust: Device posture + behavior analytics blocks access
-```
 
-**Verdict**: Necessary component, but insufficient alone.
+**OPA Policy** (fine-grained authorization):
+```rego
+package healthcare.fhir
+
+# Allow doctors to read patients they're assigned to
+allow {
+  input.method == "GET"
+  input.path == ["fhir", "Patient", patient_id]
+  input.user.role == "doctor"
+  input.user.assigned_patients[_] == patient_id
+}
+
+# Deny by default
+default allow = false
+```
 
 ---
 
-## Zero Trust Architecture (NIST SP 800-207)
+### 2. Least Privilege Access
+**Principle**: Minimal access required for function
 
-### Core Principles
+**Implementation** (PostgreSQL Row-Level Security):
+```sql
+-- Enable RLS
+ALTER TABLE patients ENABLE ROW LEVEL SECURITY;
 
-1. **Verify explicitly**: Always authenticate and authorize based on all available data points
-2. **Use least privilege access**: Just-In-Time and Just-Enough-Access (JIT/JEA)
-3. **Assume breach**: Minimize blast radius, verify end-to-end encryption, use analytics
+-- Doctors see only assigned patients
+CREATE POLICY doctor_patients ON patients
+  FOR SELECT
+  TO doctor_role
+  USING (id IN (
+    SELECT patient_id FROM doctor_assignments
+    WHERE doctor_id = current_setting('app.current_user_id')::UUID
+  ));
 
-### Architecture Components
-
+-- Nurses see patients in their ward
+CREATE POLICY nurse_ward ON patients
+  FOR SELECT
+  TO nurse_role
+  USING (ward_id = current_setting('app.current_ward_id')::UUID);
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Policy Decision Point (PDP)               │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │ Trust Score │  │ Policy      │  │ Threat      │        │
-│  │ Engine      │→ │ Engine      │← │ Intelligence│        │
-│  └─────────────┘  └─────────────┘  └─────────────┘        │
-│         ↑                 ↓                  ↑              │
-└─────────┼─────────────────┼──────────────────┼──────────────┘
-          │                 │                  │
-    ┌─────┴─────┐      ┌────┴────┐      ┌─────┴──────┐
-    │ CDM       │      │ PEP     │      │ SIEM       │
-    │ (Context) │      │(Enforce)│      │ (Monitor)  │
-    └───────────┘      └─────────┘      └────────────┘
-```
-
-**Reference**: [NIST SP 800-207](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf) (L0_CANONICAL)
 
 ---
 
-### Implementation: Elixir GenServer Policy Engine
+### 3. Assume Breach
+**Principle**: Design assuming attackers are already inside
 
+**Implementation** (Microsegmentation):
+- **Network Policies**: Deny all by default, explicit allow rules
+- **Audit Logging**: Every access logged (LGPD Art. 46, HIPAA 164.312(b))
+- **Anomaly Detection**: Prometheus alerts on unusual access patterns
+
+---
+
+## Post-Quantum Cryptography
+
+### Hybrid Approach (Classical + PQC)
+
+**Rationale**: Provides security against both classical and quantum attackers
+
+**TLS 1.3 Hybrid**:
+```
+KEM: X25519 (classical) + CRYSTALS-Kyber-768 (PQC)
+Signature: Ed25519 (classical) + CRYSTALS-Dilithium3 (PQC)
+```
+
+**Key Sizes**:
+| Algorithm | Public Key | Secret Key | Ciphertext/Signature |
+|-----------|------------|------------|----------------------|
+| RSA-2048 | 256 bytes | 256 bytes | 256 bytes |
+| X25519 | 32 bytes | 32 bytes | 32 bytes |
+| **Kyber-768** | **1,184 bytes** | **2,400 bytes** | **1,088 bytes** |
+| Ed25519 | 32 bytes | 32 bytes | 64 bytes |
+| **Dilithium3** | **1,952 bytes** | **4,000 bytes** | **3,293 bytes** |
+
+**Trade-off**: Larger key sizes (~10x) acceptable for 50+ year security.
+
+---
+
+### CRYSTALS-Kyber (Key Encapsulation)
+
+**Use Case**: TLS handshake, symmetric key exchange
+
+**Elixir Implementation** (via Rust NIF):
 ```elixir
-defmodule Healthcare.ZeroTrust.PolicyEngine do
-  use GenServer
+defmodule Healthcare.Crypto.PQC do
+  @moduledoc "Post-Quantum Cryptography (NIST FIPS 203)"
 
-  @moduledoc """
-  Zero Trust Policy Engine - NIST SP 800-207 compliant
-
-  Evaluates access requests based on:
-  - User identity (MFA verified)
-  - Device posture (OS version, encryption status)
-  - Location (geofence, VPN detection)
-  - Behavior (anomaly detection)
-  - Resource sensitivity (PHI/PII level)
-  - Time of day (business hours vs off-hours)
-  """
-
-  def evaluate_access(user, resource, context) do
-    GenServer.call(__MODULE__, {:evaluate, user, resource, context})
+  def generate_kyber_keypair() do
+    # Call Rust NIF (pqcrypto crate)
+    Healthcare.Native.kyber_keypair()
   end
 
-  def handle_call({:evaluate, user, resource, context}, _from, state) do
-    trust_score = calculate_trust_score(user, context)
-    policy = fetch_policy(resource)
-    threat_level = check_threat_intelligence(context)
-
-    decision = make_decision(trust_score, policy, threat_level)
-
-    # Log for audit (HIPAA 164.312(b))
-    AuditLog.log(user, resource, decision, trust_score)
-
-    {:reply, decision, state}
+  def encapsulate(public_key) do
+    # Returns {shared_secret, ciphertext}
+    Healthcare.Native.kyber_encapsulate(public_key)
   end
 
-  defp calculate_trust_score(user, context) do
+  def decapsulate(secret_key, ciphertext) do
+    # Returns shared_secret
+    Healthcare.Native.kyber_decapsulate(secret_key, ciphertext)
+  end
+end
+```
+
+---
+
+### CRYSTALS-Dilithium (Digital Signatures)
+
+**Use Case**: Medical record signatures, prescription authentication
+
+**Example** (Sign medical record):
+```elixir
+defmodule Healthcare.MedicalRecords do
+  def sign_record(record, doctor_private_key) do
+    record_hash = :crypto.hash(:sha3_256, Jason.encode!(record))
+    
+    # Hybrid signature (Ed25519 + Dilithium3)
+    classical_sig = :crypto.sign(:eddsa, :sha3_256, record_hash, [doctor_private_key.ed25519, :ed25519])
+    pqc_sig = Healthcare.Native.dilithium_sign(record_hash, doctor_private_key.dilithium3)
+    
     %{
-      identity: identity_score(user),          # 0-25 pts
-      device: device_posture_score(context),   # 0-25 pts
-      behavior: behavior_score(user, context), # 0-25 pts
-      location: location_score(context)        # 0-25 pts
+      record: record,
+      signatures: %{
+        classical: Base.encode64(classical_sig),
+        pqc: Base.encode64(pqc_sig)
+      },
+      signed_at: DateTime.utc_now(),
+      algorithm: "Ed25519+Dilithium3"
     }
-    |> Map.values()
-    |> Enum.sum()  # Total: 0-100
   end
-
-  defp identity_score(user) do
-    cond do
-      user.mfa_verified and user.cfm_registered -> 25
-      user.mfa_verified -> 20
-      user.password_only -> 10
-      true -> 0
-    end
-  end
-
-  defp device_posture_score(context) do
-    device = context.device
-
-    cond do
-      device.managed and device.encrypted and device.os_updated -> 25
-      device.encrypted and device.os_updated -> 20
-      device.encrypted -> 15
-      true -> 5  # Unmanaged device low trust
-    end
-  end
-
-  defp behavior_score(user, context) do
-    # Anomaly detection
-    recent_activity = UserBehavior.get_recent(user.id, hours: 24)
-
-    anomalies = [
-      unusual_time?(context.timestamp, recent_activity),
-      unusual_location?(context.location, recent_activity),
-      unusual_resource?(context.resource, recent_activity),
-      rapid_requests?(user.id)
-    ]
-
-    anomaly_count = Enum.count(anomalies, & &1)
-
-    # Penalize anomalies
-    25 - (anomaly_count * 8)
-  end
-
-  defp location_score(context) do
-    cond do
-      context.location.country == "BR" and context.location.vpn == false -> 25
-      context.location.country == "BR" -> 20
-      context.location.known_location? -> 15
-      true -> 5  # Unknown location low trust
-    end
-  end
-
-  defp make_decision(trust_score, policy, threat_level) do
-    required_score = policy.min_trust_score + threat_level.adjustment
-
-    cond do
-      trust_score >= required_score ->
-        {:allow, trust_score: trust_score}
-
-      trust_score >= policy.step_up_threshold ->
-        {:step_up_auth, method: :totp, trust_score: trust_score}
-
-      true ->
-        {:deny, reason: :insufficient_trust, trust_score: trust_score}
-    end
-  end
-end
-```
-
-**Performance**: Policy evaluation < 100ms (NIST requirement)
-
----
-
-### Healthcare-Specific Trust Factors
-
-```elixir
-defmodule Healthcare.ZeroTrust.HealthcarePolicy do
-  @doc """
-  Healthcare-specific trust adjustments
-  """
-
-  def adjust_for_resource(trust_score, resource) do
-    case resource.data_classification do
-      :phi_identifiable ->
-        # PHI requires highest trust
-        %{min_score: 80, mfa_required: true, audit: :full}
-
-      :phi_anonymized ->
-        %{min_score: 60, mfa_required: false, audit: :standard}
-
-      :public ->
-        %{min_score: 40, mfa_required: false, audit: :minimal}
-    end
-  end
-
-  def adjust_for_medical_role(trust_score, user) do
-    case user.cfm_role do
-      :doctor ->
-        # Doctors have higher baseline trust
-        trust_score + 10
-
-      :nurse ->
-        trust_score + 5
-
-      :administrative ->
-        trust_score  # No adjustment
-
-      _ ->
-        trust_score - 10  # Unknown role penalty
-    end
-  end
-
-  def emergency_override(user, resource) do
-    # CFM allows emergency access with enhanced audit
-    with {:ok, :emergency} <- verify_emergency_status(),
-         {:ok, _} <- log_emergency_access(user, resource, :enhanced_audit) do
-      {:allow, emergency: true, audit_level: :critical}
-    end
+  
+  def verify_record(signed_record, doctor_public_key) do
+    record_hash = :crypto.hash(:sha3_256, Jason.encode!(signed_record.record))
+    
+    # Verify both signatures (AND logic)
+    classical_valid = :crypto.verify(
+      :eddsa, :sha3_256, record_hash,
+      Base.decode64!(signed_record.signatures.classical),
+      [doctor_public_key.ed25519, :ed25519]
+    )
+    
+    pqc_valid = Healthcare.Native.dilithium_verify(
+      record_hash,
+      Base.decode64!(signed_record.signatures.pqc),
+      doctor_public_key.dilithium3
+    )
+    
+    classical_valid and pqc_valid
   end
 end
 ```
 
 ---
 
-### Policy Enforcement Points (PEP)
+### SPHINCS+ (Long-Term Signatures)
 
-#### 1. API Gateway (Phoenix Plug)
+**Use Case**: Medical records requiring 50+ year integrity (archival)
 
-```elixir
-defmodule HealthcareCMSWeb.Plugs.ZeroTrust do
-  import Plug.Conn
-
-  def init(opts), do: opts
-
-  def call(conn, _opts) do
-    user = conn.assigns[:current_user]
-    resource = extract_resource(conn)
-    context = build_context(conn)
-
-    case Healthcare.ZeroTrust.PolicyEngine.evaluate_access(user, resource, context) do
-      {:allow, metadata} ->
-        conn
-        |> put_private(:trust_metadata, metadata)
-        |> put_resp_header("x-trust-score", to_string(metadata.trust_score))
-
-      {:step_up_auth, method: method} ->
-        conn
-        |> put_status(401)
-        |> json(%{error: "MFA required", method: method})
-        |> halt()
-
-      {:deny, reason: reason} ->
-        conn
-        |> put_status(403)
-        |> json(%{error: "Access denied", reason: reason})
-        |> halt()
-    end
-  end
-end
-```
-
-#### 2. Database Interceptor (Ecto)
-
-```elixir
-defmodule Healthcare.Repo do
-  use Ecto.Repo, otp_app: :healthcare_cms
-
-  def all(queryable, opts \\ []) do
-    # Inject row-level security
-    user_id = Keyword.get(opts, :user_id)
-    trust_score = Keyword.get(opts, :trust_score, 0)
-
-    if trust_score < 60 do
-      # Low trust: No PHI access
-      queryable
-      |> where([r], r.data_classification != "phi_identifiable")
-      |> super(opts)
-    else
-      super(queryable, opts)
-    end
-  end
-end
-```
-
-#### 3. WASM Plugin Security
-
-```elixir
-defmodule Healthcare.PluginManager do
-  def execute_plugin(plugin_name, input, user) do
-    trust_score = Healthcare.ZeroTrust.get_trust_score(user)
-
-    # Redact PHI/PII if trust score low
-    sanitized_input = if trust_score < 80 do
-      Healthcare.LGPD.redact_phi(input)
-    else
-      input
-    end
-
-    Extism.call(plugin_name, "process", sanitized_input)
-  end
-end
-```
-
----
-
-## Trade-offs Accepted
-
-### Complexity vs Security
-
-**Increased Complexity**:
-- Policy engine (1000 LoC)
-- Context collection (device posture, location)
-- Continuous monitoring (anomaly detection)
-- Audit logging (5x more logs)
-
-**Security Gain**:
-- 95% reduction in lateral movement
-- Real-time threat response (minutes vs days)
-- Insider threat detection (behavioral analytics)
-- Compliance automation (LGPD/HIPAA audit trail)
-
-**Benchmark**:
-```
-Incident response: 48h → 5min (96% faster)
-Breach containment: 200 days (industry avg) → 1 hour
-False positive rate: 2% (acceptable for healthcare)
-```
-
-**Reference**: [IBM Cost of Data Breach 2023](https://www.ibm.com/security/data-breach) (L2_VALIDATED)
-
----
-
-### Performance Overhead
-
-**Policy Evaluation Latency**:
-```
-Traditional auth: 10ms (token validation)
-Zero Trust: 95ms (policy evaluation + context)
-Overhead: +85ms per request
-```
-
-**Acceptable because**:
-- Healthcare API target: p99 < 500ms (85ms is 17% of budget)
-- Cacheable: Trust score cached 5 minutes (low trust) to 1 hour (high trust)
-- Async: Some context collected asynchronously (threat intel)
-
-**Mitigation**:
-```elixir
-# Cache trust score (Redis)
-defmodule Healthcare.ZeroTrust.Cache do
-  def get_trust_score(user_id) do
-    case Redix.command(:redix, ["GET", "trust:#{user_id}"]) do
-      {:ok, nil} ->
-        score = Healthcare.ZeroTrust.PolicyEngine.calculate_trust_score(user_id)
-        ttl = trust_score_ttl(score)
-        Redix.command(:redix, ["SETEX", "trust:#{user_id}", ttl, score])
-        score
-
-      {:ok, cached_score} ->
-        String.to_integer(cached_score)
-    end
-  end
-
-  defp trust_score_ttl(score) when score >= 80, do: 3600   # 1 hour
-  defp trust_score_ttl(score) when score >= 60, do: 1800   # 30 min
-  defp trust_score_ttl(_score), do: 300                     # 5 min
-  end
-end
-```
-
----
-
-### Cost
-
-**Infrastructure Cost**:
-```
-Policy Engine: 2 vCPU, 4GB RAM → $50/month
-Redis Cache: 1GB → $20/month
-SIEM Integration: Splunk/ELK → $500/month
-Total: $570/month = $6,840/year
-```
-
-**Personnel Cost**:
-```
-Security engineer: 20% FTE → $40K/year
-SOC analyst: 10% FTE → $15K/year
-Total: $55K/year
-```
-
-**ROI**:
-```
-Total cost: $62K/year
-Average healthcare breach: $10.9M (IBM 2023)
-Risk reduction: 80% → Expected loss $2.2M
-Avoided cost: $8.7M
-ROI: 14,000%
-```
-
----
-
-## When NOT to Use Zero Trust
-
-❌ **Air-gapped networks**: Isolated systems with no external connectivity
-❌ **Legacy systems**: Cannot integrate with modern auth (replace/retire instead)
-❌ **Ultra-low latency**: Microsecond requirements (trading systems)
-❌ **Small teams**: < 10 users with high trust (cost > benefit)
+**Properties**:
+- **Stateless**: No key state management (vs XMSS)
+- **Slow**: ~10ms sign, ~1ms verify (acceptable for archival)
+- **Large Signatures**: ~8KB (trade-off for statelessness)
 
 ---
 
 ## Consequences
 
 ### Positive
-- ✅ **Breach prevention**: 95% reduction in lateral movement
-- ✅ **Insider threat**: Behavioral analytics detect anomalies
-- ✅ **Compliance**: Automated LGPD/HIPAA audit trail
-- ✅ **Incident response**: 96% faster (5 min vs 48 hours)
-- ✅ **Adaptive security**: Trust score adjusts real-time
+1. **NIST Compliance**: SP 800-207 (Zero Trust), FIPS 203/204/205 (PQC)
+2. **Quantum-Resistant**: 50+ year medical records protected
+3. **Microsegmentation**: Istio enforces network policies
+4. **Audit Trail**: Every access logged (LGPD/HIPAA)
 
 ### Negative
-- ❌ **Complexity**: Policy engine, context collection, monitoring
-- ❌ **Latency**: +85ms per request (mitigated with caching)
-- ❌ **Cost**: $62K/year (but ROI 14,000%)
-- ❌ **User friction**: MFA, device requirements
+1. **Complexity**: Istio + OPA + PQC = steep learning curve
+2. **Key Sizes**: 10x larger (1KB vs 10KB certificates)
+3. **Performance**: PQC ~10% slower (acceptable overhead)
 
 ### Neutral
-- ⚪ **User experience**: Transparent when trust high
-- ⚪ **Integration**: Requires API gateway, database interceptor
-- ⚪ **Training**: Security team needs Zero Trust expertise
+1. **Transition Period**: 2025-2030 (hybrid classical+PQC)
 
 ---
 
-## Validation
+## Mitigation Strategies
 
-### Production Evidence
-- **Google BeyondCorp**: Zero Trust for 135K employees (2011-)
-- **NHS Digital (UK)**: Zero Trust for healthcare (2020-)
-- **U.S. Federal Government**: EO 14028 mandates Zero Trust (2021)
+### Complexity
+- **Training**: $10K/year for Istio + OPA certification
+- **Managed Service**: AWS EKS + Istio addon
 
-### Healthcare-Specific
-- 58% of breaches internal → Zero Trust reduces 95%
-- Average breach cost $10.9M → ROI 14,000%
-- HIPAA compliance: Automated audit trail
+### Performance
+- **Hardware Acceleration**: AES-NI for symmetric crypto
+- **Caching**: Certificate caching (reduce handshakes)
 
 ---
 
 ## References
 
-### Standards (L0_CANONICAL)
-- [NIST SP 800-207 Zero Trust Architecture](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf)
-- [NIST SP 800-63B Digital Identity Guidelines](https://pages.nist.gov/800-63-3/sp800-63b.html)
+### Official Standards
+- [NIST SP 800-207 (Zero Trust)](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf) (L0_CANONICAL)
+- [NIST FIPS 203 (Kyber)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf) (L0_CANONICAL)
+- [NIST FIPS 204 (Dilithium)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf) (L0_CANONICAL)
+- [NIST FIPS 205 (SPHINCS+)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf) (L0_CANONICAL)
 
-### Healthcare Compliance (L0_CANONICAL)
-- [HIPAA Security Rule 164.312](https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html)
-- [LGPD Art. 46 (Data Transfer Security)](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
-
-### Industry Reports (L2_VALIDATED)
-- IBM Cost of Data Breach 2023 ($10.9M average)
-- Verizon DBIR 2023 (58% internal breaches)
-
-### Academic (L1_ACADEMIC)
-- "BeyondCorp: Design to Deployment at Google" (USENIX 2016)
+### Healthcare Compliance
+- [HIPAA 164.312](https://www.hhs.gov/hipaa/for-professionals/security/index.html) (L0_CANONICAL)
+- [CFM 2.314/2022](https://sistemas.cfm.org.br/normas/visualizar/resolucoes/BR/2022/2314) (L0_CANONICAL)
 
 ---
 
-**Decision Status**: ✅ Accepted and Validated
-**Review Date**: 2026-01-30
-**ROI**: 14,000%
-**Risk Reduction**: 80%
+**DSM**: [L1:security | L2:healthcare | L3:architecture | L4:reference]
+**Source**: `03-zero-trust-security-healthcare.md`
+**Version**: 1.0.0
+**Related ADRs**:
+- [ADR 001: Elixir Host Choice](./001-elixir-host-choice.md)
+- [ADR 002: WASM Plugin Isolation](./002-wasm-plugin-isolation.md)
