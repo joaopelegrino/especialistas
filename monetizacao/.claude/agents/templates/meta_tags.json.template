@@ -1,0 +1,222 @@
+{
+  "_comment": "Centralized meta tag configuration for all pages. Update this file when adding new content.",
+
+  "site": {
+    "name": "[Your Site Name]",
+    "url": "https://[your-domain.com]",
+    "description": "[Site-wide description - what your site offers]",
+    "locale": "pt_BR",
+    "alternate_locales": ["en_US", "es_ES"],
+    "logo": "https://[your-domain.com]/logo.png",
+    "logo_width": 600,
+    "logo_height": 60,
+    "favicon": "https://[your-domain.com]/favicon.ico",
+    "theme_color": "#3B82F6",
+    "og_image_default": "https://[your-domain.com]/images/og-default.jpg"
+  },
+
+  "organization": {
+    "type": "Organization",
+    "name": "[Company/Organization Name]",
+    "legal_name": "[Legal Business Name]",
+    "url": "https://[your-domain.com]",
+    "founding_date": "2024-01-01",
+    "email": "contact@[your-domain.com]",
+    "phone": "+55-11-XXXX-XXXX",
+    "address": {
+      "street": "[Street Address]",
+      "city": "[City]",
+      "state": "[State]",
+      "postal_code": "[ZIP]",
+      "country": "BR"
+    }
+  },
+
+  "social": {
+    "twitter": "@[twitter-handle]",
+    "twitter_creator": "@[author-handle]",
+    "facebook": "[facebook-page-id]",
+    "linkedin": "[company-linkedin]",
+    "github": "[github-username]",
+    "youtube": "[youtube-channel-id]"
+  },
+
+  "analytics": {
+    "google_analytics": "G-XXXXXXXXXX",
+    "google_tag_manager": "GTM-XXXXXXX",
+    "facebook_pixel": "[pixel-id]",
+    "hotjar": "[site-id]"
+  },
+
+  "verification": {
+    "google_site_verification": "[verification-code]",
+    "bing_verification": "[verification-code]",
+    "pinterest_verification": "[verification-code]",
+    "facebook_domain_verification": "[verification-code]"
+  },
+
+  "pages": {
+    "/": {
+      "title": "[Site Name] | [Tagline - max 60 chars total]",
+      "description": "[Homepage description - 150-160 chars explaining what the site offers]",
+      "keywords": "[keyword1, keyword2, keyword3, keyword4, keyword5]",
+      "type": "website",
+      "image": "https://[your-domain.com]/images/homepage-og.jpg",
+      "image_alt": "[Description of OG image for accessibility]",
+      "canonical": "https://[your-domain.com]/",
+      "robots": "index, follow",
+      "priority_sitemap": "1.0",
+      "changefreq": "weekly"
+    },
+
+    "/[article-slug]": {
+      "title": "[Article Title - Clear & Keyword-Rich - 55-60 chars]",
+      "description": "[Compelling meta description with numbers/benefits - 150-160 chars]",
+      "keywords": "[primary-keyword, secondary-keyword1, secondary-keyword2, lsi-keyword1, lsi-keyword2]",
+      "author": "[Author Name]",
+      "published": "2025-10-08",
+      "modified": "2025-10-08",
+      "type": "article",
+      "category": "[Category Name]",
+      "tags": ["tag1", "tag2", "tag3"],
+      "image": "https://[your-domain.com]/images/[article-slug]-og.jpg",
+      "image_alt": "[Descriptive alt text for OG image]",
+      "canonical": "https://[your-domain.com]/[article-slug]",
+      "robots": "index, follow",
+      "priority_sitemap": "0.9",
+      "changefreq": "monthly",
+      "estimated_read_time": "12 minutes",
+      "word_count": 3500,
+      "schema_types": ["Article", "FAQPage", "BreadcrumbList"]
+    },
+
+    "/blog/": {
+      "title": "[Blog Name] | [Site Name] - Latest Articles",
+      "description": "[Blog description - what topics covered, frequency - 150-160 chars]",
+      "keywords": "[blog-topic, article-type, industry-term, niche-keyword]",
+      "type": "website",
+      "image": "https://[your-domain.com]/images/blog-og.jpg",
+      "image_alt": "[Blog section visual description]",
+      "canonical": "https://[your-domain.com]/blog/",
+      "robots": "index, follow",
+      "priority_sitemap": "0.8",
+      "changefreq": "daily"
+    },
+
+    "/resources/": {
+      "title": "[Resources Section] | [Site Name] - Tools & Guides",
+      "description": "[What resources are available - calculators, templates, etc - 150-160 chars]",
+      "keywords": "[resource-type, tool-name, guide-topic]",
+      "type": "website",
+      "image": "https://[your-domain.com]/images/resources-og.jpg",
+      "image_alt": "[Resources section visual]",
+      "canonical": "https://[your-domain.com]/resources/",
+      "robots": "index, follow",
+      "priority_sitemap": "0.7",
+      "changefreq": "monthly"
+    },
+
+    "/about/": {
+      "title": "About [Site/Company Name] | Our Mission & Team",
+      "description": "[Brief history, mission, what makes you unique - 150-160 chars]",
+      "keywords": "[company-name, industry, mission, team]",
+      "type": "website",
+      "image": "https://[your-domain.com]/images/about-og.jpg",
+      "image_alt": "[Team photo or company visual]",
+      "canonical": "https://[your-domain.com]/about/",
+      "robots": "index, follow",
+      "priority_sitemap": "0.6",
+      "changefreq": "yearly"
+    },
+
+    "/contact/": {
+      "title": "Contact [Site/Company Name] | Get in Touch",
+      "description": "[How to contact, response time, support options - 150-160 chars]",
+      "keywords": "[contact, support, email, phone, help]",
+      "type": "website",
+      "image": "https://[your-domain.com]/images/contact-og.jpg",
+      "image_alt": "[Contact page visual]",
+      "canonical": "https://[your-domain.com]/contact/",
+      "robots": "index, follow",
+      "priority_sitemap": "0.5",
+      "changefreq": "yearly"
+    }
+  },
+
+  "defaults": {
+    "title_suffix": " | [Site Name]",
+    "description_fallback": "[Default site description if page description missing]",
+    "image_fallback": "https://[your-domain.com]/images/og-default.jpg",
+    "robots_default": "index, follow",
+    "type_default": "website",
+    "locale_default": "pt_BR"
+  },
+
+  "templates": {
+    "article": {
+      "title_format": "[Article Title] | [Site Name]",
+      "og_type": "article",
+      "schema_types": ["Article", "BreadcrumbList"],
+      "robots": "index, follow"
+    },
+    "blog_post": {
+      "title_format": "[Post Title] | Blog | [Site Name]",
+      "og_type": "article",
+      "schema_types": ["BlogPosting", "BreadcrumbList"],
+      "robots": "index, follow"
+    },
+    "product": {
+      "title_format": "[Product Name] | [Site Name]",
+      "og_type": "product",
+      "schema_types": ["Product", "Offer", "BreadcrumbList"],
+      "robots": "index, follow"
+    },
+    "landing_page": {
+      "title_format": "[Offer] | [Site Name]",
+      "og_type": "website",
+      "schema_types": ["WebPage"],
+      "robots": "index, follow"
+    }
+  },
+
+  "seo_settings": {
+    "title_max_length": 60,
+    "description_max_length": 160,
+    "keywords_max": 5,
+    "og_image_min_width": 1200,
+    "og_image_min_height": 630,
+    "og_image_max_size_kb": 300
+  },
+
+  "ai_optimization": {
+    "llms_txt_url": "https://[your-domain.com]/llms.txt",
+    "robots_txt_url": "https://[your-domain.com]/robots.txt",
+    "sitemap_url": "https://[your-domain.com]/sitemap.xml",
+    "structured_data_validation": "https://validator.schema.org/",
+    "rich_results_test": "https://search.google.com/test/rich-results"
+  },
+
+  "_usage_notes": {
+    "title": "Keep titles 55-60 chars for full display in SERPs. Include primary keyword naturally.",
+    "description": "Write compelling 150-160 char descriptions. Include call-to-action or benefit. Don't duplicate title.",
+    "keywords": "5-7 keywords max. Focus on: 1 primary, 2-3 secondary, 2-3 LSI. Don't stuff.",
+    "images": "OG images should be 1200x630px. Under 300KB. Include text overlay for social sharing.",
+    "canonical": "Always specify canonical URL to avoid duplicate content issues.",
+    "dates": "Use ISO 8601 format (YYYY-MM-DD) for published/modified dates.",
+    "schema": "List all schema types implemented on the page for tracking.",
+    "author": "Specify author name consistently across articles for E-E-A-T.",
+    "updating": "When updating pages, change 'modified' date and update description if needed."
+  },
+
+  "_validation_checklist": {
+    "title_length": "55-60 characters",
+    "description_length": "150-160 characters",
+    "keywords_count": "5-7 maximum",
+    "image_dimensions": "1200x630px minimum",
+    "image_size": "<300KB",
+    "canonical_https": "Always use HTTPS",
+    "dates_iso8601": "YYYY-MM-DD format",
+    "robots_valid": "Use standard directives only",
+    "schema_validated": "Test with validator.schema.org"
+  }
+}

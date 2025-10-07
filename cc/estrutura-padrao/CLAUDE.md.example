@@ -1,0 +1,155 @@
+# [Project Name]
+
+<!--
+IMPORTANTE: Mantenha este arquivo mínimo (< 1K tokens)!
+Use /prime-* commands para carregar contexto detalhado just-in-time.
+-->
+
+## 📋 Essentials
+
+- **Tech Stack**: [e.g., Python 3.11, FastAPI, PostgreSQL, React 18]
+- **Style Guide**: [e.g., PEP 8, type hints required, JSDoc for JS]
+- **Testing**: [e.g., pytest with 80% coverage minimum]
+- **Architecture**: [e.g., Clean Architecture, Repository pattern]
+
+## 🛠️ Commands
+
+```bash
+# Development
+npm run dev          # Start dev server (localhost:3000)
+npm run dev:api      # Start API server (localhost:8000)
+
+# Testing
+pytest               # Run all tests
+pytest -v -k test_auth  # Run specific test
+npm run test:watch   # Watch mode for frontend
+
+# Build & Deploy
+npm run build        # Production build
+docker-compose up    # Run full stack locally
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── api/          # Backend API (FastAPI)
+│   ├── auth/     # Authentication logic
+│   ├── models/   # Database models
+│   └── routes/   # API endpoints
+├── web/          # Frontend (React)
+│   ├── components/
+│   ├── hooks/
+│   └── pages/
+└── shared/       # Shared utilities
+```
+
+## 🎯 Key Patterns
+
+### Authentication
+- JWT tokens with refresh mechanism
+- Tokens stored in httpOnly cookies
+- See `/prime-bug` for auth debugging context
+
+### API Design
+- RESTful endpoints under `/api/v1/`
+- Request validation with Pydantic
+- Error responses follow RFC 7807
+
+### Database
+- PostgreSQL with SQLAlchemy ORM
+- Alembic for migrations
+- See `src/api/models/` for schema
+
+## 🚀 Context Management
+
+### Available Primes
+- `/prime` - General project understanding (~3K tokens)
+- `/prime-bug` - Bug investigation & testing context (~6K tokens)
+- `/prime-feature` - Feature development & architecture (~7K tokens)
+- `/prime-migration` - Database & dependency migrations (~6K tokens)
+
+### Workflows
+- `/scout "query"` - Fast codebase search (parallel agents)
+- `/scout-plan-build "task"` - Complete feature implementation workflow
+- `/load-bundle <file>` - Restore previous session state
+
+### When Context Fills Up
+```bash
+/context  # Check usage (e.g., 170K/200K = 85%)
+/clear    # Clear context
+/load-bundle .agents/context-bundles/[current].md  # Restore state
+```
+
+## 🔒 Security
+
+- Never commit `.env` files or secrets
+- API keys loaded from environment variables
+- Use `python-dotenv` for local development
+- Production secrets in [vault/k8s secrets/etc.]
+
+## 📝 Conventions
+
+### Git Workflow
+- Branch naming: `feature/`, `bugfix/`, `hotfix/`
+- Commit format: `type(scope): message` (Conventional Commits)
+- PR requires: tests passing, 1 approval, no merge conflicts
+
+### Code Style
+- Python: Black formatter, isort for imports
+- JavaScript: Prettier, ESLint rules enforced
+- Pre-commit hooks run linting automatically
+
+### Testing
+- Unit tests for business logic
+- Integration tests for API endpoints
+- E2E tests for critical user flows
+- Mocks for external services
+
+## 📚 Documentation
+
+- **API Docs**: http://localhost:8000/docs (Swagger UI)
+- **Architecture**: See `docs/ARCHITECTURE.md`
+- **Contributing**: See `docs/CONTRIBUTING.md`
+- **Deployment**: See `docs/DEPLOYMENT.md`
+
+## 🐛 Common Issues
+
+### Database Connection Fails
+```bash
+# Check PostgreSQL is running
+docker-compose ps
+
+# Reset database
+docker-compose down -v
+docker-compose up -d db
+alembic upgrade head
+```
+
+### Frontend Build Fails
+```bash
+# Clear cache
+rm -rf node_modules/.cache
+npm run clean
+npm install
+```
+
+### Tests Failing Locally
+```bash
+# Ensure test database is clean
+pytest --create-db
+```
+
+## 💡 Tips
+
+1. **Use context priming**: Start with `/prime` or task-specific prime
+2. **Monitor context**: Run `/context` when working on complex tasks
+3. **Clear at 70%+**: Use `/clear` + `/load-bundle` to continue efficiently
+4. **Keep CLAUDE.md minimal**: Let `/prime-*` commands load detailed context JIT
+5. **Context bundles auto-save**: Your work is logged to `.agents/context-bundles/`
+
+---
+
+**Last Updated**: 2025-10-07
+**Maintained By**: [Team Name]
+**Questions**: [team-channel] or [email]

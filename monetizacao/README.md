@@ -41,6 +41,15 @@ Framework para escolher entre Cloudflare e soluções customizadas.
 ### 🔗 [9. Recursos e Referências](./09-recursos-referencias.md)
 166 links essenciais, repositórios GitHub e documentação técnica.
 
+### 🔍 [10. SEO para LLMs e Agentes de IA](./10-seo-llm-agentes-ia.md)
+Otimização para descoberta por agentes de IA: llms.txt, LLMO/GEO, structured data e estratégias para ChatGPT, Claude, Perplexity e AI browsers. **Novo documento complementar sobre a revolução da busca por IA.**
+
+### 🖥️ [11. Hosting para Elixir Phoenix](./11-hosting-elixir-phoenix.md)
+Comparação completa de **14 plataformas** de hosting para aplicações Elixir Phoenix: Fly.io (recomendação #1 com região São Paulo), Gigalixir, Render, Railway, **Sevalla by Kinsta** (novo - GCP+Cloudflare, região GRU, 14s deploys), Cloud Run, AWS ECS, Azure, Cloudflare Containers, soluções brasileiras (Hostinger, Locaweb) e análise de WebAssembly. Inclui **capacidades pay-per-crawl** por plataforma, exemplo de Plug Phoenix para detecção de AI crawlers, templates de deploy (Dockerfile, fly.toml, railway.json, render.yaml, nixpacks.toml), matriz de preços por tier, latências regionais e integração com Claude Code SDK.
+
+### 💵 [12. BOM e Guia de Fornecedores: Blog Phoenix Pay-Per-Crawl](./12-bom-blog-phoenix-paypercrawl.md)
+**Bill of Materials completo** e análise de custos para lançar um blog Elixir Phoenix focado em monetização de AI crawlers. Inclui **4 cenários de custo** ($0,83/mês ultra low-cost até $924/mês enterprise), **rankings de fornecedores** por categoria (🥇🥈🥉), análise de **ROI e break-even** para 4 níveis de tráfego (50k-1M+ pageviews/mês), **roadmap de implementação 90 dias** (5 fases), **projeções de crescimento 12 meses**, estratégias de otimização de custos, análise de riscos com mitigações, e checklist completo de compra. Cobertura detalhada: hosting (Fly.io, Railway, Sevalla), CDN (Cloudflare), payment processing (Stripe, Asaas PIX), analytics (Plausible, Umami), email (Resend), database (PostgreSQL), e pay-per-crawl infrastructure (Workers, DIY Phoenix Plug).
+
 ## 🚀 Quick Start
 
 ### Para Publicadores
@@ -67,6 +76,35 @@ app.use('/api/*', validateCrawlRequest({
   paymentProcessor: 'stripe'
 }));
 ```
+
+## 🔄 Sinergia: Pay-Per-Crawl + SEO para LLMs
+
+**Nova Estratégia Dual de Monetização** documentada no [Capítulo 10](./10-seo-llm-agentes-ia.md):
+
+### Por que Otimizar para LLMs?
+- **57% das SERPs** do Google já incluem AI Overviews (2025)
+- **800% crescimento YoY** em tráfego de LLMs
+- **Projeção Semrush:** Tráfego LLM > Google Search até 2027
+
+### Estratégia Integrada
+```mermaid
+graph LR
+    A[Seu Conteúdo] --> B[Detectar AI Crawler]
+    B --> C{Crawler Pago?}
+    C -->|Sim| D[Permitir Acesso]
+    C -->|Não| E[Bloquear/Paywall]
+    D --> F[Servir Conteúdo Otimizado]
+    F --> G[Citado em AI Responses]
+    G --> H[Tráfego Referral Qualificado]
+    H --> I[+ Receita Pay-Per-Crawl]
+```
+
+### Benefícios Duplos
+1. **Receita Direta:** US$ 0,001-0,05 por crawl
+2. **Visibilidade em IA:** Citations em ChatGPT, Claude, Perplexity
+3. **Tráfego Qualificado:** Usuários vindos de AI têm 40% mais engajamento
+
+**Implementação Rápida:** llms.txt + structured data + content optimization = 1 semana
 
 ## 💡 Casos de Uso Principais
 

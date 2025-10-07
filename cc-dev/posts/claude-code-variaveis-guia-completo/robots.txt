@@ -1,0 +1,127 @@
+# robots.txt Verification & Recommendations
+
+## Status: NO CHANGES NEEDED ✅
+
+O conteúdo técnico deste artigo sobre Claude Code é ideal para AI crawlers.
+Configuração atual de robots.txt deve estar adequada.
+
+## Recommended Configuration
+
+Para garantir que AI crawlers possam acessar este conteúdo:
+
+```txt
+# Sitemap
+Sitemap: https://[SEU-DOMINIO]/sitemap.xml
+
+# AI Crawlers - Allow access to technical content
+User-agent: GPTBot
+Allow: /posts/
+Crawl-delay: 10
+
+User-agent: ClaudeBot
+Allow: /posts/
+Crawl-delay: 10
+
+User-agent: Google-Extended
+Allow: /posts/
+Crawl-delay: 10
+
+User-agent: PerplexityBot
+Allow: /posts/
+Crawl-delay: 10
+
+User-agent: cohere-ai
+Allow: /posts/
+Crawl-delay: 10
+
+# Traditional Search Engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+```
+
+## Rationale for AI Crawler Access
+
+**Por que PERMITIR este artigo para AI crawlers:**
+
+1. **Educational content**: Guia técnico que beneficia desenvolvedores
+2. **High citation value**: Conteúdo bem referenciado aumenta autoridade
+3. **No sensitive info**: Apenas documentação pública
+4. **Community value**: Resolver problema comum beneficia ecosystem
+
+**Citation benefit esperado:**
+- ChatGPT queries: "claude code variables", "slash commands syntax"
+- Perplexity searches: "how to use $ARGUMENTS claude code"
+- Claude Code queries: "fix variable expansion"
+- Google AI Overviews: "claude code command arguments"
+
+## Verification Checklist
+
+Antes de deployment, verificar:
+
+- [ ] Sitemap.xml inclui URL deste artigo
+- [ ] GPTBot tem acesso a /posts/
+- [ ] ClaudeBot tem acesso a /posts/
+- [ ] Crawl-delay configurado (recomendado: 10 segundos)
+- [ ] Sem Disallow bloqueando /posts/claude-code-variaveis-guia-completo
+
+## Testing
+
+Após deployment, testar:
+
+```bash
+# Test robots.txt
+curl https://[SEU-DOMINIO]/robots.txt
+
+# Verify sitemap includes article
+curl https://[SEU-DOMINIO]/sitemap.xml | grep "claude-code-variaveis"
+
+# Test article accessibility
+curl -A "GPTBot" https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo
+curl -A "ClaudeBot" https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo
+```
+
+## Monitoring
+
+Após indexação, monitorar:
+
+1. **Google Search Console**:
+   - Crawl stats for article URL
+   - Index status
+   - AI Overview appearances
+
+2. **Citation Tracking** (manual or via Otterly.ai):
+   - ChatGPT mentions
+   - Perplexity citations
+   - Claude Code references
+   - Bing Copilot appearances
+
+3. **Analytics**:
+   - AI referrer traffic (via query params)
+   - Direct landing from AI platforms
+   - Time on page from AI referrals
+
+## Expected Citation Rate
+
+**Target**: 25-35% citation rate para queries relevantes
+
+**Baseline Queries** to monitor:
+- "claude code variables not working"
+- "how to use $ARGUMENTS in slash commands"
+- "difference between $1 and $ARGUMENTS"
+- "fix ${VARIABLE} claude code"
+- "claude code argument-hint syntax"
+
+**Success Metrics** (30 days post-indexação):
+- Aparição em top 3 AI responses: 30%+
+- Direct citations com link: 20%+
+- Menções sem link: 40%+
+
+## Notes
+
+- Este é conteúdo evergreen adequado para citação de longo prazo
+- Atualização mensal mantém relevância
+- Alta densidade de dados específicos favorece citação
+- FAQ structure otimizada para AI query matching

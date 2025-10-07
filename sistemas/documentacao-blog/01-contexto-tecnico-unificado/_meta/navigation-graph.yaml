@@ -1,0 +1,461 @@
+# Healthcare CMS - Navigation Graph
+# Intelligent context-aware documentation navigation
+# Version: 1.0.0
+# Created: 2025-09-30
+
+navigation_structure:
+  type: "context_graph"
+  project: "Healthcare CMS"
+  methodology: "Six-Layer Docs"
+
+  # Primary Entry Points
+  entry_points:
+    quick_start:
+      path: "_meta/quick-start-validated.md"
+      audience: ["new_developer", "llm_initialization"]
+      context_level: 0
+      read_time: "5min"
+      token_estimate: 800
+      next_suggested:
+        - "codebase/layer-1-overview/project-structure.md"
+        - "dependencies/dependency-matrix.yaml"
+        - "development/setup-environment/local-development.md"
+      description: "Fastest path to running the system locally"
+
+    llm_context_master:
+      path: "_meta/llm-context-master.md"
+      audience: ["llm_initialization", "quick_overview"]
+      context_level: 0
+      read_time: "2min"
+      token_estimate: 500
+      next_suggested:
+        - "codebase/_progressive-index.md"
+        - "architecture/_summary.md"
+      description: "Master context for LLM initialization"
+
+    architecture_decision:
+      path: "architecture/decisions-adr/_index.md"
+      audience: ["architect", "tech_lead", "stakeholder"]
+      context_level: 2
+      read_time: "30min"
+      token_estimate: 5000
+      next_suggested:
+        - "architecture/patterns/zero-trust-implementation.md"
+        - "architecture/tradeoffs/elixir-vs-alternatives.md"
+      description: "Understand why key architectural decisions were made"
+
+    debugging:
+      path: "development/debugging/common-issues-dsm.yaml"
+      audience: ["developer", "support", "devops"]
+      context_level: 1
+      read_time: "10min"
+      token_estimate: 1500
+      next_suggested:
+        - "development/debugging/troubleshooting-guide.md"
+        - "operations/monitoring/observability-strategy.md"
+      description: "Quick resolution of common problems"
+
+    compliance:
+      path: "knowledge-base/domain-specific/compliance-requirements.md"
+      audience: ["compliance_officer", "legal", "auditor"]
+      context_level: 2
+      read_time: "20min"
+      token_estimate: 3000
+      next_suggested:
+        - "codebase/layer-2-core/compliance-automation.md"
+        - "operations/security/audit-procedures.md"
+      description: "LGPD, CFM, ANVISA compliance requirements"
+
+  # Breadcrumb Trails (Common User Journeys)
+  breadcrumb_trails:
+    authentication_flow:
+      description: "Understanding the complete authentication system"
+      estimated_time: "45min"
+      context_levels: [0, 1, 2]
+      steps:
+        - path: "_meta/llm-context-master.md"
+          focus: "Authentication overview"
+          key_sections: ["Security Components"]
+
+        - path: "codebase/layer-1-overview/main-workflows.md"
+          focus: "User authentication workflow"
+          key_sections: ["Authentication Flow"]
+
+        - path: "codebase/layer-2-core/authentication-system.md"
+          focus: "Guardian JWT implementation"
+          key_sections: ["Guardian Integration", "Session Management"]
+
+        - path: "codebase/layer-3-detailed/argon2-password-security.md"
+          focus: "Password hashing deep-dive"
+          key_sections: ["Argon2id Parameters", "Attack Prevention"]
+
+        - path: "architecture/decisions-adr/005-guardian-jwt-choice.md"
+          focus: "Why Guardian was chosen"
+          key_sections: ["Alternatives Considered", "Trade-offs"]
+
+    zero_trust_implementation:
+      description: "Deep-dive into Zero Trust Architecture"
+      estimated_time: "90min"
+      context_levels: [0, 1, 2, 3]
+      steps:
+        - path: "_meta/llm-context-master.md"
+          focus: "Zero Trust overview"
+          key_sections: ["Critical Security Components"]
+
+        - path: "codebase/layer-1-overview/key-concepts.md"
+          focus: "Zero Trust principles"
+          key_sections: ["Zero Trust Architecture"]
+
+        - path: "codebase/layer-2-core/zero-trust-architecture.md"
+          focus: "Policy Engine architecture"
+          key_sections: ["Policy Engine", "Trust Algorithm", "PEPs"]
+
+        - path: "codebase/layer-3-detailed/policy-engine-internals.md"
+          focus: "GenServer implementation"
+          key_sections: ["State Management", "Caching Strategy"]
+
+        - path: "codebase/layer-3-detailed/trust-algorithm-implementation.md"
+          focus: "8-data-source scoring"
+          key_sections: ["Weighting", "Healthcare Logic"]
+
+        - path: "layer-4-deep-dive/trust-algorithm-math.md"
+          focus: "Mathematical foundations"
+          key_sections: ["Bayesian Inference", "Temporal Decay"]
+
+        - path: "architecture/decisions-adr/002-zero-trust-choice.md"
+          focus: "Why Zero Trust for healthcare"
+          key_sections: ["Security Requirements", "NIST SP 800-207"]
+
+    medical_content_pipeline:
+      description: "5-stage medical workflow (S.1.1 → S.4-1.1-3)"
+      estimated_time: "60min"
+      context_levels: [1, 2, 3]
+      steps:
+        - path: "codebase/layer-1-overview/key-concepts.md"
+          focus: "Medical content pipeline overview"
+          key_sections: ["Medical Content Pipeline"]
+
+        - path: "codebase/layer-2-core/medical-workflows.md"
+          focus: "All 5 systems detailed"
+          key_sections: ["S.1.1", "S.1.2", "S.2-1.2", "S.3-2", "S.4-1.1-3"]
+
+        - path: "codebase/layer-2-core/compliance-automation.md"
+          focus: "LGPD analyzer (S.1.1)"
+          key_sections: ["LGPD Detection", "Sensitive Data"]
+
+        - path: "codebase/layer-2-core/scientific-apis.md"
+          focus: "Research integration (S.2-1.2)"
+          key_sections: ["PubMed API", "SciELO API"]
+
+        - path: "codebase/layer-3-detailed/lgpd-analyzer-engine.md"
+          focus: "LGPD engine internals"
+          key_sections: ["NLP Detection", "Auto-redaction"]
+
+        - path: "codebase/layer-3-detailed/medical-claim-extractor.md"
+          focus: "Claims extraction internals"
+          key_sections: ["CFM Disclaimers", "Evidence Requirements"]
+
+    performance_optimization:
+      description: "Optimizing system performance"
+      estimated_time: "120min"
+      context_levels: [1, 2, 3, 4]
+      steps:
+        - path: "codebase/layer-1-overview/main-workflows.md"
+          focus: "Critical paths"
+          key_sections: ["Request Flow"]
+
+        - path: "operations/monitoring/metrics-dashboard.md"
+          focus: "Current metrics"
+          key_sections: ["Performance SLOs", "Bottlenecks"]
+
+        - path: "codebase/layer-3-detailed/policy-engine-internals.md"
+          focus: "Policy evaluation optimization"
+          key_sections: ["Caching", "Performance"]
+
+        - path: "codebase/layer-4-deep-dive/policy-engine-optimization.md"
+          focus: "Advanced optimization"
+          key_sections: ["ETS Caching", "Benchmarks"]
+
+        - path: "codebase/layer-4-deep-dive/database-query-optimization.md"
+          focus: "Database tuning"
+          key_sections: ["Index Strategy", "Query Plans"]
+
+        - path: "architecture/patterns/performance-patterns.md"
+          focus: "Design patterns"
+          key_sections: ["Caching Strategies", "Async Processing"]
+
+    new_developer_onboarding:
+      description: "Complete onboarding path (Week 1)"
+      estimated_time: "2-3 days"
+      context_levels: [0, 1, 2]
+      steps:
+        - path: "_meta/quick-start-validated.md"
+          focus: "Get system running"
+          day: 1
+          duration: "30min"
+
+        - path: "_meta/llm-context-master.md"
+          focus: "Project overview"
+          day: 1
+          duration: "15min"
+
+        - path: "codebase/layer-1-overview/project-structure.md"
+          focus: "Application architecture"
+          day: 1
+          duration: "30min"
+
+        - path: "codebase/layer-1-overview/key-concepts.md"
+          focus: "Core concepts"
+          day: 1
+          duration: "30min"
+
+        - path: "codebase/layer-1-overview/technology-stack.md"
+          focus: "Tech stack overview"
+          day: 1
+          duration: "20min"
+
+        - path: "development/setup-environment/local-development.md"
+          focus: "Dev environment setup"
+          day: 1
+          duration: "2h"
+
+        - path: "codebase/layer-2-core/phoenix-application.md"
+          focus: "Phoenix architecture"
+          day: 2
+          duration: "45min"
+
+        - path: "codebase/layer-2-core/zero-trust-architecture.md"
+          focus: "Security model"
+          day: 2
+          duration: "45min"
+
+        - path: "codebase/layer-2-core/database-architecture.md"
+          focus: "Database design"
+          day: 2
+          duration: "30min"
+
+        - path: "development/coding-standards/style-guide.md"
+          focus: "Code conventions"
+          day: 2
+          duration: "20min"
+
+        - path: "development/testing/testing-strategy.md"
+          focus: "Testing approach"
+          day: 3
+          duration: "30min"
+
+        - path: "development/hands-on-exercises/exercise-01-crud.md"
+          focus: "First contribution"
+          day: 3
+          duration: "4h"
+
+  # Context-Aware Suggestions
+  context_suggestions:
+    when_reading_authentication:
+      triggers:
+        - "authentication-system.md"
+        - "argon2-password-security.md"
+      suggest:
+        - path: "codebase/layer-2-core/zero-trust-architecture.md"
+          reason: "Authentication integrates with Zero Trust"
+
+        - path: "architecture/decisions-adr/005-guardian-jwt-choice.md"
+          reason: "Understand why Guardian was chosen"
+
+        - path: "development/testing/security-testing.md"
+          reason: "Test authentication flows"
+
+    when_reading_zero_trust:
+      triggers:
+        - "zero-trust-architecture.md"
+        - "policy-engine-internals.md"
+      suggest:
+        - path: "architecture/decisions-adr/002-zero-trust-choice.md"
+          reason: "Architectural rationale"
+
+        - path: "codebase/layer-4-deep-dive/trust-algorithm-math.md"
+          reason: "Mathematical foundations"
+
+        - path: "operations/security/audit-procedures.md"
+          reason: "Security auditing"
+
+    when_reading_compliance:
+      triggers:
+        - "compliance-automation.md"
+        - "compliance-requirements.md"
+      suggest:
+        - path: "codebase/layer-2-core/medical-workflows.md"
+          reason: "LGPD analyzer is part of medical pipeline"
+
+        - path: "operations/security/audit-procedures.md"
+          reason: "Compliance auditing"
+
+        - path: "knowledge-base/domain-specific/legal-constraints.md"
+          reason: "Legal context"
+
+    when_debugging:
+      triggers:
+        - "common-issues-dsm.yaml"
+        - "troubleshooting-guide.md"
+      suggest:
+        - path: "operations/monitoring/observability-strategy.md"
+          reason: "Check metrics and logs"
+
+        - path: "codebase/layer-3-detailed/<component>-internals.md"
+          reason: "Deep-dive into failing component"
+
+        - path: "development/debugging/debugging-workflows.md"
+          reason: "Systematic debugging approach"
+
+  # Role-Based Navigation
+  role_based_paths:
+    new_developer:
+      primary_docs:
+        - "_meta/quick-start-validated.md"
+        - "codebase/layer-1-overview/*"
+        - "development/setup-environment/*"
+      estimated_time_to_productivity: "3 days"
+
+    experienced_developer:
+      primary_docs:
+        - "_meta/llm-context-master.md"
+        - "codebase/layer-2-core/*"
+        - "architecture/decisions-adr/*"
+      estimated_time_to_productivity: "1 day"
+
+    architect:
+      primary_docs:
+        - "architecture/decisions-adr/*"
+        - "architecture/patterns/*"
+        - "dependencies/dependency-matrix.yaml"
+      focus: "System design and trade-offs"
+
+    devops_sre:
+      primary_docs:
+        - "operations/deployment/*"
+        - "operations/monitoring/*"
+        - "development/debugging/*"
+      focus: "Deployment, monitoring, troubleshooting"
+
+    security_engineer:
+      primary_docs:
+        - "codebase/layer-2-core/zero-trust-architecture.md"
+        - "codebase/layer-3-detailed/policy-engine-internals.md"
+        - "operations/security/*"
+      focus: "Security architecture and audit"
+
+    compliance_officer:
+      primary_docs:
+        - "knowledge-base/domain-specific/compliance-requirements.md"
+        - "codebase/layer-2-core/compliance-automation.md"
+        - "operations/security/audit-procedures.md"
+      focus: "LGPD, CFM, ANVISA compliance"
+
+    medical_professional:
+      primary_docs:
+        - "codebase/layer-1-overview/key-concepts.md"
+        - "codebase/layer-2-core/medical-workflows.md"
+        - "knowledge-base/domain-specific/medical-guidelines.md"
+      focus: "Medical workflows and compliance"
+
+  # Topic-Based Clustering
+  topic_clusters:
+    security:
+      core_docs:
+        - "codebase/layer-2-core/zero-trust-architecture.md"
+        - "codebase/layer-2-core/authentication-system.md"
+        - "codebase/layer-3-detailed/policy-engine-internals.md"
+        - "codebase/layer-3-detailed/argon2-password-security.md"
+      supporting_docs:
+        - "architecture/decisions-adr/002-zero-trust-choice.md"
+        - "architecture/decisions-adr/005-guardian-jwt-choice.md"
+        - "operations/security/*"
+
+    compliance:
+      core_docs:
+        - "codebase/layer-2-core/compliance-automation.md"
+        - "knowledge-base/domain-specific/compliance-requirements.md"
+      supporting_docs:
+        - "codebase/layer-3-detailed/lgpd-analyzer-engine.md"
+        - "operations/security/audit-procedures.md"
+
+    database:
+      core_docs:
+        - "codebase/layer-2-core/database-architecture.md"
+        - "codebase/layer-3-detailed/multi-tenant-isolation.md"
+        - "codebase/layer-3-detailed/schema-design-patterns.md"
+      supporting_docs:
+        - "architecture/decisions-adr/003-postgresql-choice.md"
+        - "codebase/layer-4-deep-dive/database-query-optimization.md"
+
+    medical_workflows:
+      core_docs:
+        - "codebase/layer-2-core/medical-workflows.md"
+        - "codebase/layer-2-core/scientific-apis.md"
+      supporting_docs:
+        - "codebase/layer-3-detailed/lgpd-analyzer-engine.md"
+        - "codebase/layer-3-detailed/medical-claim-extractor.md"
+
+    performance:
+      core_docs:
+        - "operations/monitoring/metrics-dashboard.md"
+        - "codebase/layer-4-deep-dive/policy-engine-optimization.md"
+        - "codebase/layer-4-deep-dive/database-query-optimization.md"
+      supporting_docs:
+        - "architecture/patterns/performance-patterns.md"
+        - "development/testing/performance-benchmarks.md"
+
+  # Dynamic Next-Step Recommendations
+  next_step_algorithm:
+    description: "Context-aware recommendations based on user journey"
+    factors:
+      - current_doc_level: "Progressive depth matching"
+      - user_role: "Role-specific suggestions"
+      - topic_cluster: "Related content"
+      - completion_status: "Uncompleted related docs"
+      - recency: "Recently updated docs"
+
+    example:
+      current: "codebase/layer-2-core/zero-trust-architecture.md"
+      user_role: "developer"
+      recommendations:
+        - path: "codebase/layer-3-detailed/policy-engine-internals.md"
+          score: 0.95
+          reason: "Natural progression to deeper level"
+
+        - path: "codebase/layer-2-core/authentication-system.md"
+          score: 0.85
+          reason: "Related security topic, same level"
+
+        - path: "architecture/decisions-adr/002-zero-trust-choice.md"
+          score: 0.75
+          reason: "Architectural context"
+
+---
+
+# Navigation Metadata
+
+created: "2025-09-30"
+version: "1.0.0"
+methodology: "Six-Layer Docs + DSM"
+total_entry_points: 5
+total_breadcrumb_trails: 6
+total_role_paths: 7
+total_topic_clusters: 5
+completion_status: "3.4% (foundation complete)"
+
+# Usage Instructions
+
+This navigation graph can be:
+1. **Manually consulted** by developers for guided learning
+2. **Programmatically parsed** by LLMs for context-aware suggestions
+3. **Integrated into docs site** for interactive navigation
+4. **Used by CI/CD** to validate doc coverage and linkage
+
+# Next Steps
+
+- [ ] Implement dynamic recommendation engine
+- [ ] Create interactive docs site using this graph
+- [ ] Add completion tracking per user
+- [ ] Generate personalized learning paths
+- [ ] Integrate with search functionality

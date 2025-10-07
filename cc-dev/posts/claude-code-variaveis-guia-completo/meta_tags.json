@@ -1,0 +1,184 @@
+{
+  "page": {
+    "url": "/posts/claude-code-variaveis-guia-completo",
+    "canonical": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo",
+    "language": "pt-BR",
+    "type": "article"
+  },
+
+  "seo": {
+    "title": "Como Usar Variáveis em Slash Commands do Claude Code [2025]",
+    "title_length": 58,
+    "description": "Aprenda a sintaxe correta de variáveis em Claude Code: $ARGUMENTS vs ${VARIABLE}. Guia completo com 3 abordagens, exemplos reais e case study.",
+    "description_length": 158,
+    "keywords": [
+      "Claude Code variáveis",
+      "slash commands argumentos",
+      "sintaxe Claude Code",
+      "prompt variables LLM",
+      "argument-hint Claude",
+      "$ARGUMENTS syntax",
+      "Claude Code tutorial"
+    ],
+    "robots": "index, follow",
+    "googlebot": "index, follow",
+    "revisit_after": "30 days"
+  },
+
+  "article": {
+    "author": "Equipe de Desenvolvimento",
+    "published_time": "2025-10-07T00:00:00Z",
+    "modified_time": "2025-10-07T00:00:00Z",
+    "section": "Technical Guides",
+    "tag": [
+      "Claude Code",
+      "Slash Commands",
+      "Variables",
+      "LLM Prompts",
+      "Developer Tools",
+      "AI Development"
+    ],
+    "word_count": 3547,
+    "reading_time_minutes": 15
+  },
+
+  "open_graph": {
+    "og:type": "article",
+    "og:title": "Como Usar Variáveis em Slash Commands do Claude Code",
+    "og:description": "Guia definitivo: $ARGUMENTS vs ${VARIABLE}. 3 abordagens validadas + case study real corrigindo 30+ variáveis. 10 fontes oficiais.",
+    "og:url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo",
+    "og:site_name": "[NOME DO SEU SITE]",
+    "og:locale": "pt_BR",
+    "og:image": "https://[SEU-DOMINIO]/images/claude-code-variables-guide-og.jpg",
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:alt": "Diagrama mostrando sintaxe de variáveis em Claude Code: $ARGUMENTS, $1/$2/$3 e ${VARIABLE} inválida",
+    "article:published_time": "2025-10-07T00:00:00Z",
+    "article:modified_time": "2025-10-07T00:00:00Z",
+    "article:author": "[URL DO PERFIL DO AUTOR]",
+    "article:section": "Technical Guides",
+    "article:tag": ["Claude Code", "Slash Commands", "Variables"]
+  },
+
+  "twitter": {
+    "twitter:card": "summary_large_image",
+    "twitter:title": "Como Usar Variáveis em Claude Code Slash Commands",
+    "twitter:description": "$ARGUMENTS vs ${VARIABLE}: Guia completo com 3 abordagens, case study real e troubleshooting. Baseado em 10 fontes oficiais.",
+    "twitter:image": "https://[SEU-DOMINIO]/images/claude-code-variables-guide-twitter.jpg",
+    "twitter:image:alt": "Claude Code Variables Guide - $ARGUMENTS syntax diagram",
+    "twitter:site": "@[SEU_HANDLE]",
+    "twitter:creator": "@[AUTOR_HANDLE]"
+  },
+
+  "schema_types": [
+    "Article",
+    "FAQPage",
+    "HowTo",
+    "BreadcrumbList"
+  ],
+
+  "additional_meta": {
+    "theme-color": "#000000",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "format-detection": "telephone=no"
+  },
+
+  "link_tags": [
+    {
+      "rel": "canonical",
+      "href": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/json+oembed",
+      "href": "https://[SEU-DOMINIO]/oembed?url=https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo",
+      "title": "[NOME DO SEU SITE] oEmbed Profile"
+    }
+  ],
+
+  "llm_optimization": {
+    "answer_first": true,
+    "data_points": [
+      "30+ variáveis inválidas corrigidas",
+      "504 linhas de código refatoradas",
+      "100% taxa de falha ${VARIABLE}",
+      "3 abordagens validadas",
+      "10 fontes oficiais",
+      "3.547 palavras",
+      "15 minutos leitura"
+    ],
+    "structure_types": [
+      "Answer-first (50 palavras)",
+      "Decision tree",
+      "Comparison table",
+      "Case study with metrics",
+      "10 FAQs",
+      "Troubleshooting guide"
+    ],
+    "citation_friendly": true,
+    "update_frequency": "monthly",
+    "next_update": "2025-11-07"
+  },
+
+  "performance": {
+    "preload": [
+      {
+        "href": "/fonts/main.woff2",
+        "as": "font",
+        "type": "font/woff2",
+        "crossorigin": "anonymous"
+      }
+    ],
+    "prefetch": [
+      {
+        "href": "/images/claude-code-variables-guide.jpg",
+        "as": "image"
+      }
+    ]
+  },
+
+  "analytics": {
+    "content_group": "Technical Guides",
+    "custom_dimensions": {
+      "dimension1": "Claude Code",
+      "dimension2": "Variables Syntax",
+      "dimension3": "Developer Tools"
+    },
+    "tracking_events": [
+      {
+        "category": "Content",
+        "action": "FAQ Click",
+        "label": "Claude Code Variables"
+      },
+      {
+        "category": "Engagement",
+        "action": "Code Copy",
+        "label": "Syntax Examples"
+      }
+    ]
+  },
+
+  "validation": {
+    "meta_title_optimal": true,
+    "meta_description_optimal": true,
+    "keywords_count": 7,
+    "og_image_dimensions_correct": true,
+    "twitter_card_configured": true,
+    "canonical_url_set": true,
+    "schema_markup_ready": true
+  },
+
+  "notes": {
+    "title_seo_best_practices": "58 caracteres - dentro do limite ideal de 50-60",
+    "description_seo_best_practices": "158 caracteres - dentro do limite ideal de 150-160",
+    "og_image_recommendations": "1200x630px - dimensões recomendadas para Facebook/LinkedIn",
+    "twitter_image_recommendations": "1200x675px ou 1200x600px - dimensões recomendadas para Twitter",
+    "update_reminders": [
+      "Atualizar modified_time quando artigo mudar",
+      "Revisar keywords mensalmente",
+      "Verificar se imagens OG ainda existem",
+      "Testar meta tags em validators (Facebook Debugger, Twitter Card Validator)"
+    ]
+  }
+}

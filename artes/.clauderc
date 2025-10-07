@@ -1,0 +1,48 @@
+{
+  "mcp": {
+    "servers": {
+      "adobe-express-addons": {
+        "command": "npx",
+        "args": ["-y", "@adobe/express-add-on-dev-mcp@latest"],
+        "description": "Adobe Express Add-on MCP Server (Beta) - Oficial",
+        "env": {}
+      },
+      "adobe-photoshop": {
+        "command": "python",
+        "args": ["-m", "adobe_mcp.photoshop"],
+        "description": "Adobe Photoshop MCP - Automação e controle via IA",
+        "env": {}
+      },
+      "adobe-premiere": {
+        "command": "python",
+        "args": ["-m", "adobe_mcp.premiere"],
+        "description": "Adobe Premiere Pro MCP - Automação de edição de vídeo",
+        "env": {}
+      },
+      "adobe-illustrator": {
+        "command": "python",
+        "args": ["-m", "adobe_mcp.illustrator"],
+        "description": "Adobe Illustrator MCP - Criação e manipulação de vetores",
+        "env": {}
+      },
+      "adobe-aftereffects": {
+        "command": "python",
+        "args": ["-m", "adobe_mcp.aftereffects"],
+        "description": "Adobe After Effects MCP - Motion graphics e VFX",
+        "env": {}
+      },
+      "figma": {
+        "command": "npx",
+        "args": ["-y", "@figma/mcp-server"],
+        "description": "Figma Dev Mode MCP - Design-to-code e design tokens",
+        "env": {}
+      },
+      "canva": {
+        "command": "canva",
+        "args": ["mcp"],
+        "description": "Canva Dev MCP Server - Oficial - Desenvolvimento de apps Canva",
+        "env": {}
+      }
+    }
+  }
+}

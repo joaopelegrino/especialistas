@@ -1,0 +1,650 @@
+# Render Configuration Template for Elixir Phoenix Applications
+# Documentation: https://render.com/docs/infrastructure-as-code
+
+# =============================================================================
+# SERVICES CONFIGURATION
+# =============================================================================
+
+services:
+  # Web Service - Phoenix Application
+  - type: web
+    name: [APP_NAME]
+    runtime: docker
+    plan: [PLAN_TYPE]
+    region: [REGION]
+
+    # Build configuration
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+
+    # Health check configuration
+    healthCheckPath: /health
+
+    # Auto-deploy configuration
+    branch: [BRANCH]
+    autoDeploy: true
+
+    # Environment variables
+    envVars:
+      - key: PHX_HOST
+        value: [APP_NAME].onrender.com
+
+      - key: PORT
+        value: 10000
+
+      - key: MIX_ENV
+        value: prod
+
+      - key: LANG
+        value: en_US.UTF-8
+
+      - key: ECTO_IPV6
+        value: false
+
+      - key: POOL_SIZE
+        value: 10
+
+      # Secrets (set in Render Dashboard)
+      - key: SECRET_KEY_BASE
+        sync: false  # Set manually
+
+      - key: DATABASE_URL
+        fromDatabase:
+          name: [APP_NAME]-db
+          property: connectionString
+
+      - key: RELEASE_COOKIE
+        generateValue: true
+
+# PostgreSQL Database
+databases:
+  - name: [APP_NAME]-db
+    databaseName: [APP_NAME]_prod
+    plan: [DB_PLAN_TYPE]
+    region: [REGION]
+    ipAllowList: []  # Empty = allow all Render services
+
+    # Backup configuration (paid plans only)
+    # postgresMajorVersion: 15
+
+# =============================================================================
+# CONFIGURATION INSTRUCTIONS
+# =============================================================================
+#
+# 1. Replace placeholders:
+#    - [APP_NAME]: Your application name (e.g., "myapp")
+#    - [PLAN_TYPE]: Service plan (starter, standard, pro, pro plus, pro max, pro ultra)
+#    - [REGION]: Deployment region (oregon, ohio, frankfurt, singapore)
+#    - [BRANCH]: Git branch to deploy (e.g., "main")
+#    - [DB_PLAN_TYPE]: Database plan (starter, standard, pro, pro plus)
+#
+# 2. Available service plans:
+#
+#    FREE:
+#    - 512MB RAM, 0.1 CPU
+#    - Spins down after 15 min inactivity
+#    - 750 hours/month
+#    - Good for: Testing, hobby projects
+#
+#    STARTER ($7/month):
+#    - 512MB RAM, 0.5 CPU
+#    - Always on
+#    - Good for: Small production apps
+#
+#    STANDARD ($25/month):
+#    - 2GB RAM, 1 CPU
+#    - Good for: Production apps
+#
+#    PRO ($85/month):
+#    - 4GB RAM, 2 CPU
+#    - Good for: High-traffic apps
+#
+#    PRO PLUS ($250/month):
+#    - 8GB RAM, 4 CPU
+#
+#    PRO MAX ($500/month):
+#    - 16GB RAM, 8 CPU
+#
+#    PRO ULTRA ($1000/month):
+#    - 32GB RAM, 16 CPU
+#
+# 3. Available database plans:
+#
+#    STARTER ($7/month):
+#    - 1GB RAM, 0.1 CPU, 1GB storage
+#    - 1 week backups
+#
+#    STANDARD ($20/month):
+#    - 2GB RAM, 1 CPU, 10GB storage
+#    - 7 day backups
+#
+#    PRO ($90/month):
+#    - 4GB RAM, 2 CPU, 25GB storage
+#    - 14 day backups
+#
+#    PRO PLUS ($200/month):
+#    - 8GB RAM, 4 CPU, 50GB storage
+#    - 30 day backups
+#
+# 4. Available regions:
+#    - oregon: Oregon, USA (us-west)
+#    - ohio: Ohio, USA (us-east)
+#    - frankfurt: Frankfurt, Germany (eu-central)
+#    - singapore: Singapore (ap-southeast)
+#
+#    Latency guide:
+#    - Brazil → Ohio: ~110ms
+#    - Brazil → Oregon: ~180ms
+#    - Brazil → Frankfurt: ~200ms
+#    - Brazil → Singapore: ~330ms
+#
+# 5. Initial setup:
+#
+#    a. Connect repository:
+#       - Dashboard → New → Blueprint
+#       - Connect GitHub repository
+#       - Render auto-detects render.yaml
+#
+#    b. Set secrets (Dashboard → Environment):
+#       - SECRET_KEY_BASE: Generate with `mix phx.gen.secret`
+#
+#    c. Deploy:
+#       - Git push triggers automatic deployment
+#       - Or click "Manual Deploy" in Dashboard
+#
+# 6. Custom domain:
+#    - Settings → Custom Domain
+#    - Add CNAME: [subdomain] → [app-name].onrender.com
+#    - Automatic HTTPS via Let's Encrypt
+#
+# 7. View logs:
+#    - Dashboard → Logs tab
+#    - Or use Render CLI: render logs -s [APP_NAME]
+#
+# =============================================================================
+# RENDER.YAML REFERENCE
+# =============================================================================
+#
+# Full schema:
+# https://render.com/docs/infrastructure-as-code
+#
+# Service types:
+# - web: HTTP service with public URL
+# - private: Internal service (no public URL)
+# - cron: Scheduled job
+# - worker: Background worker
+# - static: Static site
+#
+# Additional web service options:
+#
+# services:
+#   - type: web
+#     name: myapp
+#     runtime: docker
+#
+#     # Scaling (paid plans only)
+#     numInstances: 2  # Horizontal scaling
+#
+#     # Notifications
+#     buildFilter:
+#       paths:
+#         - lib/**
+#         - config/**
+#       ignoredPaths:
+#         - docs/**
+#
+#     # Custom build command (if not using Dockerfile)
+#     buildCommand: mix deps.get && npm install --prefix assets
+#     startCommand: bin/myapp start
+#
+#     # Disk storage
+#     disk:
+#       name: myapp-data
+#       mountPath: /app/data
+#       sizeGB: 1
+#
+# =============================================================================
+# HEALTH CHECKS
+# =============================================================================
+#
+# Render checks healthCheckPath every 30 seconds:
+# - 200-399 = healthy
+# - Other codes = unhealthy
+# - 3 failed checks = service restart
+#
+# Create health endpoint in router.ex:
+# scope "/", MyAppWeb do
+#   pipe_through :api
+#   get "/health", HealthController, :check
+# end
+#
+# # lib/myapp_web/controllers/health_controller.ex
+# defmodule MyAppWeb.HealthController do
+#   use MyAppWeb, :controller
+#
+#   def check(conn, _params) do
+#     # Check critical dependencies
+#     with :ok <- check_database(),
+#          :ok <- check_redis() do
+#       json(conn, %{
+#         status: "ok",
+#         timestamp: DateTime.utc_now(),
+#         version: Application.spec(:myapp, :vsn)
+#       })
+#     else
+#       {:error, reason} ->
+#         conn
+#         |> put_status(:service_unavailable)
+#         |> json(%{status: "error", reason: reason})
+#     end
+#   end
+#
+#   defp check_database do
+#     case MyApp.Repo.query("SELECT 1") do
+#       {:ok, _} -> :ok
+#       {:error, _} -> {:error, "database_unreachable"}
+#     end
+#   end
+#
+#   defp check_redis do
+#     # If using Redis
+#     :ok
+#   end
+# end
+#
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+#
+# Render PostgreSQL features:
+# - Automatic backups (paid plans)
+# - Point-in-time recovery
+# - Read replicas (enterprise)
+# - Connection pooling via PgBouncer
+#
+# Connection string format:
+# postgresql://user:password@host:5432/database
+#
+# Configure in config/prod.exs:
+# config :myapp, MyApp.Repo,
+#   url: System.get_env("DATABASE_URL"),
+#   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+#   ssl: true,
+#   ssl_opts: [
+#     verify: :verify_peer,
+#     cacertfile: CAStore.file_path(),
+#     server_name_indication: ~c"hostname",
+#     customize_hostname_check: [
+#       match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+#     ]
+#   ]
+#
+# Database management:
+# - Access via dashboard: Settings → Connections
+# - External connections allowed (whitelist IP)
+# - Use psql: psql $DATABASE_URL
+# - Run migrations: render run -s [APP_NAME] bin/myapp eval "MyApp.Release.migrate()"
+#
+# =============================================================================
+# PERSISTENT STORAGE (DISKS)
+# =============================================================================
+#
+# Render supports persistent disks:
+#
+# services:
+#   - type: web
+#     name: myapp
+#     disk:
+#       name: myapp-data
+#       mountPath: /app/data
+#       sizeGB: 1  # 1-512 GB
+#
+# Pricing:
+# - $0.25/GB/month
+# - Included backups
+# - Automatic snapshots
+#
+# Use cases:
+# - User uploads (if not using S3)
+# - SQLite databases
+# - Cache files
+# - Application logs
+#
+# Limitations:
+# - Single-instance only (not replicated across instances)
+# - Manual backup/restore for multi-instance
+# - Consider S3 for multi-instance deployments
+#
+# =============================================================================
+# ENVIRONMENT VARIABLES
+# =============================================================================
+#
+# Three ways to set env vars:
+#
+# 1. In render.yaml (for non-secrets):
+#    envVars:
+#      - key: MY_VAR
+#        value: my_value
+#
+# 2. Synced from other services:
+#    envVars:
+#      - key: DATABASE_URL
+#        fromDatabase:
+#          name: myapp-db
+#          property: connectionString
+#
+# 3. Set in Dashboard (for secrets):
+#    Settings → Environment → Add Environment Variable
+#
+# Generate random values:
+#    envVars:
+#      - key: RELEASE_COOKIE
+#        generateValue: true  # Render generates secure random value
+#
+# Environment groups (for shared vars):
+# - Create group: Dashboard → Environment Groups
+# - Link to multiple services
+# - Good for: API keys, shared configs
+#
+# =============================================================================
+# DEPLOYMENT STRATEGIES
+# =============================================================================
+#
+# Automatic deployment:
+# - Git push → automatic deploy
+# - Configure branch: branch: main
+# - Filter by paths: buildFilter
+#
+# Manual deployment:
+# - Dashboard → Manual Deploy
+# - Select commit/branch
+# - Good for: Production releases
+#
+# Deploy previews (paid plans):
+# - Automatic environment per PR
+# - Enable: Settings → Pull Request Previews
+# - Each PR gets unique URL
+# - Auto-cleanup on PR close
+#
+# Blue-green deployment:
+# - Use multiple services with different branches
+# - Switch traffic via custom domain
+# - Manual process (no built-in support)
+#
+# Zero-downtime deploys:
+# - Render automatically does rolling deploys
+# - New instance started before old stopped
+# - Health checks ensure readiness
+#
+# =============================================================================
+# SCALING CONFIGURATION
+# =============================================================================
+#
+# Horizontal scaling (paid plans):
+# services:
+#   - type: web
+#     name: myapp
+#     numInstances: 3  # Run 3 instances
+#
+# Benefits:
+# - Load balancing across instances
+# - High availability
+# - Handle more traffic
+#
+# Limitations:
+# - Each instance is independent (no shared state)
+# - Use external cache (Redis) for sessions
+# - Disk mounts not shared between instances
+#
+# Vertical scaling:
+# - Change plan in Dashboard
+# - Settings → Plan → Upgrade/Downgrade
+# - Zero-downtime upgrade
+#
+# Auto-scaling:
+# - Not available (manual scaling only)
+# - Monitor metrics to decide when to scale
+#
+# Cost optimization:
+# - Start with smaller plan
+# - Scale up based on metrics
+# - Use free tier for development
+# - Enable spin-down for low-traffic apps (free tier)
+#
+# =============================================================================
+# LOGGING & MONITORING
+# =============================================================================
+#
+# View logs:
+# - Dashboard → Logs tab
+# - Real-time streaming
+# - Search and filter
+# - Download logs
+#
+# Log retention:
+# - Free: 7 days
+# - Starter: 7 days
+# - Standard+: 30 days
+#
+# Structured logging:
+# config :logger, :console,
+#   format: "$time $metadata[$level] $message\n",
+#   metadata: [:request_id, :user_id]
+#
+# External logging:
+# - Datadog: Use Datadog Agent sidecar
+# - LogDNA: Use LogDNA integration
+# - Papertrail: Send logs via syslog
+# - Sentry: Error tracking
+#
+# Metrics:
+# - Dashboard → Metrics tab shows:
+#   - CPU usage
+#   - Memory usage
+#   - Response time
+#   - Request count
+#   - Error rate
+#
+# Alerts:
+# - Email notifications for:
+#   - Deploy success/failure
+#   - Service crashes
+#   - High error rates
+# - Configure: Settings → Notifications
+#
+# =============================================================================
+# PRICING EXAMPLES
+# =============================================================================
+#
+# HOBBY / DEVELOPMENT:
+# - Web: Free tier (512MB, spins down)
+# - Database: Free tier (PostgreSQL not available on free)
+# - Total: $0/month (no database) or $7/month (with database)
+#
+# SMALL PRODUCTION (< 10k users):
+# - Web: Starter ($7) + Database: Starter ($7)
+# - Total: $14/month
+# - Specs: 512MB RAM, 0.5 CPU, always-on
+#
+# MEDIUM PRODUCTION (10k-100k users):
+# - Web: Standard ($25) + Database: Standard ($20)
+# - Total: $45/month
+# - Specs: 2GB RAM, 1 CPU, 10GB DB storage
+#
+# LARGE PRODUCTION (100k+ users):
+# - Web: Pro ($85) × 2 instances + Database: Pro ($90)
+# - Total: $260/month
+# - Specs: 4GB RAM, 2 CPU per instance, 25GB DB storage
+#
+# Additional costs:
+# - Bandwidth: $0.10/GB after 100GB/month
+# - Disk storage: $0.25/GB/month
+# - Backup storage: Included in plan
+#
+# =============================================================================
+# RECOMMENDED CONFIGURATIONS BY USE CASE
+# =============================================================================
+#
+# HOBBY / DEV:
+# services:
+#   - type: web
+#     plan: free
+#     envVars:
+#       - key: POOL_SIZE
+#         value: 2
+#
+# SMALL PRODUCTION:
+# services:
+#   - type: web
+#     plan: starter
+#     envVars:
+#       - key: POOL_SIZE
+#         value: 10
+# databases:
+#   - plan: starter
+#
+# MEDIUM PRODUCTION:
+# services:
+#   - type: web
+#     plan: standard
+#     numInstances: 2
+#     envVars:
+#       - key: POOL_SIZE
+#         value: 15
+# databases:
+#   - plan: standard
+#
+# LARGE PRODUCTION:
+# services:
+#   - type: web
+#     plan: pro
+#     numInstances: 3
+#     envVars:
+#       - key: POOL_SIZE
+#         value: 20
+# databases:
+#   - plan: pro
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# Deployment fails:
+# - Check logs: Dashboard → Logs
+# - Verify Dockerfile builds locally: docker build .
+# - Check environment variables are set
+# - Verify health check endpoint returns 200
+#
+# Application crashes:
+# - Check logs for error messages
+# - Verify DATABASE_URL is correct
+# - Ensure migrations ran successfully
+# - Check SECRET_KEY_BASE is set
+# - Verify Phoenix listens on 0.0.0.0:10000
+#
+# Database connection errors:
+# - Verify DATABASE_URL: Dashboard → Environment
+# - Check SSL configuration in config/prod.exs
+# - Test connection: psql $DATABASE_URL
+# - Increase POOL_SIZE if seeing timeouts
+#
+# Slow performance:
+# - Check metrics: Dashboard → Metrics
+# - Consider upgrading plan (more CPU/RAM)
+# - Add instances (horizontal scaling)
+# - Optimize database queries
+# - Add database indexes
+#
+# High costs:
+# - Review metrics for actual usage
+# - Consider downgrading underutilized services
+# - Enable spin-down for dev/staging (free tier)
+# - Optimize Docker image size
+# - Use CDN for static assets
+#
+# =============================================================================
+# MIGRATION FROM OTHER PLATFORMS
+# =============================================================================
+#
+# From Heroku:
+# 1. Create render.yaml based on Procfile
+# 2. Export env vars: heroku config -s > .env
+# 3. Import to Render: Dashboard → Environment
+# 4. Deploy
+#
+# From Fly.io:
+# 1. Convert fly.toml → render.yaml
+# 2. Adjust port (Fly: 8080, Render: 10000)
+# 3. Set environment variables
+# 4. Deploy
+#
+# From Railway:
+# 1. Convert railway.json → render.yaml
+# 2. Adjust configuration
+# 3. Set environment variables
+# 4. Deploy
+#
+# Database migration:
+# 1. Backup source: pg_dump
+# 2. Create Render PostgreSQL
+# 3. Restore: psql $DATABASE_URL < dump.sql
+# 4. Verify data
+#
+# =============================================================================
+# INTEGRATION WITH CLAUDE CODE
+# =============================================================================
+#
+# Deploy from Claude Code:
+#
+# 1. Install Render CLI:
+#    npm install -g @render/cli
+#    # or
+#    brew install render
+#
+# 2. Login:
+#    render login
+#
+# 3. Deploy:
+#    git push  # Automatic deployment
+#
+# 4. View logs:
+#    render logs -s [APP_NAME] --follow
+#
+# 5. Run migrations:
+#    render run -s [APP_NAME] bin/myapp eval "MyApp.Release.migrate()"
+#
+# 6. Open shell:
+#    render shell -s [APP_NAME]
+#
+# Useful commands:
+# - render services list  # List all services
+# - render services info -s [APP_NAME]  # Service details
+# - render deploys list -s [APP_NAME]  # Deployment history
+# - render deploys rollback -s [APP_NAME]  # Rollback
+#
+# =============================================================================
+# RESOURCES
+# =============================================================================
+#
+# Official Documentation:
+# - Render Docs: https://render.com/docs
+# - Elixir Guide: https://render.com/docs/deploy-elixir-phoenix
+# - render.yaml Reference: https://render.com/docs/infrastructure-as-code
+#
+# Community:
+# - Render Community: https://community.render.com/
+# - Elixir Forum: https://elixirforum.com/
+#
+# Templates:
+# - Render Templates: https://render.com/templates
+# - Phoenix Template: https://render.com/docs/deploy-elixir-phoenix
+#
+# Support:
+# - Help Center: https://render.com/docs
+# - Support: support@render.com
+# - Status Page: https://status.render.com/
+#
+# Pricing Calculator:
+# - https://render.com/pricing
+#
+# =============================================================================

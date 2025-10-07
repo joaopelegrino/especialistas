@@ -1,0 +1,323 @@
+{
+  "schemas": [
+    {
+      "name": "Article",
+      "description": "Main article schema for SEO and rich results",
+      "json_ld": {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Como Usar Variáveis em Slash Commands do Claude Code",
+        "description": "Guia definitivo sobre sintaxe de variáveis em Claude Code: $ARGUMENTS vs ${VARIABLE}. 3 abordagens validadas, case study real corrigindo 30+ variáveis.",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://[SEU-DOMINIO]/images/claude-code-variables-guide.jpg",
+          "width": 1200,
+          "height": 630,
+          "caption": "Claude Code variables syntax guide diagram"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Equipe de Desenvolvimento",
+          "url": "https://[SEU-DOMINIO]/author/equipe"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "[NOME DA SUA ORGANIZAÇÃO]",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://[SEU-DOMINIO]/logo.png",
+            "width": 600,
+            "height": 60
+          }
+        },
+        "datePublished": "2025-10-07T00:00:00+00:00",
+        "dateModified": "2025-10-07T00:00:00+00:00",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo"
+        },
+        "articleSection": "Technical Guides",
+        "keywords": "Claude Code, variáveis, slash commands, $ARGUMENTS, sintaxe, LLM prompts",
+        "wordCount": 3547,
+        "timeRequired": "PT15M",
+        "inLanguage": "pt-BR",
+        "about": {
+          "@type": "Thing",
+          "name": "Claude Code Variable Syntax",
+          "description": "Sintaxe de variáveis em comandos slash do Claude Code"
+        }
+      }
+    },
+
+    {
+      "name": "FAQPage",
+      "description": "FAQ schema for rich snippets and AI citation",
+      "json_ld": {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Por que ${VARIABLE} não funciona se funciona em bash?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Claude Code slash commands não são bash scripts. São arquivos markdown processados pelo Claude Code CLI que: 1) Lê o arquivo .md, 2) Substitui $ARGUMENTS ou $1, $2... com valores fornecidos, 3) Envia texto para Claude. Não há engine de template, interpretador bash ou contexto de variáveis customizadas. Use apenas $ARGUMENTS ou $1, $2, $3 que são suportados oficialmente."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Posso criar minhas próprias variáveis customizadas?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não diretamente no markdown. Mas você pode: 1) Usar bash dentro de code blocks para definir variáveis, 2) Instruir Claude a criar variáveis baseadas em $ARGUMENTS, ou 3) Usar detecção dinâmica (Abordagem 3) onde Claude detecta valores automaticamente."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qual diferença entre $ARGUMENTS e $* em bash?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No contexto de Claude Code markdown: $ARGUMENTS é a sintaxe oficial suportada, enquanto $* (sintaxe bash) não funciona em .md. Dentro de bash code blocks: $* representa todos args como string, $@ como array, $# é número de args, e $1, $2... são args individuais."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como passar argumentos opcionais?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Três abordagens: 1) Defaults com bash usando ${2:-default-value}, 2) Lógica condicional if [ -z $2 ], ou 3) Instruir Claude que argumentos são opcionais e usar valores padrão se não fornecidos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Posso usar variáveis de ambiente do sistema?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, mas apenas em bash code blocks. Variáveis como $USER, $HOME, $SHELL, $PATH estão disponíveis dentro de blocos ```bash```. No markdown direto, essas variáveis não são expandidas."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como debugar variáveis que não estão funcionando?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Três métodos: 1) Echo explícito em bash block mostrando valores de $ARGUMENTS, $1, $2, etc., 2) Grep no arquivo buscando \\${ inválidas, ou 3) Criar comando de teste mínimo que apenas exibe valores recebidos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quantos argumentos posicionais posso usar?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Limite técnico: ilimitado ($1 até $99+). Limite prático: máximo 4-5 argumentos. Mais que isso resulta em UX ruim e propensão a erros. Se precisa 6+ argumentos, redesenhe o comando, use auto-detecção, ou passe config file."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como lidar com caracteres especiais?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Quote no input usando aspas simples ou duplas. Em bash, sempre quote variáveis: PROJECT_PATH=\"$ARGUMENTS\". Para caracteres perigosos (;|&), considere sanitização ou validação whitelist."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Posso chamar um slash command de dentro de outro?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Não diretamente. Alternativas: 1) Documentar workflow com múltiplos comandos em sequência, 2) Criar comando orquestrador que replica lógica de outros comandos, ou 3) Usar bash para chamar comandos reais (não slash commands)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como migrar comandos com ${VAR} para sintaxe correta?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Processo em 6 passos: 1) Auditar arquivo com grep, 2) Classificar cada variável (input, detectável, env var, calculada), 3) Criar mapeamento, 4) Substituir sistematicamente, 5) Adicionar frontmatter, 6) Testar e documentar mudanças no CHANGELOG."
+            }
+          }
+        ]
+      }
+    },
+
+    {
+      "name": "HowTo",
+      "description": "How-to guide schema for implementation steps",
+      "json_ld": {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "Como Implementar Variáveis em Claude Code Slash Commands",
+        "description": "Guia passo a passo para implementar sintaxe correta de variáveis em comandos Claude Code",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://[SEU-DOMINIO]/images/claude-code-implementation-steps.jpg",
+          "width": 1200,
+          "height": 630
+        },
+        "totalTime": "PT30M",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "0"
+        },
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "Claude Code CLI"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Text editor"
+          },
+          {
+            "@type": "HowToTool",
+            "name": "Terminal/bash"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Escolher Abordagem Correta",
+            "text": "Determine se precisa 1 argumento ($ARGUMENTS), 2-5 argumentos estruturados ($1, $2, $3), ou análise complexa com auto-detecção (Abordagem 3). Use decision tree: 1 argumento simples → $ARGUMENTS, 2-4 args estruturados → $1/$2/$3, complexo/adaptativo → Detecção Dinâmica.",
+            "url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo#implementacao",
+            "itemListElement": [
+              {
+                "@type": "HowToDirection",
+                "text": "Avalie quantos argumentos seu comando precisa"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Consulte decision tree na seção Matriz de Decisão"
+              }
+            ]
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Criar Arquivo de Comando",
+            "text": "Crie arquivo .md em .claude/commands/ (projeto) ou ~/.claude/commands/ (pessoal). Estrutura obrigatória: frontmatter YAML com argument-hint e description, seguido do conteúdo do comando.",
+            "url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo#implementacao",
+            "itemListElement": [
+              {
+                "@type": "HowToDirection",
+                "text": "mkdir -p .claude/commands"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Criar arquivo seu-comando.md"
+              }
+            ]
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Adicionar Validação",
+            "text": "Implemente validação de input usando bash. Verifique se argumentos obrigatórios foram fornecidos, se paths/files existem, e forneça mensagens de erro claras. Use if [ -z $ARG ] para verificar se vazio.",
+            "url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo#implementacao",
+            "itemListElement": [
+              {
+                "@type": "HowToDirection",
+                "text": "Adicionar bloco bash com validação"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Verificar argumentos obrigatórios"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Fornecer mensagens de erro úteis"
+              }
+            ]
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Escrever Instruções Claras",
+            "text": "Estruture instruções para Claude usando template: Mission (objetivo), Input (argumentos recebidos), Execution Steps (fases numeradas), Expected Output (formato desejado). Use $ARGUMENTS ou $1, $2, $3 nas instruções.",
+            "url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo#implementacao"
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Testar Extensivamente",
+            "text": "Execute testes: sem argumentos (deve dar erro), com argumento válido, com múltiplos argumentos se aplicável, com argumento inválido, e edge cases (paths com espaços, caracteres especiais). Valide que variáveis são substituídas corretamente.",
+            "url": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo#implementacao",
+            "itemListElement": [
+              {
+                "@type": "HowToDirection",
+                "text": "Testar sem argumentos"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Testar com argumentos válidos"
+              },
+              {
+                "@type": "HowToDirection",
+                "text": "Testar edge cases"
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    {
+      "name": "BreadcrumbList",
+      "description": "Breadcrumb navigation schema",
+      "json_ld": {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://[SEU-DOMINIO]/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Posts",
+            "item": "https://[SEU-DOMINIO]/posts"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Technical Guides",
+            "item": "https://[SEU-DOMINIO]/posts/technical-guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Claude Code Variables Guide",
+            "item": "https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo"
+          }
+        ]
+      }
+    }
+  ],
+
+  "implementation_notes": {
+    "how_to_use": "Insert each schema's json_ld into <script type='application/ld+json'> tags in HTML <head>",
+    "validation": "Validate all schemas at https://validator.schema.org/ and https://search.google.com/test/rich-results",
+    "multiple_schemas": "You can include multiple schemas on same page - they're all valid together",
+    "updates": "Update dateModified in Article schema when content changes",
+    "testing": "Test in Google Rich Results Test and see what enhanced results appear"
+  },
+
+  "expected_rich_results": [
+    "Article snippet with image, author, date",
+    "FAQ accordion in search results",
+    "HowTo with step count and time estimate",
+    "Breadcrumb navigation in search results"
+  ],
+
+  "validation_checklist": [
+    "✓ All @context use https://schema.org",
+    "✓ All required properties present",
+    "✓ Image dimensions specified",
+    "✓ Dates in ISO 8601 format",
+    "✓ URLs are absolute (with https://)",
+    "✓ Publisher logo meets requirements (600x60)",
+    "✓ Article image meets requirements (1200x630)",
+    "✓ FAQ answers are comprehensive (50+ words each)",
+    "✓ HowTo steps are actionable",
+    "✓ Breadcrumbs follow site structure"
+  ]
+}

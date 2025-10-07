@@ -1,0 +1,182 @@
+# robots.txt for [Site Name]
+# Last updated: [Date]
+# Purpose: Control crawler access, especially AI crawlers for pay-per-crawl
+
+# Sitemap location
+Sitemap: https://[your-domain.com]/sitemap.xml
+
+# ============================================
+# AI Crawlers - Configure based on your monetization strategy
+# ============================================
+
+# OpenAI GPTBot
+User-agent: GPTBot
+# Options: Allow (paid partnership), Selective Allow, or Disallow (block)
+Allow: /
+# Disallow: /premium/
+# Disallow: /api/
+Crawl-delay: 10
+
+# Anthropic ClaudeBot
+User-agent: ClaudeBot
+# Options: Allow (citation value), Selective, or Disallow
+Allow: /
+Crawl-delay: 10
+
+# Google Extended (for Bard/Gemini training)
+User-agent: Google-Extended
+# Options: Allow (SEO benefit), Selective, or Disallow (no training)
+Allow: /
+Crawl-delay: 10
+
+# Common Crawl (research/training datasets)
+User-agent: CCBot
+# Options: Usually Disallow (free scraping) or Allow (citation value)
+Disallow: /
+# Allow: /public-articles/
+
+# Perplexity Bot
+User-agent: PerplexityBot
+# Options: Allow (high citation rate) or Selective
+Allow: /
+Crawl-delay: 10
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+Crawl-delay: 10
+
+# Meta AI
+User-agent: FacebookBot
+# Options: Selective - depends on your Meta relationship
+Allow: /
+Crawl-delay: 10
+
+# Applebot Extended (for Apple Intelligence)
+User-agent: Applebot-Extended
+Allow: /
+Crawl-delay: 10
+
+# ============================================
+# Traditional Search Engines - Usually Full Access
+# ============================================
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Yahoo (uses Bing)
+User-agent: Slurp
+Allow: /
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 10
+
+# ============================================
+# SEO Tools - Usually Block (no value, consume resources)
+# ============================================
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# ============================================
+# Malicious/Spam Bots - Block
+# ============================================
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+# ============================================
+# Default Rules for Unknown Bots
+# ============================================
+
+User-agent: *
+# Block sensitive areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+
+# Block certain file types
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Allow specific file types
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /llms.txt
+
+# Rate limiting for unknown bots
+Crawl-delay: 30
+
+# ============================================
+# Notes for Pay-Per-Crawl Implementation
+# ============================================
+
+# Strategy Guidelines:
+#
+# 1. ALLOW + Monitor:
+#    - AI crawlers with citation value (Perplexity, Claude)
+#    - Traditional search engines (Google, Bing)
+#    - Potential partners (OpenAI if you have agreement)
+#
+# 2. SELECTIVE ALLOW:
+#    - Public content: Allow (for citations)
+#    - Premium content: Disallow (requires paid access)
+#    - Example:
+#      Allow: /articles/
+#      Disallow: /premium/
+#
+# 3. DISALLOW:
+#    - Training-only scrapers (CCBot)
+#    - SEO tools (Ahrefs, Semrush)
+#    - Unknown/malicious bots
+#
+# 4. Crawl-Delay:
+#    - 10 seconds: AI crawlers (balance access + server load)
+#    - 30 seconds: Unknown bots (aggressive rate limiting)
+#    - No delay: Major search engines (they self-regulate)
+#
+# 5. Monitor & Adjust:
+#    - Track which bots access your content (server logs)
+#    - Measure citation rate vs crawl volume
+#    - Adjust policies based on ROI
+
+# ============================================
+# Testing & Validation
+# ============================================
+
+# Test your robots.txt:
+# 1. Google Robots.txt Tester: https://www.google.com/webmasters/tools/robots-testing-tool
+# 2. Bing Robots.txt Validator: https://www.bing.com/webmasters/
+# 3. Command line: curl https://your-site.com/robots.txt

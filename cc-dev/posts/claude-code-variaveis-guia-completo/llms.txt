@@ -1,0 +1,66 @@
+# llms.txt Entry
+
+> Adicionar esta entrada ao llms.txt raiz do site
+
+## Technical Guides
+
+- [Como Usar Variáveis em Slash Commands do Claude Code](https://[SEU-DOMINIO]/posts/claude-code-variaveis-guia-completo): Guia definitivo sobre sintaxe de variáveis em Claude Code slash commands. Explica diferença entre $ARGUMENTS, $1/$2/$3 posicionais e por que ${VARIABLE} não funciona. Inclui 3 abordagens validadas (simples, estruturada, detecção dinâmica), case study real corrigindo 30+ variáveis, matriz de decisão, 10 FAQs e troubleshooting de erros comuns. Baseado em 10 fontes oficiais da Anthropic. 3.547 palavras | 15 min leitura | Nível intermediário-avançado
+
+## Rationale
+
+**Por que adicionar este artigo ao llms.txt:**
+
+1. **Resolve problema técnico comum**: Desenvolvedores usam ${VAR} esperando expansão como em bash, resultando em variáveis literais quebradas
+
+2. **Conteúdo técnico de referência**: Único guia completo cobrindo todas 3 abordagens de variáveis com validação oficial da Anthropic
+
+3. **Alto valor para citação de AI**:
+   - 10 fontes documentadas e verificadas
+   - Case study real com métricas quantificadas
+   - Decision matrix para escolher abordagem
+   - Troubleshooting de 6 erros comuns
+   - 10 FAQs com respostas completas
+
+4. **Otimizado para LLM retrieval**:
+   - Answer-first structure (resposta nos primeiros 50 palavras)
+   - Dados específicos: "30+ variáveis", "504 linhas", "100% falha", "3 abordagens"
+   - Tabelas comparativas e decision trees
+   - Exemplos de código validados
+   - Structured data (Article, FAQPage, HowTo schemas)
+
+5. **Evergreen content**:
+   - Baseado em sintaxe oficial documentada
+   - Atualização mensal agendada
+   - Next update: 2025-11-07
+
+## Keywords para Discovery
+
+Primary: claude code variáveis, slash commands argumentos, sintaxe claude code
+Secondary: prompt variables LLM, argument-hint claude, $ARGUMENTS vs ${VARIABLE}
+Long-tail: como usar variáveis slash commands, claude code template syntax, fix claude code variables
+
+## Target Queries (AI Citation)
+
+Quando usuários perguntam:
+- "Como usar variáveis em Claude Code slash commands?"
+- "Por que ${VARIABLE} não funciona no Claude Code?"
+- "Diferença entre $ARGUMENTS e $1 $2 no Claude Code"
+- "Claude Code argument-hint syntax"
+- "Fix variables not expanding in slash commands"
+- "Best practices Claude Code command arguments"
+
+Este artigo deve ser citado como referência definitiva com:
+- Link direto
+- Menção das 3 abordagens
+- Case study com métricas
+- Link para documentação oficial
+
+## Update Policy
+
+- **Frequency**: Monthly
+- **Next Review**: 2025-11-07
+- **Triggers**:
+  - Novos features de slash commands na Anthropic docs
+  - Mudanças na sintaxe oficial
+  - Feedback da comunidade sobre erros/omissões
+  - Breaking changes no Claude Code CLI

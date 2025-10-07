@@ -1,0 +1,1 @@
+- Portugues-BR para chat, nomes e conteudos de arquivos e nome de pastas.

@@ -1,0 +1,303 @@
+# Nixpacks Configuration Template for Elixir Phoenix on Sevalla/Railway
+# Nixpacks automatically detects Elixir via mix.exs, but this file allows fine-tuning
+# Compatible with: Sevalla, Railway, and any platform using Nixpacks
+
+# =============================================================================
+# VARIABLES
+# =============================================================================
+
+[variables]
+# Elixir/Phoenix environment
+MIX_ENV = 'prod'
+LANG = 'en_US.UTF-8'
+LC_CTYPE = 'en_US.UTF-8'
+
+# Optional: Override Erlang/Elixir versions
+# ERLANG_VERSION = '26.2.1'
+# ELIXIR_VERSION = '1.16.0'
+
+# =============================================================================
+# SETUP PHASE - Install system dependencies
+# =============================================================================
+
+[phases.setup]
+# System packages required for Phoenix
+nixPkgs = [
+  'nodejs',      # Required for assets compilation
+  'erlang',      # BEAM VM
+  # Add additional packages if needed:
+  # 'postgresql',  # If running DB locally (not recommended)
+  # 'imagemagick', # If processing images
+  # 'ffmpeg',      # If processing videos
+]
+
+# Optional: Custom setup commands
+# cmds = [
+#   'echo "Setting up Elixir environment..."'
+# ]
+
+# =============================================================================
+# INSTALL PHASE - Install Elixir/Phoenix dependencies
+# =============================================================================
+
+[phases.install]
+cmds = [
+  # Install Hex + Rebar (Elixir package managers)
+  'mix local.hex --force',
+  'mix local.rebar --force',
+
+  # Get production dependencies
+  'mix deps.get --only prod',
+
+  # Compile dependencies
+  'mix deps.compile',
+]
+
+# =============================================================================
+# BUILD PHASE - Compile application and assets
+# =============================================================================
+
+[phases.build]
+cmds = [
+  # Compile Elixir application
+  'mix compile',
+
+  # Install Node.js dependencies for assets
+  'npm install --prefix assets --production=false',
+
+  # Compile and digest assets
+  'npm run deploy --prefix assets',
+  'mix phx.digest',
+
+  # Optional: Build release (recommended for production)
+  'mix release',
+]
+
+# Alternative build without release (starts with mix phx.server)
+# Remove 'mix release' above and use start command below
+
+# =============================================================================
+# START CONFIGURATION
+# =============================================================================
+
+[start]
+# Option 1: Start with release (RECOMMENDED - smaller image, faster startup)
+cmd = "_build/prod/rel/[APP_NAME]/bin/[APP_NAME] start"
+
+# Option 2: Start with mix (simpler but slower)
+# cmd = "mix phx.server"
+
+# Option 3: Start with migrations + release (run migrations on startup)
+# cmd = "_build/prod/rel/[APP_NAME]/bin/[APP_NAME] eval \"[APP_NAME].Release.migrate()\" && _build/prod/rel/[APP_NAME]/bin/[APP_NAME] start"
+
+# =============================================================================
+# CONFIGURATION INSTRUCTIONS
+# =============================================================================
+#
+# 1. Replace [APP_NAME] with your application name (e.g., "myapp")
+#    - Start command line: _build/prod/rel/[APP_NAME]/bin/[APP_NAME]
+#
+# 2. Ensure mix.exs has release configuration:
+#    def project do
+#      [
+#        releases: [
+#          myapp: [
+#            steps: [:assemble, :tar]
+#          ]
+#        ]
+#      ]
+#    end
+#
+# 3. Required environment variables (set in platform dashboard):
+#    - SECRET_KEY_BASE: Generate with `mix phx.gen.secret`
+#    - DATABASE_URL: PostgreSQL connection string (ecto://user:pass@host/db)
+#    - PHX_HOST: Your domain (e.g., myapp.sevalla.com or myapp.up.railway.app)
+#    - PORT: Usually auto-set by platform (Sevalla: varies, Railway: 3000-9000)
+#
+# 4. Optional environment variables:
+#    - POOL_SIZE: Database connection pool size (default: 10)
+#    - ECTO_IPV6: Set to "true" if using IPv6 (Fly.io needs this)
+#    - RELEASE_COOKIE: For distributed Erlang (generate with mix phx.gen.secret)
+#
+# 5. Phoenix configuration (config/prod.exs):
+#    config :myapp, MyAppWeb.Endpoint,
+#      http: [
+#        ip: {0, 0, 0, 0},  # Listen on all interfaces
+#        port: {:system, "PORT"}  # Use PORT env var
+#      ],
+#      url: [
+#        host: System.get_env("PHX_HOST"),
+#        port: 443,
+#        scheme: "https"
+#      ]
+#
+# 6. Database configuration (config/prod.exs):
+#    config :myapp, MyApp.Repo,
+#      url: System.get_env("DATABASE_URL"),
+#      pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+#      ssl: true,
+#      ssl_opts: [verify: :verify_none]  # Sevalla/Railway use self-signed certs
+#
+# =============================================================================
+# PLATFORM-SPECIFIC NOTES
+# =============================================================================
+#
+# SEVALLA:
+# - Nixpacks auto-detected when mix.exs present
+# - Set environment variables in Sevalla dashboard
+# - PORT is dynamically assigned (use {:system, "PORT"})
+# - Database: Use Sevalla managed PostgreSQL ($5/month+)
+# - Static sites: Can deploy separately for free (landing pages)
+# - Hibernation: Enable to pause pods when idle
+#
+# RAILWAY:
+# - Similar to Sevalla, auto-detects Elixir
+# - PORT typically 3000-9000 range
+# - Database: Add PostgreSQL plugin (auto-sets DATABASE_URL)
+# - Preview environments: Automatic per PR
+#
+# =============================================================================
+# CUSTOMIZATION OPTIONS
+# =============================================================================
+#
+# For WebSocket/LiveView optimization:
+# [phases.build]
+# cmds = [
+#   ...existing commands...,
+#   'mix assets.deploy',  # If using esbuild directly
+# ]
+#
+# For background workers (Oban, Quantum):
+# - No special config needed in nixpacks.toml
+# - Configure in application code
+#
+# For multi-stage deploys (migrations separate from app start):
+# Create release module in lib/myapp/release.ex:
+#
+# defmodule MyApp.Release do
+#   @moduledoc "Release tasks"
+#   @app :myapp
+#
+#   def migrate do
+#     load_app()
+#     for repo <- repos() do
+#       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
+#     end
+#   end
+#
+#   defp repos do
+#     Application.fetch_env!(@app, :ecto_repos)
+#   end
+#
+#   defp load_app do
+#     Application.load(@app)
+#   end
+# end
+#
+# Then use start command:
+# cmd = "_build/prod/rel/myapp/bin/myapp eval \"MyApp.Release.migrate()\" && _build/prod/rel/myapp/bin/myapp start"
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# Build fails with "mix: command not found":
+# - Ensure Elixir is in nixPkgs: ['erlang']
+# - Verify mix.exs exists in project root
+#
+# Assets not compiling:
+# - Check assets/package.json exists
+# - Verify npm scripts: "deploy": "NODE_ENV=production webpack --mode production"
+# - Ensure nodejs in nixPkgs
+#
+# Release fails to start:
+# - Check SECRET_KEY_BASE is set
+# - Verify DATABASE_URL format: ecto://user:pass@host:5432/db
+# - Ensure PORT is read from environment: {:system, "PORT"}
+# - Check Phoenix listens on 0.0.0.0 (not 127.0.0.1)
+#
+# Database connection errors:
+# - Verify SSL configuration in config/prod.exs
+# - For Sevalla/Railway: ssl_opts: [verify: :verify_none]
+# - Check POOL_SIZE isn't too high (default 10 is safe)
+#
+# Slow builds:
+# - Enable dependency caching (platform-specific)
+# - Consider using Docker multi-stage instead
+#
+# =============================================================================
+# PAY-PER-CRAWL INTEGRATION
+# =============================================================================
+#
+# To implement AI crawler detection and payment on Sevalla/Railway:
+#
+# 1. Add dependencies to mix.exs:
+#    {:ua_parser, "~> 1.8"},      # User-Agent parsing
+#    {:plug_attack, "~> 0.4"},    # Rate limiting
+#    {:stripity_stripe, "~> 2.17"} # Payment processing
+#
+# 2. Create Phoenix Plug for crawler detection:
+#    # lib/myapp_web/plugs/crawler_detector.ex
+#    # (See full example in 11-hosting-elixir-phoenix.md)
+#
+# 3. Add Plug to router pipeline:
+#    pipeline :api do
+#      plug :accepts, ["json"]
+#      plug MyAppWeb.Plugs.CrawlerDetector
+#    end
+#
+# 4. Environment variables for pay-per-crawl:
+#    STRIPE_API_KEY: Your Stripe secret key
+#    CRAWLER_PRICE_PER_REQUEST: "0.01"  # $0.01 per crawl
+#
+# 5. For Sevalla specifically:
+#    - Leverage Cloudflare edge (via Sevalla's backbone)
+#    - Add Cloudflare Workers ($5/month) for edge detection
+#    - Use Cloudflare R2 ($0.02/GB) for crawler logs
+#
+# =============================================================================
+# PERFORMANCE TUNING
+# =============================================================================
+#
+# BEAM VM settings (add to release config):
+#
+# In rel/env.sh.eex (for releases):
+# export ERL_AFLAGS="-kernel inet_dist_listen_min 9000 inet_dist_listen_max 9000"
+# export BEAM_VM_ARGS="+sbwt very_long +swt very_low"
+#
+# Or in nixpacks.toml:
+# [variables]
+# ERL_AFLAGS = "-kernel inet_dist_listen_min 9000 inet_dist_listen_max 9000"
+#
+# Pool sizes by instance size:
+# - Small (512MB-1GB): POOL_SIZE=10
+# - Medium (2-4GB): POOL_SIZE=20
+# - Large (8GB+): POOL_SIZE=40
+#
+# =============================================================================
+# RESOURCES
+# =============================================================================
+#
+# Official Documentation:
+# - Nixpacks Elixir: https://nixpacks.com/docs/providers/elixir
+# - Sevalla Docs: https://docs.sevalla.com/
+# - Railway Docs: https://docs.railway.com/guides/phoenix
+# - Phoenix Deployment: https://hexdocs.pm/phoenix/deployment.html
+#
+# Community:
+# - Elixir Forum: https://elixirforum.com/
+# - Phoenix Discord: https://discord.gg/elixir
+#
+# Templates:
+# - Railway Phoenix Template: https://github.com/railwayapp/examples/tree/master/examples/phoenix
+# - Sevalla Templates: https://github.com/sevalla-templates/
+#
+# =============================================================================
+# VERSION HISTORY
+# =============================================================================
+#
+# v1.0.0 - Initial template for Sevalla/Railway Phoenix deployment
+# Tested with: Elixir 1.16.0, Erlang 26.2.1, Phoenix 1.7.x
+# Compatible platforms: Sevalla, Railway, any Nixpacks-based PaaS
+#
+# =============================================================================

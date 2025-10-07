@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!--
+  Priority Guidelines:
+  1.0 = Homepage
+  0.9 = Key pillar content, high-value pages
+  0.8 = Important category/section pages
+  0.7 = Regular articles/posts
+  0.6 = Resources, tools
+  0.5 = Archive, older content
+  0.4 = Tags, minor pages
+
+  Changefreq Guidelines:
+  - always: Real-time data (rarely used)
+  - hourly: News sites, live content
+  - daily: Blog homepages, active sections
+  - weekly: Regular blogs, updated sections
+  - monthly: Static content, documentation
+  - yearly: Legal pages, archived content
+  - never: Truly static content
+  -->
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://[your-domain.com]/</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Main Documentation/Articles (High Priority) -->
+  <url>
+    <loc>https://[your-domain.com]/[article-slug]</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <!-- Optional: Include featured image -->
+    <image:image>
+      <image:loc>https://[your-domain.com]/images/[article-image].jpg</image:loc>
+      <image:title>[Image title for accessibility]</image:title>
+      <image:caption>[Brief caption]</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Section/Category Pages -->
+  <url>
+    <loc>https://[your-domain.com]/[category]/</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Regular Articles/Blog Posts -->
+  <url>
+    <loc>https://[your-domain.com]/blog/[post-slug]</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Resources/Tools -->
+  <url>
+    <loc>https://[your-domain.com]/resources/[resource-slug]</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Archive/Older Content -->
+  <url>
+    <loc>https://[your-domain.com]/archive/[old-post]</loc>
+    <lastmod>[YYYY-MM-DD]</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Add more URLs following the same pattern -->
+
+</urlset>
+
+<!--
+SITEMAP BEST PRACTICES:
+
+1. File Size Limits:
+   - Max 50MB uncompressed
+   - Max 50,000 URLs per file
+   - If you exceed, create sitemap index (sitemap_index.xml)
+
+2. Update Frequency:
+   - Regenerate whenever content changes
+   - At minimum, regenerate weekly
+   - Submit to search engines after updates
+
+3. Validation:
+   - Validate XML: https://www.xml-sitemaps.com/validate-xml-sitemap.html
+   - Google Search Console: Submit and check for errors
+   - Bing Webmaster Tools: Submit and validate
+
+4. Submission:
+   - Google Search Console: "Sitemaps" section
+   - Bing Webmaster Tools: Submit via dashboard
+   - robots.txt: Add "Sitemap: https://your-domain.com/sitemap.xml"
+   - Ping (optional): http://www.google.com/ping?sitemap=[sitemap-url]
+
+5. What to Include:
+   ✅ All public pages you want indexed
+   ✅ Recent content (higher priority)
+   ✅ Updated lastmod dates (accurate)
+   ✅ Canonical URLs only
+
+6. What to Exclude:
+   ❌ Duplicate content
+   ❌ Pages blocked by robots.txt
+   ❌ Pages with noindex meta tag
+   ❌ Admin/private pages
+   ❌ Paginated pages (only include first page or canonical)
+
+7. Image Sitemaps:
+   - Include images for better image search ranking
+   - Max 1,000 images per URL entry
+   - Use image:loc for image URL
+   - Add title and caption for context
+
+8. Video Sitemaps:
+   - Use video:video element for video content
+   - Include video:title, video:description
+   - Specify video:thumbnail_loc
+   - Add video:duration
+
+9. For AI Crawlers:
+   - Recent content (lastmod) is prioritized by LLMs
+   - High priority pages get more attention
+   - Combine with llms.txt for best results
+
+10. Automation:
+    - Use scripts to generate dynamically
+    - Update on content publish/edit
+    - Version control sitemap changes
+
+EXAMPLE PYTHON GENERATOR:
+See .claude/agents/publish-master.md for complete sitemap generation script
+-->

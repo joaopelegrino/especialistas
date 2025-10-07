@@ -1,0 +1,235 @@
+# Dockerfile Template for Elixir Phoenix Applications
+# Optimized multi-stage build for production deployment
+# Compatible with: Fly.io, Google Cloud Run, AWS ECS, Azure Container Apps, Railway, Render
+
+# =============================================================================
+# BUILD STAGE - Compile Elixir application
+# =============================================================================
+FROM hexpm/elixir:1.16.0-erlang-26.2.1-alpine-3.19.0 AS build
+
+# Install build dependencies
+RUN apk add --no-cache \
+    build-base \
+    git \
+    nodejs \
+    npm \
+    python3
+
+# Set working directory
+WORKDIR /app
+
+# Install Hex + Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Set build ENV
+ENV MIX_ENV=prod
+
+# Install mix dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get --only prod
+RUN mix deps.compile
+
+# Install Node.js dependencies for assets
+COPY assets/package.json assets/package-lock.json ./assets/
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
+
+# Copy application code
+COPY priv priv
+COPY lib lib
+COPY assets assets
+
+# Compile assets
+RUN npm run --prefix ./assets deploy
+RUN mix phx.digest
+
+# Compile application
+RUN mix compile
+
+# Build release
+COPY rel rel
+RUN mix release
+
+# =============================================================================
+# RUNTIME STAGE - Minimal runtime image
+# =============================================================================
+FROM alpine:3.19.0 AS app
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    libstdc++ \
+    openssl \
+    ncurses-libs \
+    libgcc
+
+# Create non-root user
+RUN addgroup -g 1000 app && \
+    adduser -D -u 1000 -G app app
+
+WORKDIR /app
+
+# Set runtime environment
+ENV MIX_ENV=prod \
+    LANG=C.UTF-8 \
+    PORT=4000
+
+# Copy release from build stage
+COPY --from=build --chown=app:app /app/_build/prod/rel/[APP_NAME] ./
+
+# Switch to non-root user
+USER app
+
+# Expose port
+EXPOSE 4000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:4000/health || exit 1
+
+# Start application
+CMD ["bin/[APP_NAME]", "start"]
+
+# =============================================================================
+# CONFIGURATION INSTRUCTIONS
+# =============================================================================
+#
+# 1. Replace [APP_NAME] with your application name (e.g., "myapp")
+#    - Line 63: COPY --from=build --chown=app:app /app/_build/prod/rel/[APP_NAME] ./
+#    - Line 76: CMD ["bin/[APP_NAME]", "start"]
+#
+# 2. Adjust Elixir/Erlang versions in line 8 if needed:
+#    - Check compatibility: https://hexdocs.pm/elixir/compatibility-and-deprecations.html
+#    - Latest versions: https://hub.docker.com/r/hexpm/elixir
+#
+# 3. Add database client if using PostgreSQL:
+#    RUN apk add --no-cache postgresql-client
+#
+# 4. Add additional runtime dependencies in line 56 if needed
+#
+# 5. Customize health check endpoint (line 72):
+#    - Default: /health
+#    - Create in router.ex: get "/health", HealthController, :check
+#
+# 6. Environment variables to set at runtime:
+#    - SECRET_KEY_BASE (required): mix phx.gen.secret
+#    - DATABASE_URL (if using Ecto)
+#    - PHX_HOST (your domain)
+#    - PORT (default 4000)
+#
+# 7. Build command:
+#    docker build -t myapp:latest .
+#
+# 8. Run locally:
+#    docker run -p 4000:4000 \
+#      -e SECRET_KEY_BASE="$(mix phx.gen.secret)" \
+#      -e DATABASE_URL="ecto://user:pass@localhost/db" \
+#      myapp:latest
+#
+# 9. Multi-architecture build (for Apple Silicon + x86):
+#    docker buildx build --platform linux/amd64,linux/arm64 -t myapp:latest .
+#
+# 10. Size optimization achieved:
+#     - Build stage: ~500MB
+#     - Runtime stage: ~50-80MB (90% reduction)
+#
+# =============================================================================
+# PLATFORM-SPECIFIC NOTES
+# =============================================================================
+#
+# FLY.IO:
+# - Use `fly launch` to auto-generate fly.toml
+# - Fly automatically detects and uses this Dockerfile
+# - No modifications needed
+#
+# GOOGLE CLOUD RUN:
+# - Ensure PORT env var is used (Cloud Run sets this dynamically)
+# - Add: ENV PORT=8080 (Cloud Run default)
+# - Health checks automatically configured
+#
+# AWS ECS:
+# - Push to ECR: aws ecr get-login-password | docker login
+# - Task definition health check uses HEALTHCHECK instruction
+# - Set CPU/Memory in task definition (512 CPU / 1024 MB recommended)
+#
+# AZURE CONTAINER APPS:
+# - Push to ACR: az acr login --name myregistry
+# - Health probes use /health endpoint
+# - Set ingress port to 4000
+#
+# RAILWAY:
+# - Railway auto-detects Dockerfile
+# - Set environment variables in Railway dashboard
+# - Automatic HTTPS + domain provisioning
+#
+# RENDER:
+# - Render auto-detects Dockerfile
+# - Set environment variables in Render dashboard
+# - Health check path: /health
+#
+# =============================================================================
+# SECURITY BEST PRACTICES
+# =============================================================================
+#
+# ✅ Non-root user (app:app)
+# ✅ Minimal attack surface (Alpine base)
+# ✅ Multi-stage build (no build tools in runtime)
+# ✅ Health checks enabled
+# ✅ No secrets in image (use environment variables)
+# ✅ Specific version pinning (no :latest tags)
+#
+# Additional recommendations:
+# - Scan image: docker scan myapp:latest
+# - Use .dockerignore to exclude .git, .env, etc.
+# - Rotate SECRET_KEY_BASE regularly
+# - Enable HTTPS only in production
+# - Set secure cookie flags in config/prod.exs
+#
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+#
+# Container exits immediately:
+# - Check logs: docker logs <container_id>
+# - Verify SECRET_KEY_BASE is set
+# - Ensure DATABASE_URL is correct
+# - Check migrations ran: mix ecto.migrate
+#
+# Port binding issues:
+# - Verify Phoenix listens on 0.0.0.0 (not 127.0.0.1)
+# - In config/prod.exs: http: [ip: {0, 0, 0, 0}, port: {:system, "PORT"}]
+#
+# Database connection fails:
+# - Check DATABASE_URL format
+# - Verify database is reachable from container
+# - Test: docker run --rm postgres:15 psql $DATABASE_URL
+#
+# Assets not loading:
+# - Verify mix phx.digest ran successfully
+# - Check priv/static directory exists in container
+# - Ensure static_url host is set in config/prod.exs
+#
+# =============================================================================
+# PERFORMANCE TUNING
+# =============================================================================
+#
+# BEAM VM settings (add to CMD):
+# CMD ["bin/[APP_NAME]", "start", \
+#      "--erl", "+sbwt very_long +swt very_low", \
+#      "--erl", "-kernel inet_dist_listen_min 9000 inet_dist_listen_max 9000"]
+#
+# Recommended settings by container size:
+#
+# Small (512MB RAM):
+# - ERL_MAX_PORTS=4096
+# - POOL_SIZE=10
+#
+# Medium (1GB RAM):
+# - ERL_MAX_PORTS=8192
+# - POOL_SIZE=20
+#
+# Large (2GB+ RAM):
+# - ERL_MAX_PORTS=16384
+# - POOL_SIZE=40
+#
+# =============================================================================

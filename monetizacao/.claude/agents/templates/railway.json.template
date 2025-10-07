@@ -1,0 +1,566 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10,
+    "startCommand": "bin/[APP_NAME] start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 100
+  },
+  "regions": [
+    "[REGION]"
+  ],
+  "env": {
+    "PHX_HOST": {
+      "value": "${RAILWAY_PUBLIC_DOMAIN}"
+    },
+    "PORT": {
+      "value": "${PORT}"
+    },
+    "DATABASE_URL": {
+      "value": "${DATABASE_URL}"
+    },
+    "SECRET_KEY_BASE": {
+      "value": "${SECRET_KEY_BASE}"
+    },
+    "ECTO_IPV6": {
+      "value": "false"
+    },
+    "MIX_ENV": {
+      "value": "prod"
+    },
+    "LANG": {
+      "value": "en_US.UTF-8"
+    },
+    "RELEASE_COOKIE": {
+      "value": "${RELEASE_COOKIE}"
+    }
+  }
+}
+
+// =============================================================================
+// Railway.app Configuration Template for Elixir Phoenix Applications
+// Documentation: https://docs.railway.app/
+// =============================================================================
+//
+// CONFIGURATION INSTRUCTIONS
+// =============================================================================
+//
+// 1. Replace placeholders:
+//    - [APP_NAME]: Your application name (e.g., "myapp")
+//    - [REGION]: Deployment region (e.g., "us-west1")
+//
+// 2. Available regions:
+//    - us-west1: Oregon, USA
+//    - us-east4: Virginia, USA
+//    - europe-west4: Netherlands, Europe
+//    - asia-south1: Mumbai, India
+//    - Full list: https://docs.railway.app/reference/regions
+//
+// 3. Initial setup:
+//    a. Install Railway CLI:
+//       npm install -g @railway/cli
+//       # or
+//       brew install railway
+//
+//    b. Login:
+//       railway login
+//
+//    c. Initialize project:
+//       railway init
+//
+//    d. Link to existing project (optional):
+//       railway link [PROJECT_ID]
+//
+// 4. Set environment variables:
+//    railway variables set SECRET_KEY_BASE=$(mix phx.gen.secret)
+//    railway variables set RELEASE_COOKIE=$(mix phx.gen.secret)
+//
+// 5. Create PostgreSQL database (optional):
+//    railway add postgresql
+//    # DATABASE_URL automatically set
+//
+// 6. Deploy:
+//    railway up
+//    # or via GitHub integration (automatic on push)
+//
+// 7. Custom domain:
+//    railway domain
+//    # Follow prompts to add custom domain
+//
+// 8. View logs:
+//    railway logs --follow
+//
+// 9. Open application:
+//    railway open
+//
+// =============================================================================
+// RAILWAY.JSON vs RAILWAY.TOML
+// =============================================================================
+//
+// Railway supports both JSON and TOML formats:
+//
+// Use railway.json (this file) for:
+// - Complex configurations with nested objects
+// - Dynamic references to Railway variables
+// - JSON schema validation
+//
+// Use railway.toml for:
+// - Simpler, more readable configuration
+// - TOML syntax preference
+//
+// Both formats are functionally equivalent.
+//
+// =============================================================================
+// ENVIRONMENT VARIABLES
+// =============================================================================
+//
+// Required variables (set via CLI or Dashboard):
+//
+// SECRET_KEY_BASE:
+//   Generate: mix phx.gen.secret
+//   Description: Phoenix secret for signing cookies/sessions
+//
+// RELEASE_COOKIE:
+//   Generate: mix phx.gen.secret
+//   Description: Erlang distribution cookie for clustering
+//
+// Optional variables:
+//
+// DATABASE_URL:
+//   Auto-set if using Railway PostgreSQL
+//   Manual format: ecto://user:pass@host:5432/database
+//
+// PHX_HOST:
+//   Auto-set to Railway public domain
+//   Override for custom domain
+//
+// PORT:
+//   Auto-set by Railway (typically 3000-9000 range)
+//   Phoenix should read from System.get_env("PORT")
+//
+// Additional variables for production:
+//
+// POOL_SIZE: Database connection pool (default: 10)
+// SMTP_HOST: Email sending (if using Swoosh)
+// SENTRY_DSN: Error tracking (if using Sentry)
+// AWS_ACCESS_KEY_ID: S3 uploads (if using ExAws)
+//
+// Set variables:
+// railway variables set KEY=value
+// railway variables set KEY=value --environment production
+//
+// List variables:
+// railway variables
+//
+// =============================================================================
+// DEPLOYMENT STRATEGIES
+// =============================================================================
+//
+// 1. GitHub Integration (Recommended):
+//    - Connect Railway to GitHub repository
+//    - Automatic deployments on git push
+//    - PR environments (staging per pull request)
+//    - Rollback to any previous commit
+//
+//    Setup:
+//    a. Railway Dashboard → New Project → Deploy from GitHub
+//    b. Select repository
+//    c. Railway auto-detects Dockerfile
+//
+// 2. CLI Deployment:
+//    railway up
+//    railway up --detach  # Deploy without logs
+//
+// 3. Manual Docker:
+//    docker build -t myapp .
+//    railway deploy --image myapp:latest
+//
+// =============================================================================
+// SCALING CONFIGURATION
+// =============================================================================
+//
+// Railway auto-scales based on usage:
+// - Horizontal: Multiple replicas (Pro plan)
+// - Vertical: CPU/Memory auto-adjustment
+//
+// Configure replicas (Pro plan only):
+// {
+//   "deploy": {
+//     "numReplicas": 2  // 2 instances
+//   }
+// }
+//
+// Resource limits:
+// - Starter: 512MB RAM, 1 vCPU (shared)
+// - Developer: Up to 8GB RAM, 8 vCPU
+// - Pro: Up to 32GB RAM, 32 vCPU
+//
+// Configure via Dashboard:
+// Settings → Resources → Memory/CPU limits
+//
+// =============================================================================
+// HEALTH CHECKS
+// =============================================================================
+//
+// Railway uses healthcheckPath to determine if app is ready:
+//
+// Create health endpoint in router.ex:
+// scope "/", MyAppWeb do
+//   pipe_through :browser
+//   get "/health", HealthController, :check
+// end
+//
+// # lib/myapp_web/controllers/health_controller.ex
+// defmodule MyAppWeb.HealthController do
+//   use MyAppWeb, :controller
+//
+//   def check(conn, _params) do
+//     # Check database connection
+//     case MyApp.Repo.query("SELECT 1") do
+//       {:ok, _} ->
+//         json(conn, %{status: "ok"})
+//       {:error, _} ->
+//         conn
+//         |> put_status(:service_unavailable)
+//         |> json(%{status: "error"})
+//     end
+//   end
+// end
+//
+// Configure timeout:
+// - Default: 100 seconds
+// - Increase for slow-starting apps
+// - Decrease for fast-starting apps
+//
+// =============================================================================
+// DATABASE CONFIGURATION
+// =============================================================================
+//
+// Railway PostgreSQL Plugin:
+//
+// 1. Add PostgreSQL:
+//    railway add postgresql
+//
+// 2. DATABASE_URL automatically set as:
+//    postgresql://user:pass@host:5432/railway
+//
+// 3. Connection pooling:
+//    - Railway includes PgBouncer
+//    - Max connections: 100 (default)
+//    - Recommended POOL_SIZE: 10-20
+//
+// 4. Backups:
+//    - Automatic daily backups (Pro plan)
+//    - Manual backups: Settings → Backups
+//
+// 5. Access database:
+//    railway connect postgresql
+//    # Opens psql session
+//
+// 6. Database metrics:
+//    Dashboard → PostgreSQL → Metrics
+//
+// Configure in config/prod.exs:
+// config :myapp, MyApp.Repo,
+//   url: System.get_env("DATABASE_URL"),
+//   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+//   ssl: true,
+//   ssl_opts: [verify: :verify_none]  # Railway PostgreSQL uses self-signed certs
+//
+// =============================================================================
+// PERSISTENT STORAGE (Volumes)
+// =============================================================================
+//
+// Railway supports persistent volumes:
+//
+// 1. Create volume:
+//    railway volume create --name myapp-data --size 1GB
+//
+// 2. Mount in railway.json:
+// {
+//   "volumes": [
+//     {
+//       "name": "myapp-data",
+//       "mountPath": "/app/data"
+//     }
+//   ]
+// }
+//
+// 3. Access in application:
+//    # Ensure directory exists at startup
+//    File.mkdir_p!("/app/data")
+//
+// Limitations:
+// - Single-region only (no multi-region replication)
+// - Backup manually or to S3
+// - Max size: 50GB (contact support for more)
+//
+// Use cases:
+// - User uploads
+// - SQLite databases
+// - Cache files
+// - Log storage
+//
+// =============================================================================
+// LOGGING & MONITORING
+// =============================================================================
+//
+// View logs:
+// railway logs
+// railway logs --follow
+// railway logs --tail 100
+//
+// Log retention:
+// - Starter: 7 days
+// - Developer: 14 days
+// - Pro: 30 days
+//
+// Log levels:
+// Configure in config/prod.exs:
+// config :logger, level: :info
+//
+// Structured logging:
+// Use Logger.metadata for context:
+// Logger.metadata(request_id: conn.assigns.request_id)
+// Logger.info("User login", user_id: user.id)
+//
+// External monitoring:
+// - Sentry: Error tracking
+// - LogDNA: Log aggregation
+// - Datadog: APM
+// - AppSignal: Elixir-specific monitoring
+//
+// Health metrics:
+// Dashboard → Metrics shows:
+// - CPU usage
+// - Memory usage
+// - Network I/O
+// - Request count
+//
+// =============================================================================
+// PRICING
+// =============================================================================
+//
+// Railway Pricing (as of 2025):
+//
+// Starter ($0/month):
+// - $5 free credit/month
+// - Pay-as-you-go after
+// - ~100 hours runtime/month
+// - Shared CPU
+// - 512MB RAM
+// - 1GB storage
+//
+// Developer ($20/month):
+// - Includes $20 credit
+// - Pay-as-you-go after
+// - Up to 8GB RAM
+// - Up to 8 vCPU
+// - 100GB storage
+//
+// Pro ($50/month):
+// - Includes $50 credit
+// - Priority support
+// - Multiple replicas
+// - Advanced observability
+// - Up to 32GB RAM
+// - Up to 32 vCPU
+//
+// Resource costs:
+// - vCPU: $0.000463/minute (~$20/month per vCPU)
+// - Memory: $0.000231/GB/minute (~$10/month per GB)
+// - Storage: $0.25/GB/month
+// - Network: $0.10/GB egress
+//
+// Cost optimization:
+// - Use appropriate resource limits
+// - Enable sleep mode for dev/staging
+// - Use CDN for static assets
+// - Optimize database queries
+//
+// Estimate costs:
+// https://railway.app/pricing
+//
+// =============================================================================
+// RECOMMENDED CONFIGURATIONS BY USE CASE
+// =============================================================================
+//
+// HOBBY / DEVELOPMENT:
+// {
+//   "deploy": {
+//     "numReplicas": 1
+//   }
+// }
+// Cost: ~$5-10/month (Starter plan)
+//
+// SMALL PRODUCTION (< 10k users):
+// {
+//   "deploy": {
+//     "numReplicas": 1
+//   }
+// }
+// Resources: 1GB RAM, 1 vCPU
+// Cost: ~$30-50/month (Developer plan)
+//
+// MEDIUM PRODUCTION (10k-100k users):
+// {
+//   "deploy": {
+//     "numReplicas": 2
+//   }
+// }
+// Resources: 2GB RAM, 2 vCPU per replica
+// Cost: ~$100-150/month (Pro plan)
+//
+// LARGE PRODUCTION (100k+ users):
+// {
+//   "deploy": {
+//     "numReplicas": 3
+//   }
+// }
+// Resources: 4GB RAM, 4 vCPU per replica
+// Cost: ~$200-300/month (Pro plan)
+// Consider dedicated infrastructure at this scale
+//
+// =============================================================================
+// TROUBLESHOOTING
+// =============================================================================
+//
+// Deployment fails:
+// - Check logs: railway logs
+// - Verify Dockerfile builds: docker build .
+// - Check environment variables: railway variables
+//
+// Application crashes:
+// - Check health endpoint returns 200
+// - Verify DATABASE_URL is set
+// - Ensure migrations ran
+// - Check BEAM memory settings
+//
+// Slow performance:
+// - Check metrics: Dashboard → Metrics
+// - Increase CPU/Memory limits
+// - Add replicas (Pro plan)
+// - Optimize database queries
+//
+// Database connection errors:
+// - Verify DATABASE_URL: railway variables
+// - Check SSL configuration in config/prod.exs
+// - Increase POOL_SIZE if seeing timeouts
+// - Test connection: railway connect postgresql
+//
+// High costs:
+// - Review metrics for actual usage
+// - Set resource limits in Dashboard
+// - Enable sleep for non-production
+// - Optimize Docker image size
+//
+// =============================================================================
+// MIGRATION FROM OTHER PLATFORMS
+// =============================================================================
+//
+// From Heroku:
+// 1. Export environment variables from Heroku
+// 2. Import to Railway: railway variables set
+// 3. Railway auto-detects Procfile or Dockerfile
+// 4. Deploy: railway up
+//
+// From Fly.io:
+// 1. Convert fly.toml → railway.json (manual)
+// 2. Adjust health check paths
+// 3. Set environment variables
+// 4. Deploy
+//
+// From Render:
+// 1. Convert render.yaml → railway.json
+// 2. Adjust build/start commands
+// 3. Set environment variables
+// 4. Deploy
+//
+// Database migration:
+// 1. Backup source database: pg_dump
+// 2. Create Railway PostgreSQL
+// 3. Restore: railway connect postgresql < dump.sql
+// 4. Verify data integrity
+//
+// =============================================================================
+// ADVANCED FEATURES
+// =============================================================================
+//
+// PR Environments:
+// - Automatic environment per pull request
+// - Enable: Settings → Deployments → PR Environments
+// - Each PR gets unique URL
+// - Auto-cleanup on PR merge/close
+//
+// Staging Environments:
+// - Create separate environment: Settings → Environments → New
+// - Deploy specific branch: Settings → Deployments → Branch
+// - Separate environment variables per environment
+//
+// Webhooks:
+// - Deploy hooks: Trigger deploys via HTTP
+// - Status webhooks: Get notified on deploy events
+// - Configure: Settings → Webhooks
+//
+// CLI Scripts:
+// - Run migrations: railway run mix ecto.migrate
+// - Open console: railway run bin/myapp remote
+// - Run seeds: railway run mix run priv/repo/seeds.exs
+//
+// Docker Registry:
+// - Railway has built-in registry
+// - Push custom images: railway deploy --image
+//
+// =============================================================================
+// INTEGRATION WITH CLAUDE CODE
+// =============================================================================
+//
+// Deploy from Claude Code:
+//
+// 1. Install Railway CLI:
+//    npm install -g @railway/cli
+//
+// 2. Login:
+//    railway login
+//
+// 3. Deploy:
+//    railway up
+//
+// Useful commands in Claude Code:
+// - railway logs --follow  # Monitor deployment
+// - railway status  # Check app status
+// - railway open  # Open in browser
+// - railway run mix ecto.migrate  # Run migrations
+//
+// Environment variable management:
+// railway variables set $(cat .env)  # Bulk import
+//
+// =============================================================================
+// RESOURCES
+// =============================================================================
+//
+// Official Documentation:
+// - Railway Docs: https://docs.railway.app/
+// - Elixir Deployment: https://docs.railway.app/guides/elixir
+// - CLI Reference: https://docs.railway.app/develop/cli
+//
+// Community:
+// - Railway Discord: https://discord.gg/railway
+// - Railway Forum: https://help.railway.app/
+// - Elixir Forum: https://elixirforum.com/
+//
+// Templates:
+// - Railway Templates: https://railway.app/templates
+// - Phoenix Template: https://railway.app/template/phoenix
+//
+// Support:
+// - Help Center: https://help.railway.app/
+// - Priority Support (Pro): support@railway.app
+//
+// =============================================================================

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.claude.com/schemas/settings.json",
+
+  "// Context Management": "Disable autocompact for manual control",
+  "autocompact": false,
+
+  "// Hooks Configuration": "Automatic context bundle logging",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/log-to-bundle.sh",
+            "description": "Log tool calls to context bundle"
+          }
+        ]
+      }
+    ]
+  },
+
+  "// MCP Configuration": "Load MCP servers on-demand, not by default",
+  "// Comment": "Don't use default .mcp.json - creates specialized configs instead",
+  "// See": "mcp-configs/ directory for specialized configurations",
+
+  "// Model Configuration": "Optional: Set default model",
+  "model": "claude-sonnet-4-5",
+
+  "// Thinking Mode": "Enable for complex tasks",
+  "// Note": "Enable with /thinking command when needed",
+
+  "// Output Style": "Optional: Custom output style",
+  "// outputStyle": "path/to/custom-style.md",
+
+  "// Status Line": "Optional: Custom status line",
+  "// statusLine": "path/to/custom-status.md"
+}
