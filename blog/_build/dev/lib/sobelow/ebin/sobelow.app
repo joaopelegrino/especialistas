@@ -1,7 +1,5 @@
 {application,sobelow,
-             [{applications,[kernel,stdlib,elixir,logger,eex,inets,jason]},
-              {description,"Security-focused static analysis for Elixir & the Phoenix framework"},
-              {modules,['Elixir.Mix.Tasks.Sobelow','Elixir.Sobelow',
+             [{modules,['Elixir.Mix.Tasks.Sobelow','Elixir.Sobelow',
                         'Elixir.Sobelow.CI','Elixir.Sobelow.CI.OS',
                         'Elixir.Sobelow.CI.System','Elixir.Sobelow.Config',
                         'Elixir.Sobelow.Config.CSP',
@@ -40,5 +38,8 @@
                         'Elixir.Sobelow.XSS.ContentType',
                         'Elixir.Sobelow.XSS.HTML','Elixir.Sobelow.XSS.Raw',
                         'Elixir.Sobelow.XSS.SendResp']},
+              {optional_applications,[]},
+              {applications,[kernel,stdlib,elixir,logger,eex,inets,jason]},
+              {description,"Security-focused static analysis for Elixir & the Phoenix framework"},
               {registered,[]},
               {vsn,"0.14.0"}]}.

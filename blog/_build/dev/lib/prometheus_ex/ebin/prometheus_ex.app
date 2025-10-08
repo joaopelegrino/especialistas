@@ -1,7 +1,5 @@
 {application,prometheus_ex,
-             [{applications,[kernel,stdlib,elixir,logger,mnesia,prometheus]},
-              {description,"Elixir-friendly Prometheus monitoring system client.\n"},
-              {modules,['Elixir.Prometheus','Elixir.Prometheus.Buckets',
+             [{modules,['Elixir.Prometheus','Elixir.Prometheus.Buckets',
                         'Elixir.Prometheus.Collector',
                         'Elixir.Prometheus.Config',
                         'Elixir.Prometheus.Config.KeyNotFoundError',
@@ -32,5 +30,8 @@
                         'Elixir.Prometheus.NoBucketsError',
                         'Elixir.Prometheus.Registry',
                         'Elixir.Prometheus.UnknownMetricError']},
+              {optional_applications,[]},
+              {applications,[kernel,stdlib,elixir,logger,mnesia,prometheus]},
+              {description,"Elixir-friendly Prometheus monitoring system client.\n"},
               {registered,[]},
               {vsn,"3.1.0"}]}.

@@ -1,7 +1,5 @@
 {application,guardian,
-             [{applications,[kernel,stdlib,elixir,crypto,logger,jose]},
-              {description,"Elixir Authentication framework"},
-              {modules,['Elixir.Guardian','Elixir.Guardian.Config',
+             [{modules,['Elixir.Guardian','Elixir.Guardian.Config',
                         'Elixir.Guardian.MalformedReturnValueError',
                         'Elixir.Guardian.Permissions',
                         'Elixir.Guardian.Permissions.AtomEncoding',
@@ -28,5 +26,8 @@
                         'Elixir.Guardian.Token.Jwt.Verify',
                         'Elixir.Guardian.Token.Verify','Elixir.Guardian.UUID',
                         'Elixir.Mix.Tasks.Guardian.Gen.Secret']},
+              {optional_applications,[plug]},
+              {applications,[kernel,stdlib,elixir,crypto,logger,jose,plug]},
+              {description,"Elixir Authentication framework"},
               {registered,[]},
               {vsn,"2.4.0"}]}.

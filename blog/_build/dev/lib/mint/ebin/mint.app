@@ -1,7 +1,5 @@
 {application,mint,
-             [{applications,[kernel,stdlib,elixir,logger,ssl,hpax]},
-              {description,"Small and composable HTTP client."},
-              {modules,['Elixir.Mint.Application','Elixir.Mint.Core.Conn',
+             [{modules,['Elixir.Mint.Application','Elixir.Mint.Core.Conn',
                         'Elixir.Mint.Core.Headers',
                         'Elixir.Mint.Core.Transport',
                         'Elixir.Mint.Core.Transport.SSL',
@@ -14,6 +12,9 @@
                         'Elixir.Mint.Negotiate','Elixir.Mint.TransportError',
                         'Elixir.Mint.TunnelProxy','Elixir.Mint.Types',
                         'Elixir.Mint.UnsafeProxy',mint_shims]},
+              {optional_applications,[castore]},
+              {applications,[kernel,stdlib,elixir,logger,ssl,castore,hpax]},
+              {description,"Small and composable HTTP client."},
               {registered,[]},
               {vsn,"1.7.1"},
               {mod,{'Elixir.Mint.Application',[]}}]}.
