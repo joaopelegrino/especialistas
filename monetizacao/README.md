@@ -41,6 +41,9 @@ Framework para escolher entre Cloudflare e soluções customizadas.
 ### 🔗 [9. Recursos e Referências](./09-recursos-referencias.md)
 166 links essenciais, repositórios GitHub e documentação técnica.
 
+### 🌐 [10. Ecossistemas de LLMs e Monetização 2025](./10-ecossistemas-llm-monetizacao-2025.md)
+Oportunidades de monetização em Anthropic, Google Vertex AI, AWS Bedrock, Azure OpenAI, Hugging Face e marketplaces emergentes. Mercado de US$ 5,4B→US$ 216B até 2035.
+
 ## 🚀 Quick Start
 
 ### Para Publicadores
@@ -161,6 +164,6 @@ Esta documentação está disponível sob licença MIT. Use livremente para fins
 
 ---
 
-**Última atualização**: Janeiro 2025
-**Versão**: 1.0.0
+**Última atualização**: Outubro 2025
+**Versão**: 1.1.0
 **Mantido por**: Comunidade de Publicadores Web
